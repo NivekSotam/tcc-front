@@ -34,7 +34,7 @@ const MyCalendar = () => {
         initialDate: new Date(),
         locale: ptBrLocale,
         navLinks: false,
-        editable: true,
+        editable: false,
         dayMaxEvents: true,
         dayHeaderContent(arg: DayHeaderContentArg) {
           return createElement(CustomDayHeader, { text: arg.text });
