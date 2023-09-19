@@ -7,11 +7,11 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
-import SidebarContent from "./SideBar";
-import MobileNav from "./navbar";
-import MyCalendar from "./Calendar";
+import SidebarContent from "../components/SideBar";
+import MobileNav from "../components/navbar";
+import MyCalendar from "../components/Calendar";
 
-const SidebarWithHeader = () => {
+const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -35,11 +35,10 @@ const SidebarWithHeader = () => {
 
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        Teste isano do react doom
-        {/*  */}
+        <MyCalendar />
       </Box>
     </Box>
   );
 };
 
-export default SidebarWithHeader;
+export default Home;

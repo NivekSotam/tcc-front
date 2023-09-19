@@ -53,13 +53,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
-        />
-
         <ColorModeSwitcher justifySelf="flex-end" />
 
         <Flex alignItems={"center"}>
@@ -97,9 +90,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
-              <MenuDivider />
+              {/* <MenuDivider /> */}
               <MenuItem>Sign out</MenuItem>
             </MenuList>
           </Menu>
