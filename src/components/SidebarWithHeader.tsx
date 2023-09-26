@@ -6,7 +6,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import SidebarContent from "./SideBar";
 import MobileNav from "./navbar";
 import MyCalendar from "./Calendar";

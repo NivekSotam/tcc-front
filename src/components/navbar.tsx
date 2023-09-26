@@ -16,7 +16,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
-import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import { ColorModeSwitcher } from "./ColorModeSwitcher";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;

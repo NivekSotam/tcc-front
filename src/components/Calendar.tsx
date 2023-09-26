@@ -13,7 +13,7 @@ interface CustomDayHeaderProps {
 
 class CustomDayHeader extends Component<CustomDayHeaderProps> {
   render() {
-    return createElement("div", {}, "!" + this.props.text + "!");
+    return createElement("div", {}, "" + this.props.text + "");
   }
 }
 
