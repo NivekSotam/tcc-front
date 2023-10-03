@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import PrivateRoute from "./components/PrivateRoute";
 import Login from "./pages/Login";
+import LoginPage from "./pages/Login.page";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -17,7 +18,7 @@ export const App = () => (
             </PrivateRoute>
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </Router>
   </ChakraProvider>

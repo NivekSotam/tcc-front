@@ -6,10 +6,10 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import SidebarContent from "../components/SideBar";
-import MobileNav from "../components/navbar";
 import MyCalendar from "../components/Calendar";
 import { ColorModeSwitcher } from "../components/ColorModeSwitcher";
+import SidebarContent from "../components/base/SideBar";
+import MobileNav from "../components/base/navbar";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

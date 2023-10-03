@@ -107,6 +107,7 @@ function Login() {
                         borderRadius="6px"
                         color={colorMode === "dark" ? "black" : "black"}
                         value={email}
+                        // onChangeText={email => setEmail(email)}
                         onChange={(e) => {
                           setEmail(e.target.value);
                         }}
