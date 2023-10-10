@@ -16,10 +16,7 @@ const Home = () => {
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent
-        onClose={() => onClose}
-        display={{ base: "none", md: "block" }}
-      />
+      <SidebarContent onClose={onClose} isOpen={isOpen} />
       <Drawer
         isOpen={isOpen}
         placement="left"

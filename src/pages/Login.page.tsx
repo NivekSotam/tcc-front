@@ -13,28 +13,22 @@ import {
   Avatar,
   FormControl,
   useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import LocalStorageHelper from "../helpers/localstorage-helper";
-import ErrorAlertLogin from "../components/error/ErrorAlertLogin";
+import ErrorAlert from "../components/error/ErrorAlert";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [errorStatus, setErrorStatus] = useState<number | null>(null);
 
   const handleLogin = async (event: any) => {
     event.preventDefault();
@@ -44,16 +38,38 @@ const LoginPage = () => {
         usuario: email,
         senha: password,
       });
+
       if (response.status === 200) {
-        // console.log(response);
-        LocalStorageHelper.setToken(response.data.token);
+        // Login bem-sucedido
+        LocalStorageHelper.setToken(response.data.accessToken);
         navigate("/");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
-      onOpen();
+      if (error.response) {
+        setErrorStatus(error.response.status);
+
+        if (error.response.status === 401) {
+          onOpen();
+        } else if (error.response.status === 500) {
+          onOpen();
+        }
+      } else {
+        console.error("Erro na requisição:", error.message);
+      }
     }
   };
+
+  let alertTitle = "";
+  let alertDescription = "";
+  if (errorStatus === 401) {
+    alertTitle = "Erro de Autenticação";
+    alertDescription = "Usuário e/ou senha inválido(s)";
+  } else if (errorStatus === 500) {
+    alertTitle = "Erro no Servidor";
+    alertDescription =
+      "Ocorreu um erro no servidor. Tente novamente mais tarde.";
+  }
 
   return (
     <Flex
@@ -130,8 +146,12 @@ const LoginPage = () => {
           Clique Aqui
         </Link>
       </Box>
-      {/* <Button onClick={onOpen}>Open Modal</Button> */}
-      <ErrorAlertLogin isOpen={isOpen} onClose={onClose} />
+      <ErrorAlert
+        isOpen={isOpen}
+        onClose={onClose}
+        alertTitle={alertTitle}
+        alertDescription={alertDescription}
+      />
     </Flex>
   );
 };

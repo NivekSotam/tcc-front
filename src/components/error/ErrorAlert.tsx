@@ -17,7 +17,7 @@ import {
   createMultiStyleConfigHelpers,
 } from "@chakra-ui/react";
 
-const ErrorAlertLogin = ({ isOpen, onClose }: any) => {
+const ErrorAlert = ({ isOpen, onClose, alertTitle, alertDescription }: any) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -36,10 +36,10 @@ const ErrorAlertLogin = ({ isOpen, onClose }: any) => {
           >
             <AlertIcon boxSize="40px" mr={0} />
             <AlertTitle mt={4} mb={1} fontSize="lg">
-              Erro de Autenticação
+              {alertTitle}
             </AlertTitle>
             <AlertDescription maxWidth="sm">
-              Usuário e/ou senha inválido(s)
+              {alertDescription}
             </AlertDescription>
           </Alert>
         </ModalBody>
@@ -49,4 +49,4 @@ const ErrorAlertLogin = ({ isOpen, onClose }: any) => {
   );
 };
 
-export default ErrorAlertLogin;
+export default ErrorAlert;

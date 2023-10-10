@@ -5,57 +5,37 @@ import {
   Text,
   CloseButton,
   useColorModeValue,
-  BoxProps,
-  FlexProps,
   Icon,
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
-import {
-  FiCompass,
-  FiHome,
-  FiSettings,
-  FiStar,
-  FiTrendingUp,
-} from "react-icons/fi";
+import { Link as RouterLink } from "react-router-dom";
+import { FiCalendar, FiUsers } from "react-icons/fi";
 
-interface SidebarProps extends BoxProps {
+interface SidebarProps {
   onClose: () => void;
+  isOpen: boolean;
 }
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
+  to: string;
 }
 
-interface NavItemProps extends FlexProps {
+interface NavItemProps {
   icon: IconType;
   children: React.ReactNode;
-}
-
-interface MobileProps extends FlexProps {
-  onOpen: () => void;
-}
-
-interface SidebarProps extends BoxProps {
-  onClose: () => void;
+  to: string;
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
+  { name: "Calendário", icon: FiCalendar, to: "/" },
+  { name: "Pessoas", icon: FiUsers, to: "/pessoas" },
 ];
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, to }: NavItemProps) => {
   return (
-    <Box
-      as="a"
-      href="#"
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-    >
+    <RouterLink to={to} style={{ textDecoration: "none" }}>
       <Flex
         align="center"
         p="4"
@@ -64,10 +44,9 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "#2C3E50",
           color: "white",
         }}
-        {...rest}
       >
         {icon && (
           <Icon
@@ -81,11 +60,11 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
         )}
         {children}
       </Flex>
-    </Box>
+    </RouterLink>
   );
 };
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, isOpen }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
@@ -95,7 +74,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
-      {...rest}
+      display={isOpen ? "block" : ["none", null, "block"]}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
@@ -104,7 +83,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} to={link.to}>
           {link.name}
         </NavItem>
       ))}

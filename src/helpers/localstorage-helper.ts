@@ -1,8 +1,8 @@
 import JwtDecode from "jwt-decode";
 
 const LocalStorageHelper = {
-  setToken(token: any) {
-    window.localStorage.setItem("USER_TOKEN", token);
+  setToken(accessToken: any) {
+    window.localStorage.setItem("USER_TOKEN", accessToken);
   },
   getToken() {
     return window.localStorage.getItem("USER_TOKEN");
