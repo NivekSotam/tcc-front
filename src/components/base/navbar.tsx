@@ -44,7 +44,6 @@ const MobileNav = ({ onOpen }: MobileProps) => {
 
       return response.data[0]?.usuario || "";
     } catch (error) {
-      console.error("Erro ao obter dados do usuário:", error);
       return "";
     }
   };

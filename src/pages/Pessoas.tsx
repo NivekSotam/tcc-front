@@ -6,9 +6,9 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import MyCalendar from "../components/Calendar";
 import SidebarContent from "../components/base/SideBar";
 import MobileNav from "../components/base/navbar";
+import ListagemPessoa from "../components/Pessoa/Listagem.Pessoa";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,9 +27,9 @@ const Home = () => {
         <DrawerContent></DrawerContent>
       </Drawer>
 
-      {/* <MobileNav onOpen={onOpen} /> */}
+      <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        <MyCalendar />
+        <ListagemPessoa />
       </Box>
     </Box>
   );
