@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { Link as RouterLink } from "react-router-dom";
-import { FiCalendar, FiUsers } from "react-icons/fi";
+import { FiCalendar, FiFileText, FiUsers } from "react-icons/fi";
 
 interface SidebarProps {
   onClose: () => void;
@@ -17,23 +17,20 @@ interface SidebarProps {
 }
 
 interface LinkItemProps {
-  name: string;
+  name?: string;
   icon: IconType;
   to: string;
-}
-
-interface NavItemProps {
-  icon: IconType;
-  children: React.ReactNode;
-  to: string;
+  isExpandable?: boolean;
+  children?: React.ReactNode;
 }
 
 const LinkItems: Array<LinkItemProps> = [
   { name: "Calendário", icon: FiCalendar, to: "/" },
   { name: "Pessoas", icon: FiUsers, to: "/pessoas" },
+  { name: "Serviços", icon: FiFileText, to: "/servico" },
 ];
 
-const NavItem = ({ icon, children, to }: NavItemProps) => {
+const NavItem = ({ icon, children, to, isExpandable }: LinkItemProps) => {
   return (
     <RouterLink to={to} style={{ textDecoration: "none" }}>
       <Flex

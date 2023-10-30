@@ -2,7 +2,17 @@ import React from "react";
 import { Flex, Button } from "@chakra-ui/react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-const ListPagination = ({ currentPage, totalPages, onPageChange }) => {
+interface ListPaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+const ListPagination: React.FC<ListPaginationProps> = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+}) => {
   const maxPageNumbersToShow = 10;
   const itemsPerPage = 1;
   const maxPagesToSkip = 10;
@@ -12,13 +22,11 @@ const ListPagination = ({ currentPage, totalPages, onPageChange }) => {
     1,
     currentPage > maxPagesToSkip ? currentPage - maxPagesToSkip : 1
   );
-  let endPage = Math.min(
-    totalPages,
-    startPage + maxPageNumbersToShow - 1
-  );
+  let endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
 
   if (currentPage > endPage) {
-    const pagesToSkip = Math.floor(currentPage / maxPagesToSkip) * maxPagesToSkip;
+    const pagesToSkip =
+      Math.floor(currentPage / maxPagesToSkip) * maxPagesToSkip;
     startPage = pagesToSkip + 1;
     endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
   }

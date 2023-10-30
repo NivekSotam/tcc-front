@@ -10,7 +10,7 @@ import SidebarContent from "../components/base/SideBar";
 import MobileNav from "../components/base/navbar";
 import ListagemPessoa from "../components/Pessoa/Listagem.Pessoa";
 
-const Home = () => {
+const Pessoas = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Pessoas;

@@ -6,11 +6,11 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import MyCalendar from "../components/Calendar";
 import SidebarContent from "../components/base/SideBar";
 import MobileNav from "../components/base/navbar";
+import ListagemServico from "../components/Servico/Listagem.Servico";
 
-const Home = () => {
+const Servico = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -29,10 +29,10 @@ const Home = () => {
 
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        <MyCalendar />
+        <ListagemServico />
       </Box>
     </Box>
   );
 };
 
-export default Home;
+export default Servico;

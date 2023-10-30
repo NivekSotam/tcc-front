@@ -39,37 +39,7 @@ const MyCalendar = () => {
         dayHeaderContent(arg: DayHeaderContentArg) {
           return createElement(CustomDayHeader, { text: arg.text });
         },
-        events: [
-          {
-            title: "All Day Event",
-            start: "2023-09-10",
-          },
-          {
-            title: "Click for Google",
-            url: "http://google.com/",
-            start: "2023-09-16",
-          },
-          {
-            title: "Click for Google",
-            url: "http://google.com/",
-            start: "2023-09-16",
-          },
-          {
-            title: "Click for Google",
-            url: "http://google.com/",
-            start: "2023-09-16",
-          },
-          {
-            title: "Click for Google",
-            url: "http://google.com/",
-            start: "2023-09-16",
-          },
-          {
-            title: "Click for Google",
-            url: "http://google.com/",
-            start: "2023-09-16",
-          },
-        ],
+        events: [],
       });
 
       calendar.render();

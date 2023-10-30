@@ -7,16 +7,13 @@ import {
   HStack,
   FlexProps,
   MenuItem,
-  MenuDivider,
   Menu,
   MenuButton,
   Avatar,
-  VStack,
   Box,
   MenuList,
 } from "@chakra-ui/react";
-import { FiMenu, FiBell, FiChevronDown } from "react-icons/fi";
-import axios from "axios";
+import { FiMenu, FiChevronDown } from "react-icons/fi";
 
 interface MobileProps extends FlexProps {
   onOpen: () => void;
@@ -27,37 +24,16 @@ const MobileNav = ({ onOpen }: MobileProps) => {
 
   const handleLogout = () => {
     localStorage.removeItem("USER_TOKEN");
-
     window.location.reload();
-  };
-
-  const getUserData = async (userToken: string) => {
-    try {
-      const tokenPayload = JSON.parse(atob(userToken.split(".")[1]));
-      const userId = tokenPayload.id;
-
-      const response = await axios.get(`/colaborador/get/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-
-      return response.data[0]?.usuario || "";
-    } catch (error) {
-      return "";
-    }
   };
 
   useEffect(() => {
     const userToken = localStorage.getItem("USER_TOKEN");
 
     if (userToken) {
-      const fetchUserData = async () => {
-        const userName = await getUserData(userToken);
-        setUserName(userName);
-      };
-
-      fetchUserData();
+      const tokenPayload = JSON.parse(atob(userToken.split(".")[1]));
+      const userName = tokenPayload.usuario;
+      setUserName(userName);
     }
   }, []);
 
@@ -79,7 +55,6 @@ const MobileNav = ({ onOpen }: MobileProps) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-
       <Text
         display={{ base: "flex", md: "none" }}
         fontSize="2xl"
@@ -88,7 +63,6 @@ const MobileNav = ({ onOpen }: MobileProps) => {
       >
         Logo
       </Text>
-
       <HStack spacing={{ base: "0", md: "6" }}>
         <Flex alignItems={"center"}>
           <Menu>
@@ -99,14 +73,13 @@ const MobileNav = ({ onOpen }: MobileProps) => {
             >
               <HStack>
                 <Avatar size={"sm"} bg="#2C3E50" />
-                <VStack
+                <Box
                   display={{ base: "none", md: "flex" }}
                   alignItems="flex-start"
-                  spacing="1px"
                   ml="2"
                 >
                   <Text fontSize="sm">{userName}</Text>
-                </VStack>
+                </Box>
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
                 </Box>
@@ -116,7 +89,6 @@ const MobileNav = ({ onOpen }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
               <MenuItem onClick={handleLogout}>Sair</MenuItem>
             </MenuList>
           </Menu>

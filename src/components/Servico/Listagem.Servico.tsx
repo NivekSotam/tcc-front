@@ -22,40 +22,32 @@ import {
   FaPlus,
   FaSort,
 } from "react-icons/fa";
-import { fetchData } from "./helpers/api";
-import { Pessoa } from "../../Types/Pessoa";
+import { fetchServicoData } from "./helpers/api";
+import { Servico } from "../../Types/Servico";
 import ListPagination from "../ListPagination";
-import NewPersonModal from "./create.Pessoa";
-import SuccessAlert from "../error/SuccessAlert";
 
-const ListagemPessoa = () => {
+const ListagemServico = () => {
   const [searchType, setSearchType] = useState("nome");
   const [searchTerm, setSearchTerm] = useState("");
-  const [data, setData] = useState<Pessoa[]>([]);
+  const [data, setData] = useState<Servico[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
-  const [sortOrder, setSortOrder] = useState({});
   const [buttonText, setButtonText] = useState("Buscar");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
 
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
     setSearchTerm("");
-    setButtonText(
-      type === "nome" ? "Nome" : type === "email" ? " Email" : "Cadastro"
-    );
+    setButtonText(type === "nome" ? "Nome" : "Nome");
   };
+
   useEffect(() => {
     const userToken = localStorage.getItem("USER_TOKEN");
-
     const fetchDataFromApi = async () => {
       try {
-        const fetchedData = await fetchData(
+        const fetchedData = await fetchServicoData(
           searchType,
           searchTerm,
-          userToken,
-          sortOrder
+          userToken
         );
         setData(fetchedData);
       } catch (error) {
@@ -64,24 +56,18 @@ const ListagemPessoa = () => {
     };
 
     fetchDataFromApi();
-  }, [searchType, searchTerm, sortOrder]);
+  }, [searchTerm]);
 
-  const totalPages = Math.ceil((data && data.length) / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems =
-    data && data.length > 0
-      ? data.slice(indexOfFirstItem, indexOfLastItem)
-      : [];
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
         <Th>{item.id}</Th>
         <Th>{item.nome}</Th>
-        <Th>{item.email}</Th>
-        <Th>{item.telefone}</Th>
-        <Th>{item.cadastro}</Th>
         <Th>
           <Button colorScheme="blue" mr={2}>
             <FaEdit />
@@ -107,17 +93,11 @@ const ListagemPessoa = () => {
             <MenuItem onClick={() => handleMenuItemClick("nome")}>
               Nome
             </MenuItem>
-            <MenuItem onClick={() => handleMenuItemClick("email")}>
-              Email
-            </MenuItem>
-            <MenuItem onClick={() => handleMenuItemClick("cadastro")}>
-              Cadastro
-            </MenuItem>
           </MenuList>
         </Menu>
 
         <Input
-          placeholder={`Pesquisar por ${searchType}`}
+          placeholder="Pesquisar por nome"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -126,21 +106,10 @@ const ListagemPessoa = () => {
           ml={5}
           colorScheme="blue"
           rightIcon={<FaPlus />}
-          onClick={() => setIsModalOpen(true)}
+          //   onClick={() => setIsModalOpen(true)}
         >
           Criar
         </Button>
-        <NewPersonModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSuccess={() => setIsSuccessAlertOpen(true)}
-        />
-        <SuccessAlert
-          isOpen={isSuccessAlertOpen}
-          onClose={() => setIsSuccessAlertOpen(false)}
-          alertTitle="Usuário criado com sucesso"
-          alertDescription="A nova pessoa foi adicionada com sucesso."
-        />
       </Flex>
 
       {currentItems.length > 0 ? (
@@ -149,9 +118,7 @@ const ListagemPessoa = () => {
             <Tr>
               <Th>ID</Th>
               <Th>Nome</Th>
-              <Th>Email</Th>
-              <Th>Telefone</Th>
-              <Th>Cadastro</Th>
+
               <Th>Ações</Th>
             </Tr>
           </Thead>
@@ -169,4 +136,4 @@ const ListagemPessoa = () => {
   );
 };
 
-export default ListagemPessoa;
+export default ListagemServico;
