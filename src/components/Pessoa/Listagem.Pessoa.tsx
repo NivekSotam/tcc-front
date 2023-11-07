@@ -15,18 +15,13 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import {
-  FaEdit,
-  FaTrashAlt,
-  FaAngleDown,
-  FaPlus,
-  FaSort,
-} from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus } from "react-icons/fa";
 import { fetchData } from "./helpers/api";
 import { Pessoa } from "../../Types/Pessoa";
 import ListPagination from "../ListPagination";
 import NewPersonModal from "./create.Pessoa";
 import SuccessAlert from "../error/SuccessAlert";
+import { paginateData } from "../../helpers/paginate-help";
 
 const ListagemPessoa = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -34,7 +29,6 @@ const ListagemPessoa = () => {
   const [data, setData] = useState<Pessoa[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
-  const [sortOrder, setSortOrder] = useState({});
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
@@ -43,36 +37,30 @@ const ListagemPessoa = () => {
     setSearchType(type);
     setSearchTerm("");
     setButtonText(
-      type === "nome" ? "Nome" : type === "email" ? " Email" : "Cadastro"
+      type === "nome" ? "Nome" : type === "email" ? "Email" : "Cadastro"
     );
   };
+
   useEffect(() => {
     const userToken = localStorage.getItem("USER_TOKEN");
 
     const fetchDataFromApi = async () => {
       try {
-        const fetchedData = await fetchData(
-          searchType,
-          searchTerm,
-          userToken,
-          sortOrder
-        );
-        setData(fetchedData);
+        const response = await fetchData(searchType, searchTerm, userToken);
+        setData(response.result);
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
       }
     };
 
     fetchDataFromApi();
-  }, [searchType, searchTerm, sortOrder]);
+  }, [searchType, searchTerm]);
 
-  const totalPages = Math.ceil((data && data.length) / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems =
-    data && data.length > 0
-      ? data.slice(indexOfFirstItem, indexOfLastItem)
-      : [];
+  const { currentItems, totalPages } = paginateData<Pessoa>(
+    currentPage,
+    itemsPerPage,
+    data
+  );
 
   const renderItems = () => {
     return currentItems.map((item) => (

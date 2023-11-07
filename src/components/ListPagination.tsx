@@ -14,22 +14,12 @@ const ListPagination: React.FC<ListPaginationProps> = ({
   onPageChange,
 }) => {
   const maxPageNumbersToShow = 10;
-  const itemsPerPage = 1;
-  const maxPagesToSkip = 10;
 
-  const totalItems = itemsPerPage * totalPages;
-  let startPage = Math.max(
+  const startPage = Math.max(
     1,
-    currentPage > maxPagesToSkip ? currentPage - maxPagesToSkip : 1
+    currentPage - Math.floor(maxPageNumbersToShow / 2)
   );
-  let endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
-
-  if (currentPage > endPage) {
-    const pagesToSkip =
-      Math.floor(currentPage / maxPagesToSkip) * maxPagesToSkip;
-    startPage = pagesToSkip + 1;
-    endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
-  }
+  const endPage = Math.min(totalPages, startPage + maxPageNumbersToShow - 1);
 
   const getPageNumbers = () => {
     const pages = [];

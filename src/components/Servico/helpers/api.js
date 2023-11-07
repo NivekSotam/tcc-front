@@ -14,3 +14,17 @@ export const fetchServicoData = async (searchType, searchTerm, userToken) => {
     throw error;
   }
 };
+
+export const createServico = async (newServicoData, userToken) => {
+  try {
+    const response = await axios.post("/servico", newServicoData, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao criar servico:", error);
+    throw error;
+  }
+};

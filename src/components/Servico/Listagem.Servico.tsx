@@ -25,6 +25,7 @@ import {
 import { fetchServicoData } from "./helpers/api";
 import { Servico } from "../../Types/Servico";
 import ListPagination from "../ListPagination";
+import { paginateData } from "../../helpers/paginate-help";
 
 const ListagemServico = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -37,7 +38,13 @@ const ListagemServico = () => {
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
     setSearchTerm("");
+    setCurrentPage(1);
     setButtonText(type === "nome" ? "Nome" : "Nome");
+  };
+
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -58,10 +65,11 @@ const ListagemServico = () => {
     fetchDataFromApi();
   }, [searchTerm]);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const { currentItems, totalPages } = paginateData<Servico>(
+    currentPage,
+    itemsPerPage,
+    data
+  );
 
   const renderItems = () => {
     return currentItems.map((item) => (
@@ -99,7 +107,7 @@ const ListagemServico = () => {
         <Input
           placeholder="Pesquisar por nome"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearchTermChange}
         />
 
         <Button

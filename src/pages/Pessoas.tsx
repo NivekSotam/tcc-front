@@ -34,5 +34,4 @@ const Pessoas = () => {
     </Box>
   );
 };
-
 export default Pessoas;
