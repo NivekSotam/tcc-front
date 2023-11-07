@@ -15,7 +15,7 @@ const Pessoas = () => {
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
-      <SidebarContent onClose={onClose} isOpen={isOpen} />
+      <SidebarContent />
       <Drawer
         isOpen={isOpen}
         placement="left"

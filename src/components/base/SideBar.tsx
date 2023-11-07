@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Flex,
@@ -6,35 +6,47 @@ import {
   CloseButton,
   useColorModeValue,
   Icon,
+  Button,
+  Collapse,
 } from "@chakra-ui/react";
-import { IconType } from "react-icons";
-import { Link as RouterLink } from "react-router-dom";
-import { FiCalendar, FiFileText, FiUsers } from "react-icons/fi";
+import {
+  FiCalendar,
+  FiFileText,
+  FiUsers,
+  FiChevronDown,
+  FiChevronUp,
+} from "react-icons/fi";
+import NavItem from "./NavItem";
 
-interface SidebarProps {
-  onClose: () => void;
-  isOpen: boolean;
-}
+const SidebarContent = () => {
+  const [showPessoas, setShowPessoas] = useState(false);
+  const [showServicos, setShowServicos] = useState(false);
 
-interface LinkItemProps {
-  name?: string;
-  icon: IconType;
-  to: string;
-  isExpandable?: boolean;
-  children?: React.ReactNode;
-}
-
-const LinkItems: Array<LinkItemProps> = [
-  { name: "Calendário", icon: FiCalendar, to: "/" },
-  { name: "Pessoas", icon: FiUsers, to: "/pessoas" },
-  { name: "Serviços", icon: FiFileText, to: "/servico" },
-];
-
-const NavItem = ({ icon, children, to, isExpandable }: LinkItemProps) => {
   return (
-    <RouterLink to={to} style={{ textDecoration: "none" }}>
-      <Flex
-        align="center"
+    <Box
+      transition="3s ease"
+      bg={useColorModeValue("white", "gray.900")}
+      borderRight="1px"
+      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      w={{ base: "full", md: 60 }}
+      pos="fixed"
+      h="full"
+    >
+      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
+        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+          Logo
+        </Text>
+        <CloseButton display={{ base: "flex", md: "none" }} />
+      </Flex>
+
+      <NavItem icon={FiCalendar} to="/">
+        Calendário
+      </NavItem>
+
+      <Button
+        onClick={() => setShowPessoas(!showPessoas)}
+        bg={"#fff"}
+        mt="1rem"
         p="4"
         mx="4"
         borderRadius="lg"
@@ -45,45 +57,50 @@ const NavItem = ({ icon, children, to, isExpandable }: LinkItemProps) => {
           color: "white",
         }}
       >
-        {icon && (
+        <Flex align="center">
+          <Icon as={FiUsers} />
+          Adm.Pessoas
           <Icon
-            mr="4"
+            ml="4"
             fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
+            as={showPessoas ? FiChevronUp : FiChevronDown}
           />
-        )}
-        {children}
-      </Flex>
-    </RouterLink>
-  );
-};
-
-const SidebarContent = ({ onClose, isOpen }: SidebarProps) => {
-  return (
-    <Box
-      transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
-      pos="fixed"
-      h="full"
-      display={isOpen ? "block" : ["none", null, "block"]}
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
-      </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} to={link.to}>
-          {link.name}
+        </Flex>
+      </Button>
+      <Collapse in={showPessoas}>
+        <NavItem icon={FiUsers} to="/pessoas">
+          Pessoas
         </NavItem>
-      ))}
+      </Collapse>
+      <Button
+        onClick={() => setShowServicos(!showServicos)}
+        bg={"#fff"}
+        mt="1rem"
+        p="4"
+        mx="4"
+        borderRadius="lg"
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: "#2C3E50",
+          color: "white",
+        }}
+      >
+        <Flex align="center">
+          <Icon as={FiFileText} />
+          Adm.Serviços
+          <Icon
+            ml="4"
+            fontSize="16"
+            as={showServicos ? FiChevronUp : FiChevronDown}
+          />
+        </Flex>
+      </Button>
+      <Collapse in={showServicos}>
+        <NavItem icon={FiFileText} to="/servico">
+          Serviços
+        </NavItem>
+      </Collapse>
     </Box>
   );
 };

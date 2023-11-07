@@ -61,6 +61,10 @@ const ListagemPessoa = () => {
     itemsPerPage,
     data
   );
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
 
   const renderItems = () => {
     return currentItems.map((item) => (
@@ -107,7 +111,7 @@ const ListagemPessoa = () => {
         <Input
           placeholder={`Pesquisar por ${searchType}`}
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearchTermChange}
         />
 
         <Button
