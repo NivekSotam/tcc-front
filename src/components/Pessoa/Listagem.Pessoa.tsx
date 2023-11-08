@@ -23,7 +23,6 @@ import ListPagination from "../ListPagination";
 import SuccessAlert from "../error/SuccessAlert";
 import { paginateData } from "../../helpers/paginate-help";
 import DeleteModal from "./DeleteModal";
-import EditModal from "./EditModal";
 import NewPersonModal from "./CreateModal";
 
 const ListagemPessoa = () => {
@@ -36,9 +35,7 @@ const ListagemPessoa = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [personToDelete, setPersonToDelete] = useState<string | null>(null);
-  const [personToEdit, setPersonToEdit] = useState<Pessoa | null>(null);
 
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
@@ -82,15 +79,15 @@ const ListagemPessoa = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleEditButtonClick = (person: Pessoa) => {
-    setPersonToEdit(person);
-    setIsEditModalOpen(true);
+  const handleDeleteModalClose = () => {
+    setPersonToDelete(null);
+    setIsDeleteModalOpen(false);
   };
 
-  const handleEditSuccess = () => {
-    fetchDataFromApi();
+  const handleDeleteSuccess = () => {
     setIsSuccessAlertOpen(true);
-    setIsEditModalOpen(false);
+    fetchDataFromApi();
+    handleDeleteModalClose();
   };
 
   const renderItems = () => {
@@ -102,11 +99,7 @@ const ListagemPessoa = () => {
         <Th>{item.telefone}</Th>
         <Th>{item.cadastro}</Th>
         <Th>
-          <Button
-            colorScheme="blue"
-            mr={2}
-            onClick={() => handleEditButtonClick(item)}
-          >
+          <Button colorScheme="blue" mr={2}>
             <FaEdit />
           </Button>
           <Button
@@ -163,18 +156,9 @@ const ListagemPessoa = () => {
         />
         <DeleteModal
           isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
+          onClose={handleDeleteModalClose}
           personId={personToDelete}
-          onDeleteSuccess={() => {
-            setIsDeleteModalOpen(false);
-            setPersonToDelete(null);
-          }}
-        />
-        <EditModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          person={personToEdit}
-          onSuccess={handleEditSuccess}
+          onDeleteSuccess={handleDeleteSuccess}
         />
         <SuccessAlert
           isOpen={isSuccessAlertOpen}
