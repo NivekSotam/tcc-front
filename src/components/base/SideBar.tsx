@@ -43,6 +43,11 @@ const SidebarContent = () => {
         Calendário
       </NavItem>
 
+
+      <NavItem icon={FiFileText} to="/vendas">
+        Vendas
+      </NavItem>
+
       <Button
         onClick={() => setShowPessoas(!showPessoas)}
         bg={"#fff"}

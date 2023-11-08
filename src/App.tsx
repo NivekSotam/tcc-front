@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import LoginPage from "./pages/Login.page";
 import Pessoas from "./pages/Pessoas";
 import Servico from "./pages/Servico";
+import Vendas from "./pages/Vendas";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -33,6 +34,14 @@ export const App = () => (
           element={
             <PrivateRoute>
               <Servico />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/vendas"
+          element={
+            <PrivateRoute>
+              <Vendas />
             </PrivateRoute>
           }
         />
