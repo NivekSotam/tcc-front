@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// ListagemPessoa.tsx
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Box,
   Text,
@@ -19,9 +20,11 @@ import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus } from "react-icons/fa";
 import { fetchData } from "./helpers/api";
 import { Pessoa } from "../../Types/Pessoa";
 import ListPagination from "../ListPagination";
-import NewPersonModal from "./create.Pessoa";
 import SuccessAlert from "../error/SuccessAlert";
 import { paginateData } from "../../helpers/paginate-help";
+import DeleteModal from "./DeleteModal";
+import EditModal from "./EditModal";
+import NewPersonModal from "./CreateModal";
 
 const ListagemPessoa = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -32,6 +35,10 @@ const ListagemPessoa = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [personToDelete, setPersonToDelete] = useState<string | null>(null);
+  const [personToEdit, setPersonToEdit] = useState<Pessoa | null>(null);
 
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
@@ -41,29 +48,49 @@ const ListagemPessoa = () => {
     );
   };
 
-  useEffect(() => {
-    const userToken = localStorage.getItem("USER_TOKEN");
-
-    const fetchDataFromApi = async () => {
-      try {
-        const response = await fetchData(searchType, searchTerm, userToken);
-        setData(response.result);
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-      }
-    };
-
-    fetchDataFromApi();
+  const fetchDataFromApi = useCallback(async () => {
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      const response = await fetchData(searchType, searchTerm, userToken);
+      setData(response.result);
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    }
   }, [searchType, searchTerm]);
+
+  useEffect(() => {
+    fetchDataFromApi();
+  }, [fetchDataFromApi]);
 
   const { currentItems, totalPages } = paginateData<Pessoa>(
     currentPage,
     itemsPerPage,
     data
   );
+
   const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setCurrentPage(1);
+  };
+
+  const handleCreatePersonSuccess = () => {
+    fetchDataFromApi();
+  };
+
+  const handleDeleteButtonClick = (personId: string) => {
+    setPersonToDelete(personId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleEditButtonClick = (person: Pessoa) => {
+    setPersonToEdit(person);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditSuccess = () => {
+    fetchDataFromApi();
+    setIsSuccessAlertOpen(true);
+    setIsEditModalOpen(false);
   };
 
   const renderItems = () => {
@@ -75,10 +102,17 @@ const ListagemPessoa = () => {
         <Th>{item.telefone}</Th>
         <Th>{item.cadastro}</Th>
         <Th>
-          <Button colorScheme="blue" mr={2}>
+          <Button
+            colorScheme="blue"
+            mr={2}
+            onClick={() => handleEditButtonClick(item)}
+          >
             <FaEdit />
           </Button>
-          <Button colorScheme="red">
+          <Button
+            colorScheme="red"
+            onClick={() => handleDeleteButtonClick(String(item.id))}
+          >
             <FaTrashAlt />
           </Button>
         </Th>
@@ -125,7 +159,22 @@ const ListagemPessoa = () => {
         <NewPersonModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          onSuccess={() => setIsSuccessAlertOpen(true)}
+          onSuccess={handleCreatePersonSuccess}
+        />
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          personId={personToDelete}
+          onDeleteSuccess={() => {
+            setIsDeleteModalOpen(false);
+            setPersonToDelete(null);
+          }}
+        />
+        <EditModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          person={personToEdit}
+          onSuccess={handleEditSuccess}
         />
         <SuccessAlert
           isOpen={isSuccessAlertOpen}
