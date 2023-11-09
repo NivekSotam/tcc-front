@@ -24,6 +24,7 @@ import SuccessAlert from "../error/SuccessAlert";
 import { paginateData } from "../../helpers/paginate-help";
 import DeleteModal from "./DeleteModal";
 import NewPersonModal from "./CreateModal";
+import EditModal from "./EditModal";
 
 const ListagemPessoa = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -32,10 +33,16 @@ const ListagemPessoa = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [buttonText, setButtonText] = useState("Buscar");
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [personToDelete, setPersonToDelete] = useState<string | null>(null);
+  const [personToEdit, setPersonToEdit] = useState<string | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
 
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
@@ -71,7 +78,9 @@ const ListagemPessoa = () => {
   };
 
   const handleCreatePersonSuccess = () => {
+    setIsCreateSuccessAlertOpen(true);
     fetchDataFromApi();
+    setIsModalOpen(false);
   };
 
   const handleDeleteButtonClick = (personId: string) => {
@@ -85,9 +94,25 @@ const ListagemPessoa = () => {
   };
 
   const handleDeleteSuccess = () => {
-    setIsSuccessAlertOpen(true);
+    setIsDeleteSuccessAlertOpen(true);
     fetchDataFromApi();
-    handleDeleteModalClose();
+    setIsDeleteModalOpen(false); // Fechar o modal de exclusão após o sucesso
+  };
+
+  const handleEditButtonClick = (personId: string) => {
+    setPersonToEdit(personId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setPersonToEdit(null);
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsEditModalOpen(false); // Fechar o modal de edição após o sucesso
   };
 
   const renderItems = () => {
@@ -99,7 +124,11 @@ const ListagemPessoa = () => {
         <Th>{item.telefone}</Th>
         <Th>{item.cadastro}</Th>
         <Th>
-          <Button colorScheme="blue" mr={2}>
+          <Button
+            colorScheme="blue"
+            mr={2}
+            onClick={() => handleEditButtonClick(String(item.id))}
+          >
             <FaEdit />
           </Button>
           <Button
@@ -160,11 +189,31 @@ const ListagemPessoa = () => {
           personId={personToDelete}
           onDeleteSuccess={handleDeleteSuccess}
         />
+        <EditModal
+          isOpen={isEditModalOpen}
+          onClose={handleEditModalClose}
+          personId={personToEdit}
+          onEditSuccess={handleEditSuccess}
+        />
         <SuccessAlert
-          isOpen={isSuccessAlertOpen}
-          onClose={() => setIsSuccessAlertOpen(false)}
+          isOpen={isCreateSuccessAlertOpen}
+          onClose={() => setIsCreateSuccessAlertOpen(false)}
           alertTitle="Usuário criado com sucesso"
           alertDescription="A nova pessoa foi adicionada com sucesso."
+        />
+
+        <SuccessAlert
+          isOpen={isEditSuccessAlertOpen}
+          onClose={() => setIsEditSuccessAlertOpen(false)}
+          alertTitle="Usuário editado com sucesso"
+          alertDescription="Os detalhes da pessoa foram atualizados com sucesso."
+        />
+
+        <SuccessAlert
+          isOpen={isDeleteSuccessAlertOpen}
+          onClose={() => setIsDeleteSuccessAlertOpen(false)}
+          alertTitle="Usuário excluído com sucesso"
+          alertDescription="A pessoa foi excluída com sucesso."
         />
       </Flex>
 

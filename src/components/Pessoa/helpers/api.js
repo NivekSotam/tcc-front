@@ -42,9 +42,9 @@ export const deletePerson = async (personId, userToken) => {
   }
 };
 
-export const editPerson = async (personData, userToken) => {
+export const editPerson = async ({ personId, updatedPersonData, userToken }) => {
   try {
-    const response = await axios.put(`/pessoa/${personData.id}`, personData, {
+    const response = await axios.put(`/pessoa/${personId}`, updatedPersonData, {
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -55,3 +55,19 @@ export const editPerson = async (personData, userToken) => {
     throw error;
   }
 };
+
+
+export const getPersonById = async (personId, userToken) => {
+  try {
+    const response = await axios.get(`/pessoa/${personId}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar pessoa por ID:", error);
+    throw error;
+  }
+};
+

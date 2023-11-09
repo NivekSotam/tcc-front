@@ -1,41 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getPersonById, editPerson } from "./helpers/api";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
+  Box,
   Button,
   FormControl,
   Input,
-  Box,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
 import { Pessoa } from "../../Types/Pessoa";
-import { editPerson } from "./helpers/api";
 
 interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  person: Pessoa | null;
-  onSuccess: () => void;
+  personId: string | null;
+  onEditSuccess: () => void;
 }
 
 const EditModal: React.FC<EditModalProps> = ({
   isOpen,
   onClose,
-  person,
-  onSuccess,
+  personId,
+  onEditSuccess,
 }) => {
-  const [editedPerson, setEditedPerson] = useState<Pessoa | null>(person);
+  const [editedPerson, setEditedPerson] = useState<Pessoa | null>(null);
+
+  useEffect(() => {
+    const fetchPersonDetails = async () => {
+      if (personId) {
+        try {
+          const userToken = localStorage.getItem("USER_TOKEN");
+          const response = await getPersonById(personId, userToken);
+          setEditedPerson(response.data.pessoa[0]);
+        } catch (error) {
+          console.error("Erro ao buscar detalhes da pessoa:", error);
+        }
+      }
+    };
+
+    fetchPersonDetails();
+  }, [isOpen, personId]);
 
   const handleEditPerson = async () => {
     if (editedPerson) {
       try {
         const userToken = localStorage.getItem("USER_TOKEN");
-        await editPerson(editedPerson, userToken);
-        onSuccess();
+        console.log("Dados a serem enviados:", editedPerson);
+        await editPerson({
+          personId,
+          updatedPersonData: editedPerson,
+          userToken,
+        });
+        onEditSuccess();
         onClose();
       } catch (error) {
         console.error("Erro ao editar pessoa:", error);
