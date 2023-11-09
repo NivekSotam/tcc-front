@@ -11,6 +11,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { deletePerson } from "./helpers/api";
+import ErrorAlert from "../error/ErrorAlert";
 
 interface DeleteModalProps {
   isOpen: boolean;
@@ -25,6 +26,8 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
   personId,
   onDeleteSuccess,
 }) => {
+  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
+
   const handleDeletePerson = async () => {
     if (personId) {
       try {
@@ -34,6 +37,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         onClose();
       } catch (error) {
         console.error("Erro ao excluir pessoa:", error);
+        setIsErrorAlertOpen(true);
       }
     }
   };
@@ -54,6 +58,12 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
           </Button>
         </ModalFooter>
       </ModalContent>
+      <ErrorAlert
+        isOpen={isErrorAlertOpen}
+        onClose={() => setIsErrorAlertOpen(false)}
+        alertTitle="Não foi possível fazer completar a operação."
+        alertDescription="Reveja as permissões necessárias ou verifique os dados."
+      />
     </Modal>
   );
 };

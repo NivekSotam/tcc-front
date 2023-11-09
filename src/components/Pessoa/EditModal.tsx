@@ -14,6 +14,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import { Pessoa } from "../../Types/Pessoa";
+import ErrorAlert from "../error/ErrorAlert";
 
 interface EditModalProps {
   isOpen: boolean;
@@ -29,6 +30,7 @@ const EditModal: React.FC<EditModalProps> = ({
   onEditSuccess,
 }) => {
   const [editedPerson, setEditedPerson] = useState<Pessoa | null>(null);
+  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
   useEffect(() => {
     const fetchPersonDetails = async () => {
@@ -60,6 +62,7 @@ const EditModal: React.FC<EditModalProps> = ({
         onClose();
       } catch (error) {
         console.error("Erro ao editar pessoa:", error);
+        setIsErrorAlertOpen(true);
       }
     }
   };
@@ -127,6 +130,12 @@ const EditModal: React.FC<EditModalProps> = ({
           </Button>
         </ModalFooter>
       </ModalContent>
+      <ErrorAlert
+        isOpen={isErrorAlertOpen}
+        onClose={() => setIsErrorAlertOpen(false)}
+        alertTitle="Não foi possível completar a operação."
+        alertDescription="Reveja as permissões necessárias ou verifique os dados."
+      />
     </Modal>
   );
 };
