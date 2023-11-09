@@ -48,6 +48,10 @@ const SidebarContent = () => {
         Vendas
       </NavItem>
 
+      <NavItem icon={FiFileText} to="/compras">
+        Compras
+      </NavItem>
+
       <Button
         onClick={() => setShowPessoas(!showPessoas)}
         bg={"#fff"}

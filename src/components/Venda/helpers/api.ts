@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Venda } from "../../../Types/Venda";
 
 type SearchVenda = {
     colaboradorId?: number,
@@ -20,7 +19,7 @@ export const fetchVendaData = async ({
         currentPage,
         userToken
     }: SearchVenda) => {
-        const url = `/venda?colaboradorId=${colaboradorId}&clienteFornecedorId=${clienteFornecedorId}&dataInicio=${dataInicio}&dataFim=${dataFim}&limit=${itemsPerPage}&page=${currentPage}`;
+        const url = `/venda/?colaboradorId=${colaboradorId}&clienteFornecedorId=${clienteFornecedorId}&dataInicio=${dataInicio}&dataFim=${dataFim}&limit=${itemsPerPage}&page=${currentPage}`;
     try {
       const response = await axios.get(url, {
         headers: {
