@@ -21,7 +21,7 @@ import NavItem from "./NavItem";
 const SidebarContent = () => {
   const [showPessoas, setShowPessoas] = useState(false);
   const [showServicos, setShowServicos] = useState(false);
-
+  const [showItens, setShowItens] = useState(false);
   return (
     <Box
       transition="3s ease"
@@ -43,6 +43,39 @@ const SidebarContent = () => {
         Calendário
       </NavItem>
 
+
+      <Button
+        onClick={() => setShowItens(!showItens)}
+        bg={"#fff"}
+        mt="1rem"
+        p="4"
+        mx="4"
+        borderRadius="lg"
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: "#2C3E50",
+          color: "white",
+        }}
+      >
+        <Flex align="center">
+          <Icon as={FiFileText} />
+          Itens
+          <Icon
+            ml="4"
+            fontSize="16"
+            as={showItens ? FiChevronUp : FiChevronDown}
+          />
+        </Flex>
+      </Button>
+      <Collapse in={showItens}>
+        <NavItem icon={FiFileText} to="/itens">
+          Todos os Itens
+        </NavItem>
+        <NavItem icon={FiFileText} to="/categorias">
+          Categorias
+        </NavItem>
+      </Collapse>
 
       <NavItem icon={FiFileText} to="/vendas">
         Vendas

@@ -83,45 +83,45 @@ const EditModal: React.FC<EditModalProps> = ({
         <ModalCloseButton />
         <ModalBody>
           <FormControl mb={4}>
-            <Box mb={2}>Nome</Box>
+            <Box mb={2}>Novo Nome</Box>
             <Input
-              placeholder="Nome"
+              placeholder="Novo Nome"
               name="nome"
               value={nome}
               onChange={(e) => setNome(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
-            <Box mb={2}>Email</Box>
+            <Box mb={2}>Novo Email</Box>
             <Input
-              placeholder="Email"
+              placeholder="Novo Email"
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
-            <Box mb={2}>Telefone</Box>
+            <Box mb={2}>Novo Telefone</Box>
             <Input
-              placeholder="Telefone"
+              placeholder="Novo Telefone"
               name="telefone"
               value={telefone}
               onChange={(e) => setTelefone(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
-            <Box mb={2}>Cadastro</Box>
+            <Box mb={2}>Novo Cadastro</Box>
             <Input
-              placeholder="Cadastro"
+              placeholder="Novo Cadastro"
               name="cadastro"
               value={cadastro}
               onChange={(e) => setCadastro(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
-            <Box mb={2}>Registro</Box>
+            <Box mb={2}>Novo Registro</Box>
             <Input
-              placeholder="Registro"
+              placeholder="Novo Registro"
               name="registro"
               value={registro}
               onChange={(e) => setRegistro(e.target.value)}
