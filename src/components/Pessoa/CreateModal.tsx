@@ -60,7 +60,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
       await createPerson(
         { ...newPersonData, cadastro: cleanedCadastro },
         userToken
-      );
+        );
       onSuccess();
       setIsSuccessAlertOpen(true);
       onClose();

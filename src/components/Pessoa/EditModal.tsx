@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getPersonById, editPerson } from "./helpers/api";
+import { getPersonById, editPerson, UpdatePerson } from "./helpers/api";
 import {
   Box,
   Button,
@@ -29,7 +29,12 @@ const EditModal: React.FC<EditModalProps> = ({
   personId,
   onEditSuccess,
 }) => {
-  const [editedPerson, setEditedPerson] = useState<Pessoa | null>(null);
+  const [nome, setNome] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [telefone, setTelefone] = useState<string>("")
+  const [cadastro, setCadastro] = useState<string>("");
+  const [registro, setRegistro] = useState<string>("");
+  const [personToUpdate, setPersonToUpdate] = useState<Pessoa | null>(null);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
   useEffect(() => {
@@ -37,8 +42,8 @@ const EditModal: React.FC<EditModalProps> = ({
       if (personId) {
         try {
           const userToken = localStorage.getItem("USER_TOKEN");
-          const response = await getPersonById(personId, userToken);
-          setEditedPerson(response.data.pessoa[0]);
+          const response = await getPersonById({personId, userToken});
+          setPersonToUpdate(response.data.pessoa[0]);
         } catch (error) {
           console.error("Erro ao buscar detalhes da pessoa:", error);
         }
@@ -49,14 +54,18 @@ const EditModal: React.FC<EditModalProps> = ({
   }, [isOpen, personId]);
 
   const handleEditPerson = async () => {
-    if (editedPerson) {
       try {
         const userToken = localStorage.getItem("USER_TOKEN");
-        console.log("Dados a serem enviados:", editedPerson);
         await editPerson({
           personId,
-          updatedPersonData: editedPerson,
           userToken,
+          updatedPersonData: {
+            nome,
+            email,
+            telefone,
+            cadastro,
+            registro,
+          }
         });
         onEditSuccess();
         onClose();
@@ -64,17 +73,6 @@ const EditModal: React.FC<EditModalProps> = ({
         console.error("Erro ao editar pessoa:", error);
         setIsErrorAlertOpen(true);
       }
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (editedPerson) {
-      setEditedPerson({
-        ...editedPerson,
-        [name]: value,
-      });
-    }
   };
 
   return (
@@ -89,8 +87,8 @@ const EditModal: React.FC<EditModalProps> = ({
             <Input
               placeholder="Nome"
               name="nome"
-              value={editedPerson?.nome || ""}
-              onChange={handleInputChange}
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
@@ -98,8 +96,8 @@ const EditModal: React.FC<EditModalProps> = ({
             <Input
               placeholder="Email"
               name="email"
-              value={editedPerson?.email || ""}
-              onChange={handleInputChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
@@ -107,8 +105,8 @@ const EditModal: React.FC<EditModalProps> = ({
             <Input
               placeholder="Telefone"
               name="telefone"
-              value={editedPerson?.telefone || ""}
-              onChange={handleInputChange}
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
@@ -116,8 +114,17 @@ const EditModal: React.FC<EditModalProps> = ({
             <Input
               placeholder="Cadastro"
               name="cadastro"
-              value={editedPerson?.cadastro || ""}
-              onChange={handleInputChange}
+              value={cadastro}
+              onChange={(e) => setCadastro(e.target.value)}
+            />
+          </FormControl>
+          <FormControl mb={4}>
+            <Box mb={2}>Registro</Box>
+            <Input
+              placeholder="Registro"
+              name="registro"
+              value={registro}
+              onChange={(e) => setRegistro(e.target.value)}
             />
           </FormControl>
         </ModalBody>

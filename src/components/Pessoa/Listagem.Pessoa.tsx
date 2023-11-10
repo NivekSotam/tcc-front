@@ -55,7 +55,7 @@ const ListagemPessoa = () => {
   const fetchDataFromApi = useCallback(async () => {
     try {
       const userToken = localStorage.getItem("USER_TOKEN");
-      const response = await fetchData(searchType, searchTerm, userToken);
+      const response = await fetchData({searchType, searchTerm, userToken});
       setData(response.result);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
