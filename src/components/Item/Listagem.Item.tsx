@@ -25,6 +25,8 @@ import {
 import { fetchItemData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
+import NewItemModal from "./Create.Item";
+import SuccessAlert from "../error/SuccessAlert";
 
 const ListagemItem = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -79,6 +81,12 @@ const ListagemItem = () => {
     itemsPerPage,
     data
   );
+
+  const handleCreateModalSuccess = () => {
+    setIsCreateSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsModalOpen(false);
+  };
 
   const renderItems = () => {
     return currentItems.map((item) => (
@@ -136,6 +144,17 @@ const ListagemItem = () => {
         >
           Criar
         </Button>
+        <NewItemModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSuccess={handleCreateModalSuccess}
+        />
+        <SuccessAlert
+          isOpen={isCreateSuccessAlertOpen}
+          onClose={() => setIsCreateSuccessAlertOpen(false)}
+          alertTitle="Item vriado com sucesso"
+          alertDescription="Os detalhes do Item foram atualizados com sucesso."
+        />
       </Flex>
 
       {currentItems.length > 0 ? (

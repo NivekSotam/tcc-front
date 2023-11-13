@@ -25,3 +25,26 @@ export const fetchItemData = async ({
       throw error;
     }
 };
+
+type CreateItem = {
+    data: any;
+    userToken: any;
+}
+
+export const createItem = async ({
+    data,
+    userToken
+}: CreateItem) => {
+    const url = `/item/`;
+    try {
+      const response = await axios.post(url, data, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      throw error;
+    }
+}
