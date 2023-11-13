@@ -48,3 +48,25 @@ export const createItem = async ({
       throw error;
     }
 }
+
+type DeleteItem = {
+    itemId: number;
+    userToken: any;
+}
+
+export const deleteItem = async ({
+    itemId,
+    userToken
+}: DeleteItem) => {
+    try {
+        const response = await axios.delete(`/item/${itemId}`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        return response.data;
+      } catch (error) {
+        console.error("Erro ao excluir item:", error);
+        throw error;
+      }
+}

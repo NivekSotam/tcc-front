@@ -27,6 +27,7 @@ import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
 import NewItemModal from "./Create.Item";
 import SuccessAlert from "../error/SuccessAlert";
+import DeleteModal from "./Delete.Item";
 
 const ListagemItem = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -88,6 +89,22 @@ const ListagemItem = () => {
     setIsModalOpen(false);
   };
 
+  const handleDeleteButtonClick = (itemId: number) => {
+    setitemToDelete(itemId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteModalClose = () => {
+    setitemToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsDeleteModalOpen(false);
+  };
+
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
@@ -105,7 +122,7 @@ const ListagemItem = () => {
           </Button>
           <Button
             colorScheme="red"
-            //onClick={() => handleDeleteButtonClick(Number(item.id))}
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
@@ -154,6 +171,18 @@ const ListagemItem = () => {
           onClose={() => setIsCreateSuccessAlertOpen(false)}
           alertTitle="Item vriado com sucesso"
           alertDescription="Os detalhes do Item foram atualizados com sucesso."
+        />
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={handleDeleteModalClose}
+          itemId={itemToDelete}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
+        <SuccessAlert
+          isOpen={isDeleteSuccessAlertOpen}
+          onClose={() => setIsDeleteSuccessAlertOpen(false)}
+          alertTitle="Item excluído com sucesso"
+          alertDescription="O item foi excluído com sucesso."
         />
       </Flex>
 

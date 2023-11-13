@@ -10,33 +10,33 @@ import {
   ModalCloseButton,
   Button,
 } from "@chakra-ui/react";
-import { deleteCategoria } from "./helpers/api";
+import { deleteItem } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
 
 interface DeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
-  categoriaId: number | null;
+  itemId: number | null;
   onDeleteSuccess: () => void;
 }
 
 const DeleteModal: React.FC<DeleteModalProps> = ({
   isOpen,
   onClose,
-  categoriaId,
+  itemId,
   onDeleteSuccess,
 }) => {
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
-  const handleDeleteCategoria = async () => {
-    if (categoriaId) {
+  const handleDeleteItem = async () => {
+    if (itemId) {
       try {
         const userToken = localStorage.getItem("USER_TOKEN");
-        await deleteCategoria({categoriaId, userToken});
+        await deleteItem({itemId, userToken});
         onDeleteSuccess();
         onClose();
       } catch (error) {
-        console.error("Erro ao excluir categoria:", error);
+        console.error("Erro ao excluir item:", error);
         setIsErrorAlertOpen(true);
       }
     }
@@ -48,9 +48,9 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       <ModalContent>
         <ModalHeader>Confirmação de Exclusão</ModalHeader>
         <ModalCloseButton />
-        <ModalBody>Tem certeza que deseja excluir esta categoria?</ModalBody>
+        <ModalBody>Tem certeza que deseja excluir este item?</ModalBody>
         <ModalFooter>
-          <Button colorScheme="red" mr={3} onClick={handleDeleteCategoria}>
+          <Button colorScheme="red" mr={3} onClick={handleDeleteItem}>
             Confirmar
           </Button>
           <Button variant="ghost" onClick={onClose}>
