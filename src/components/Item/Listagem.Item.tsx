@@ -20,7 +20,6 @@ import {
   FaTrashAlt,
   FaAngleDown,
   FaPlus,
-  FaSort,
 } from "react-icons/fa";
 import { fetchItemData } from "./helpers/api";
 import ListPagination from "../ListPagination";
@@ -28,6 +27,7 @@ import { paginateData } from "../../helpers/paginate-help";
 import NewItemModal from "./Create.Item";
 import SuccessAlert from "../error/SuccessAlert";
 import DeleteModal from "./Delete.Item";
+import EditModal from "./Edit.item";
 
 const ListagemItem = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -105,6 +105,22 @@ const ListagemItem = () => {
     setIsDeleteModalOpen(false);
   };
 
+  const handleEditButtonClick = (itemId: number) => {
+    setItemToEdit(itemId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setItemToEdit(null);
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsEditModalOpen(false); // Fechar o modal de edição após o sucesso
+  };
+
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
@@ -116,7 +132,7 @@ const ListagemItem = () => {
           <Button
             colorScheme="blue"
             mr={2}
-            //onClick={() => handleEditButtonClick(Number(item.id))}
+            onClick={() => handleEditButtonClick(Number(item.id))}
           >
             <FaEdit />
           </Button>
@@ -171,6 +187,18 @@ const ListagemItem = () => {
           onClose={() => setIsCreateSuccessAlertOpen(false)}
           alertTitle="Item vriado com sucesso"
           alertDescription="Os detalhes do Item foram atualizados com sucesso."
+        />
+        <EditModal
+          isOpen={isEditModalOpen}
+          onClose={handleEditModalClose}
+          itemId={itemToEdit}
+          onEditSuccess={handleEditSuccess}
+        />
+        <SuccessAlert
+          isOpen={isEditSuccessAlertOpen}
+          onClose={() => setIsEditSuccessAlertOpen(false)}
+          alertTitle="Categoria editada com sucesso"
+          alertDescription="Os detalhes da categoria foram atualizados com sucesso."
         />
         <DeleteModal
           isOpen={isDeleteModalOpen}

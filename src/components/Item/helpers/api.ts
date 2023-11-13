@@ -58,8 +58,9 @@ export const deleteItem = async ({
     itemId,
     userToken
 }: DeleteItem) => {
+    const url = `/item/${itemId}`;
     try {
-        const response = await axios.delete(`/item/${itemId}`, {
+        const response = await axios.delete(url, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -69,4 +70,29 @@ export const deleteItem = async ({
         console.error("Erro ao excluir item:", error);
         throw error;
       }
+}
+
+type UpdateItem = {
+    data: any;
+    userToken: any;
+    itemId: number | null;
+}
+
+export const editItem = async ({
+    itemId,
+    data,
+    userToken
+}: UpdateItem) => {
+        const url = `/item/${itemId}`;
+    try {
+        const response = await axios.put(url, data, {
+            headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir item:", error);
+        throw error;
+    }
 }
