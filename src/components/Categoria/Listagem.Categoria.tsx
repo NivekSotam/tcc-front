@@ -27,19 +27,24 @@ import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
 import NewCategoriaModal from "./Create.Categoria";
 import SuccessAlert from "../error/SuccessAlert";
+import DeleteModal from "./Delete.Categoria";
 
 const ListagemCategoria = () => {
   const [searchType, setSearchType] = useState("nome");
   const [searchTerm, setSearchTerm] = useState("");
 
   const [nome, setNome] = useState("");
+  const [categoriaToDelete, setCategoriaToDelete] = useState<number | null>(null);
 
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
     setSearchTerm("");
@@ -83,6 +88,22 @@ const ListagemCategoria = () => {
     setIsModalOpen(false);
   };
 
+  const handleDeleteButtonClick = (categoriaId: number) => {
+    setCategoriaToDelete(categoriaId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteModalClose = () => {
+    setCategoriaToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsDeleteModalOpen(false);
+  };
+
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
@@ -92,7 +113,9 @@ const ListagemCategoria = () => {
           <Button colorScheme="blue" mr={2}>
             <FaEdit />
           </Button>
-          <Button colorScheme="red">
+          <Button
+            colorScheme="red"
+            onClick={() => handleDeleteButtonClick(Number(item.id))}>
             <FaTrashAlt />
           </Button>
         </Th>
@@ -140,6 +163,12 @@ const ListagemCategoria = () => {
           onClose={() => setIsCreateSuccessAlertOpen(false)}
           alertTitle="Categoria criada com sucesso"
           alertDescription="A nova categoria foi adicionada com sucesso."
+        />
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={handleDeleteModalClose}
+          categoriaId={categoriaToDelete}
+          onDeleteSuccess={handleDeleteSuccess}
         />
       </Flex>
 

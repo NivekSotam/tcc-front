@@ -47,3 +47,22 @@ export const createCategoria = async ({
       throw error;
     }
 };
+
+type DelteCategoria = {
+  categoriaId: number | null;
+  userToken: any;
+}
+
+export const deleteCategoria = async ({categoriaId, userToken}: DelteCategoria) => {
+  try {
+    const response = await axios.delete(`/categoria/${categoriaId}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Erro ao excluir categoria:", error);
+    throw error;
+  }
+};
