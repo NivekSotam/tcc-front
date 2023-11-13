@@ -34,24 +34,7 @@ const EditModal: React.FC<EditModalProps> = ({
   const [telefone, setTelefone] = useState<string>("")
   const [cadastro, setCadastro] = useState<string>("");
   const [registro, setRegistro] = useState<string>("");
-  const [personToUpdate, setPersonToUpdate] = useState<Pessoa | null>(null);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchPersonDetails = async () => {
-      if (personId) {
-        try {
-          const userToken = localStorage.getItem("USER_TOKEN");
-          const response = await getPersonById({personId, userToken});
-          setPersonToUpdate(response.data.pessoa[0]);
-        } catch (error) {
-          console.error("Erro ao buscar detalhes da pessoa:", error);
-        }
-      }
-    };
-
-    fetchPersonDetails();
-  }, [isOpen, personId]);
 
   const handleEditPerson = async () => {
       try {

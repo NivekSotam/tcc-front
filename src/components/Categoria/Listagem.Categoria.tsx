@@ -28,6 +28,7 @@ import { paginateData } from "../../helpers/paginate-help";
 import NewCategoriaModal from "./Create.Categoria";
 import SuccessAlert from "../error/SuccessAlert";
 import DeleteModal from "./Delete.Categoria";
+import EditModal from "./Edit.Categoria";
 
 const ListagemCategoria = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -44,7 +45,9 @@ const ListagemCategoria = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
   const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
-
+  const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
+  const [categoriaToEdit, setCategoriaToEdit] = useState<number | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
     setSearchTerm("");
@@ -104,18 +107,40 @@ const ListagemCategoria = () => {
     setIsDeleteModalOpen(false);
   };
 
+  const handleEditButtonClick = (categoriaId: number) => {
+    setCategoriaToEdit(categoriaId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setCategoriaToEdit(null);
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsEditModalOpen(false); // Fechar o modal de edição após o sucesso
+  };
+
+
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
         <Th>{item.id}</Th>
         <Th>{item.nome}</Th>
         <Th>
-          <Button colorScheme="blue" mr={2}>
+          <Button
+            colorScheme="blue"
+            mr={2}
+            onClick={() => handleEditButtonClick(Number(item.id))}
+          >
             <FaEdit />
           </Button>
           <Button
             colorScheme="red"
-            onClick={() => handleDeleteButtonClick(Number(item.id))}>
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
+          >
             <FaTrashAlt />
           </Button>
         </Th>
@@ -164,11 +189,29 @@ const ListagemCategoria = () => {
           alertTitle="Categoria criada com sucesso"
           alertDescription="A nova categoria foi adicionada com sucesso."
         />
+        <EditModal
+          isOpen={isEditModalOpen}
+          onClose={handleEditModalClose}
+          categoriaId={categoriaToEdit}
+          onEditSuccess={handleEditSuccess}
+        />
+        <SuccessAlert
+          isOpen={isEditSuccessAlertOpen}
+          onClose={() => setIsEditSuccessAlertOpen(false)}
+          alertTitle="Categoria editada com sucesso"
+          alertDescription="Os detalhes da categoria foram atualizados com sucesso."
+        />
         <DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
           categoriaId={categoriaToDelete}
           onDeleteSuccess={handleDeleteSuccess}
+        />
+        <SuccessAlert
+          isOpen={isDeleteSuccessAlertOpen}
+          onClose={() => setIsDeleteSuccessAlertOpen(false)}
+          alertTitle="Categoria excluído com sucesso"
+          alertDescription="A categoria foi excluída com sucesso."
         />
       </Flex>
 
