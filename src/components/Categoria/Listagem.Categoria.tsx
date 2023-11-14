@@ -35,7 +35,9 @@ const ListagemCategoria = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [nome, setNome] = useState("");
-  const [categoriaToDelete, setCategoriaToDelete] = useState<number | null>(null);
+  const [categoriaToDelete, setCategoriaToDelete] = useState<number | null>(
+    null
+  );
 
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,8 +45,10 @@ const ListagemCategoria = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [categoriaToEdit, setCategoriaToEdit] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -67,12 +71,13 @@ const ListagemCategoria = () => {
         nome,
         userToken,
         currentPage,
-        itemsPerPage
-    });
+        itemsPerPage,
+      });
       setData(fetchedData);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-  }}, [nome, itemsPerPage, currentPage]);
+    }
+  }, [nome, itemsPerPage, currentPage]);
 
   useEffect(() => {
     fetchDataFromApi();
@@ -84,7 +89,6 @@ const ListagemCategoria = () => {
     data
   );
 
-  
   const handleCreateModalSuccess = () => {
     setIsCreateSuccessAlertOpen(true);
     fetchDataFromApi();
@@ -122,7 +126,6 @@ const ListagemCategoria = () => {
     fetchDataFromApi();
     setIsEditModalOpen(false); // Fechar o modal de edição após o sucesso
   };
-
 
   const renderItems = () => {
     return currentItems.map((item) => (
@@ -168,7 +171,7 @@ const ListagemCategoria = () => {
           placeholder={`Pesquisar por ${searchType}`}
           value={nome}
           onChange={handleSearchTermChange}
-        /> 
+        />
 
         <Button
           ml={5}

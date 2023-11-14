@@ -140,12 +140,12 @@ const LoginPage = () => {
           </form>
         </Box>
       </Stack>
-      <Box>
+      {/* <Box>
         Algum Problema?{" "}
         <Link color="#2C3E50" href="#">
           Clique Aqui
         </Link>
-      </Box>
+      </Box> */}
       <ErrorAlert
         isOpen={isOpen}
         onClose={onClose}

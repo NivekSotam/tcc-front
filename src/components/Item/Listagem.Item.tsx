@@ -15,12 +15,7 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import {
-  FaEdit,
-  FaTrashAlt,
-  FaAngleDown,
-  FaPlus,
-} from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus } from "react-icons/fa";
 import { fetchItemData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
@@ -43,8 +38,10 @@ const ListagemItem = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const handleMenuItemClick = (type: string) => {
@@ -66,12 +63,13 @@ const ListagemItem = () => {
         nome,
         userToken,
         currentPage,
-        itemsPerPage
-    });
+        itemsPerPage,
+      });
       setData(fetchedData);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-  }}, [nome, itemsPerPage, currentPage]);
+    }
+  }, [nome, itemsPerPage, currentPage]);
 
   useEffect(() => {
     fetchDataFromApi();
@@ -118,7 +116,7 @@ const ListagemItem = () => {
   const handleEditSuccess = () => {
     setIsEditSuccessAlertOpen(true);
     fetchDataFromApi();
-    setIsEditModalOpen(false); // Fechar o modal de edição após o sucesso
+    setIsEditModalOpen(false);
   };
 
   const renderItems = () => {
@@ -167,7 +165,7 @@ const ListagemItem = () => {
           placeholder={`Pesquisar por ${searchType}`}
           value={nome}
           onChange={handleSearchTermChange}
-        /> 
+        />
 
         <Button
           ml={5}
@@ -185,7 +183,7 @@ const ListagemItem = () => {
         <SuccessAlert
           isOpen={isCreateSuccessAlertOpen}
           onClose={() => setIsCreateSuccessAlertOpen(false)}
-          alertTitle="Item vriado com sucesso"
+          alertTitle="Item criado com sucesso"
           alertDescription="Os detalhes do Item foram atualizados com sucesso."
         />
         <EditModal

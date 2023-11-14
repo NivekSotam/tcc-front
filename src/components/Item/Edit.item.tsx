@@ -15,10 +15,11 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Text
+  Text,
+  Textarea,
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaTools } from "react-icons/fa";
 
 interface EditModalProps {
   isOpen: boolean;
@@ -40,36 +41,36 @@ const EditModal: React.FC<EditModalProps> = ({
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
   const handleEditItem = async () => {
-      try {
-        const userToken = localStorage.getItem("USER_TOKEN");
-        await editItem({
-          itemId,
-          userToken,
-          data: {
-            nome,
-            valor,
-            descricao,
-            quantidade
-          }
-        });
-        onEditSuccess();
-        onClose();
-      } catch (error) {
-        console.error("Erro ao editar pessoa:", error);
-        setIsErrorAlertOpen(true);
-      }
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      await editItem({
+        itemId,
+        userToken,
+        data: {
+          nome,
+          valor,
+          descricao,
+          quantidade,
+        },
+      });
+      onEditSuccess();
+      onClose();
+    } catch (error) {
+      console.error("Erro ao editar pessoa:", error);
+      setIsErrorAlertOpen(true);
+    }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Criar Nova Categoria</ModalHeader>
+        <ModalHeader>Editar Item</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
-                <Text>Nome:</Text>
+              <Text>Nome:</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaUser color="gray.300" />
@@ -78,53 +79,55 @@ const EditModal: React.FC<EditModalProps> = ({
                   placeholder="Nome"
                   name="nome"
                   value={nome}
-                  onChange={(e) =>
-                    setNome(e.target.value)
-                  }
+                  onChange={(e) => setNome(e.target.value)}
                 />
-            </InputGroup>
+              </InputGroup>
             </FormControl>
             <FormControl mb={3}>
-                <Text>Descrição:</Text>
+              <Text>Descrição:</Text>
               <InputGroup>
-                <Input
+                <Textarea
                   placeholder="Descrição"
                   name="descricao"
                   value={descricao}
-                  onChange={(e) =>
-                    setDescricao(e.target.value)
-                  }
+                  onChange={(e) => setDescricao(e.target.value)}
+                  h="120px"
                 />
-            </InputGroup>
+              </InputGroup>
             </FormControl>
             <FormControl mb={3}>
-                <Text>Valor:</Text>
+              <Text>Valor:</Text>
               <InputGroup>
+                <InputLeftElement
+                  pointerEvents="none"
+                  color="#2C3E50"
+                  fontSize="1.2em"
+                  children="$"
+                />
                 <Input
                   placeholder="Valor"
                   name="valor"
                   value={valor}
-                  onChange={(e) =>
-                    setValor(Number(e.target.value))
-                  }
+                  onChange={(e) => setValor(Number(e.target.value))}
                 />
-            </InputGroup>
+              </InputGroup>
             </FormControl>
             <FormControl mb={3}>
-            <Text>Quantidade:</Text>
+              <Text>Quantidade:</Text>
               <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <FaTools color="gray.300" />
+                </InputLeftElement>
                 <Input
                   placeholder="Quantidade"
                   name="quantidade"
                   value={quantidade}
-                  onChange={(e) =>
-                    setQuantidade(Number(e.target.value))
-                  }
+                  onChange={(e) => setQuantidade(Number(e.target.value))}
                 />
               </InputGroup>
             </FormControl>
             <Button colorScheme="blue" onClick={handleEditItem}>
-              Criar Item
+              Confirmar
             </Button>
           </Flex>
         </ModalBody>

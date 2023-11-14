@@ -12,6 +12,7 @@ import {
   FormControl,
   InputLeftElement,
   InputGroup,
+  Box,
 } from "@chakra-ui/react";
 import { FaUser, FaEnvelope, FaPhone, FaIdCard } from "react-icons/fa";
 import { createPerson } from "./helpers/api";
@@ -60,7 +61,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
       await createPerson(
         { ...newPersonData, cadastro: cleanedCadastro },
         userToken
-        );
+      );
       onSuccess();
       setIsSuccessAlertOpen(true);
       onClose();
@@ -79,6 +80,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
+              <Box mb={2}>Nome</Box>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaUser color="gray.300" />
@@ -94,6 +96,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Box mb={2}>Email</Box>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaEnvelope color="gray.300" />
@@ -101,6 +104,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
                 <Input
                   placeholder="Email"
                   name="email"
+                  type="email"
                   value={newPersonData.email}
                   onChange={(e) =>
                     setNewPersonData({
@@ -112,6 +116,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Box mb={2}>Telefone</Box>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaPhone color="gray.300" />
@@ -130,6 +135,7 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Box mb={2}>Cadastro</Box>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaIdCard color="gray.300" />

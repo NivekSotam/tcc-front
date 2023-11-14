@@ -30,8 +30,7 @@ const Compra = () => {
 
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        <Text>AAAAAAAAAAA</Text>
-        < ListagemCompra />
+        <ListagemCompra />
       </Box>
     </Box>
   );
