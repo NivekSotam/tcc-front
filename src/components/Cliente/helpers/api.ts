@@ -14,17 +14,17 @@ export const fetchCliforData = async ({
     currentPage,
 }: ListCliente) => {
     const url = `/clientefornecedor/?nome=${nome}&isCliente=1&limit=${itemsPerPage}&page=${currentPage}`
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Erro ao buscar dados:", error);
-    throw error;
-  }
+    try {
+        const response = await axios.get(url, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+        throw error;
+    }
 };
 
 type createCliente = {
@@ -37,17 +37,17 @@ export const createCliente = async ({
     userToken
 }: createCliente) => {
     try {
-      const response = await axios.post("/clientefornecedor", data, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-      return response.data;
+        const response = await axios.post("/clientefornecedor", data, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        });
+        return response.data;
     } catch (error) {
-      console.error("Erro ao criar cliente:", error);
-      throw error;
+        console.error("Erro ao criar cliente:", error);
+        throw error;
     }
-  };
+};
 
 type UpdateCliente = {
     data: any;
@@ -62,14 +62,37 @@ export const editCliente = async ({
 }: UpdateCliente) => {
     const url = `/clientefornecedor/${clienteId}`;
     try {
-      const response = await axios.put(url, data, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-      return response.data;
+        const response = await axios.put(url, data, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        });
+        return response.data;
     } catch (error) {
-      console.error("Erro ao criar cliente:", error);
-      throw error;
+        console.error("Erro ao editar cliente:", error);
+        throw error;
     }
-  };
+};
+
+type DeleteCliente = {
+    clienteId: number;
+    userToken: any;
+}
+
+export const deleteCliente = async ({
+    clienteId,
+    userToken
+}: DeleteCliente) => {
+    const url = `/clientefornecedor/${clienteId}`;
+    try {
+        const response = await axios.delete(url, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao deletar cliente:", error);
+        throw error;
+    }
+};

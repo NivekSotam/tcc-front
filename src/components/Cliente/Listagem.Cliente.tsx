@@ -28,13 +28,14 @@ import { paginateData } from "../../helpers/paginate-help";
 import NewClienteModal from "./Create.Cliente";
 import SuccessAlert from "../error/SuccessAlert";
 import EditModal from "./Edit.Cliente";
+import DeleteModal from "./Delete.cliente";
 
 const ListagemCliente = () => {
   const [searchType, setSearchType] = useState("nome");
   const [searchTerm, setSearchTerm] = useState("");
 
   const [nome, setNome] = useState("");
-  const [categoriaToDelete, setCategoriaToDelete] = useState<number | null>(null);
+  const [clienteToDelete, setClienteToDelete] = useState<number | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
@@ -91,21 +92,21 @@ const ListagemCliente = () => {
     setIsModalOpen(false);
   };
 
-//   const handleDeleteButtonClick = (clienteId: number) => {
-//     setCategoriaToDelete(clienteId);
-//     setIsDeleteModalOpen(true);
-//   };
+  const handleDeleteButtonClick = (clienteId: number) => {
+    setClienteToDelete(clienteId);
+    setIsDeleteModalOpen(true);
+  };
 
-//   const handleDeleteModalClose = () => {
-//     setCategoriaToDelete(null);
-//     setIsDeleteModalOpen(false);
-//   };
+  const handleDeleteModalClose = () => {
+    setClienteToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
 
-//   const handleDeleteSuccess = () => {
-//     setIsDeleteSuccessAlertOpen(true);
-//     fetchDataFromApi();
-//     setIsDeleteModalOpen(false);
-//   };
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsDeleteModalOpen(false);
+  };
 
   const handleEditButtonClick = (clienteId: number) => {
     setClienteToEdit(clienteId);
@@ -139,7 +140,7 @@ const ListagemCliente = () => {
           </Button>
           <Button
             colorScheme="red"
-           // onClick={() => handleDeleteButtonClick(Number(item.id))}
+           onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
@@ -201,10 +202,10 @@ const ListagemCliente = () => {
           alertTitle="Categoria editada com sucesso"
           alertDescription="Os detalhes da categoria foram atualizados com sucesso."
         />
-        {/*<DeleteModal
+        <DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
-          clienteId={categoriaToDelete}
+          clienteId={clienteToDelete}
           onDeleteSuccess={handleDeleteSuccess}
         />
         <SuccessAlert
@@ -212,7 +213,7 @@ const ListagemCliente = () => {
           onClose={() => setIsDeleteSuccessAlertOpen(false)}
           alertTitle="Categoria excluído com sucesso"
           alertDescription="A categoria foi excluída com sucesso."
-        /> */}
+        />
       </Flex>
 
       {currentItems.length > 0 ? (
