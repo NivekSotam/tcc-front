@@ -2,9 +2,9 @@ import axios from "axios";
 
 type ListCategoria = {
     nome?: string;
-    userToken: any,
-    itemsPerPage: number,
-    currentPage: number
+    userToken: any;
+    itemsPerPage: number;
+    currentPage: number;
 }
 
 export const fetchCategoriaData = async ({
