@@ -20,7 +20,6 @@ import {
   FaTrashAlt,
   FaAngleDown,
   FaPlus,
-  FaSort,
 } from "react-icons/fa";
 import { fetchCliforData } from "./helpers/api";
 import ListPagination from "../ListPagination";
