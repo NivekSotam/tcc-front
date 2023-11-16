@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { editItem } from "./helpers/api";
 import {
   Box,
@@ -8,6 +8,10 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -19,7 +23,8 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
-import { FaUser, FaTools } from "react-icons/fa";
+import { FaUser, FaTools, FaChevronDown } from "react-icons/fa";
+import { fetchCategoriaData } from "../Categoria/helpers/api";
 
 interface EditModalProps {
   isOpen: boolean;
@@ -39,6 +44,11 @@ const EditModal: React.FC<EditModalProps> = ({
   const [descricao, setDescricao] = useState("");
   const [quantidade, setQuantidade] = useState<number>();
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
+
+  const [categoriaId, setCategoriaId] = useState<any>();
+  const [data, setData] = useState<any[]>([]);
+  const [categoria, setCategoria] = useState<string>("Escolha uma categoria");
+
 
   const handleEditItem = async () => {
     try {
@@ -60,6 +70,46 @@ const EditModal: React.FC<EditModalProps> = ({
       setIsErrorAlertOpen(true);
     }
   };
+
+  const fetchCategoriaDataFromApi = useCallback(async () => {
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      const response = await fetchCategoriaData({
+        nome: "%",
+        userToken,
+        itemsPerPage: 50,
+        currentPage: 1,
+      });
+      setData(response);
+      console.log(response)
+      console.log("bbbb", data)
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCategoriaDataFromApi();
+    if (!isOpen) {
+      setCategoria("Escolha uma categoria");
+      setCategoriaId(null);
+    }
+  }, []);
+
+  const renderMenuCategoria = () => {
+    return (
+      <MenuList>
+        {
+          data?.map((categoria) => (
+            <MenuItem onClick={() => {
+              setCategoriaId(categoria?.id)
+              setCategoria(categoria?.nome)
+            }}>{categoria?.nome}</MenuItem>
+          ))
+        }
+      </MenuList>
+    )
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -125,6 +175,16 @@ const EditModal: React.FC<EditModalProps> = ({
                   onChange={(e) => setQuantidade(Number(e.target.value))}
                 />
               </InputGroup>
+            </FormControl>
+            <FormControl mb={3}>
+              <Text>Categoria:</Text>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<FaChevronDown />}
+                >{categoria}</MenuButton>
+                {renderMenuCategoria()}
+              </Menu>
             </FormControl>
             <Button colorScheme="blue" onClick={handleEditItem}>
               Confirmar

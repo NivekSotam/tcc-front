@@ -176,7 +176,7 @@ const ListagemItem = () => {
           Criar
         </Button>
         <NewItemModal
-          isOpenA={isModalOpen}
+          isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleCreateModalSuccess}
         />

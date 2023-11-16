@@ -25,13 +25,13 @@ import ErrorAlert from "../error/ErrorAlert";
 import { fetchCategoriaData } from "../Categoria/helpers/api"
 
 interface NewItemModal {
-  isOpenA: boolean;
+  isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 const NewItemModal: React.FC<NewItemModal> = ({
-  isOpenA,
+  isOpen,
   onClose,
   onSuccess,
 }) => {
@@ -65,7 +65,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
 
   useEffect(() => {
     fetchCategoriaDataFromApi();
-    if (!isOpenA) {
+    if (!isOpen) {
       setNome("");
       setValor("");
       setDescricao("");
@@ -114,7 +114,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
   }
 
   return (
-    <Modal isOpen={isOpenA} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Criar novo Item</ModalHeader>
