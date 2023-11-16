@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -14,37 +14,66 @@ import {
   InputGroup,
   Text,
   Textarea,
+  Menu,
+  MenuItem,
+  MenuButton,
+  MenuList,
 } from "@chakra-ui/react";
-import { FaUser, FaTools } from "react-icons/fa";
+import { FaUser, FaTools, FaChevronDown } from "react-icons/fa";
 import { createItem } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
+import { fetchCategoriaData } from "../Categoria/helpers/api"
 
 interface NewItemModal {
-  isOpen: boolean;
+  isOpenA: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 const NewItemModal: React.FC<NewItemModal> = ({
-  isOpen,
+  isOpenA,
   onClose,
   onSuccess,
 }) => {
   const [nome, setNome] = useState("");
-  const [valor, setValor] = useState<string>("");
+  const [valor, setValor] = useState<any>();
   const [descricao, setDescricao] = useState("");
-  const [quantidade, setQuantidade] = useState<number>(0);
+  const [quantidade, setQuantidade] = useState<any>();
+  const [categoriaId, setCategoriaId] = useState<any>();
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
+  const [data, setData] = useState<any[]>([]);
+  const [categoria, setCategoria] = useState<string>("Escolha uma categoria");
+
+  const fetchCategoriaDataFromApi = useCallback(async () => {
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      const response = await fetchCategoriaData({
+        nome: "%",
+        userToken,
+        itemsPerPage: 50,
+        currentPage: 1,
+      });
+      setData(response);
+      console.log(response)
+      console.log("bbbb", data)
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    }
+  }, []);
+
   useEffect(() => {
-    if (!isOpen) {
+    fetchCategoriaDataFromApi();
+    if (!isOpenA) {
       setNome("");
       setValor("");
       setDescricao("");
       setQuantidade(0);
+      setCategoria("Escolha uma categoria");
+      setCategoriaId(null);
     }
-  }, [isOpen]);
+  }, []);
 
   const handleCreatePerson = async () => {
     try {
@@ -56,6 +85,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
           descricao,
           valorUnitario: valor,
           quantidade,
+          categoriaId
         },
         userToken,
       });
@@ -68,8 +98,23 @@ const NewItemModal: React.FC<NewItemModal> = ({
     }
   };
 
+  const renderMenuCategoria = () => {
+    return (
+      <MenuList>
+        {
+          data?.map((categoria) => (
+            <MenuItem onClick={() => {
+              setCategoriaId(categoria?.id)
+              setCategoria(categoria?.nome)
+            }}>{categoria?.nome}</MenuItem>
+          ))
+        }
+      </MenuList>
+    )
+  }
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpenA} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Criar novo Item</ModalHeader>
@@ -110,11 +155,10 @@ const NewItemModal: React.FC<NewItemModal> = ({
                   children="$"
                 />
                 <Input
-                  type="text"
                   placeholder="Valor"
                   name="valor"
                   value={valor}
-                  onChange={(e) => setValor(e.target.value)}
+                  onChange={(e) => setValor(Number(e.target.value))}
                 />
               </InputGroup>
             </FormControl>
@@ -131,6 +175,16 @@ const NewItemModal: React.FC<NewItemModal> = ({
                   onChange={(e) => setQuantidade(Number(e.target.value))}
                 />
               </InputGroup>
+            </FormControl>
+            <FormControl mb={3}>
+              <Text>Categoria:</Text>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<FaChevronDown />}
+                >{categoria}</MenuButton>
+                {renderMenuCategoria()}
+              </Menu>
             </FormControl>
             <Button colorScheme="blue" onClick={handleCreatePerson}>
               Criar Item

@@ -11,8 +11,9 @@ export const fetchItemData = async ({
     nome,
     userToken,
     itemsPerPage,
-    currentPage}: ListItem) => {
-    const url = `/item/?nome=${nome}&limit=${itemsPerPage}&page=${currentPage}`;
+    currentPage,
+  }: ListItem) => {
+    const url = `/item/?nome=${nome}&categoria=&limit=${itemsPerPage}&page=${currentPage}`;
     try {
       const response = await axios.get(url, {
         headers: {
@@ -35,6 +36,7 @@ export const createItem = async ({
     data,
     userToken
 }: CreateItem) => {
+    console.log(data)
     const url = `/item/`;
     try {
       const response = await axios.post(url, data, {

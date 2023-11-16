@@ -29,6 +29,7 @@ const ListagemItem = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const [nome, setNome] = useState("");
+  const [categoria, setCategoria] = useState("");
   const [itemToDelete, setitemToDelete] = useState<number | null>(null);
   const [itemToEdit, setItemToEdit] = useState<number | null>(null);
 
@@ -38,12 +39,11 @@ const ListagemItem = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
-    useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
-    useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
     setSearchTerm("");
@@ -176,7 +176,7 @@ const ListagemItem = () => {
           Criar
         </Button>
         <NewItemModal
-          isOpen={isModalOpen}
+          isOpenA={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleCreateModalSuccess}
         />

@@ -11,7 +11,8 @@ export const fetchCategoriaData = async ({
     nome,
     userToken,
     itemsPerPage,
-    currentPage}: ListCategoria) => {
+    currentPage
+  }: ListCategoria) => {
     const url = `/categoria/?nome=${nome}&limit=${itemsPerPage}&page=${currentPage}`;
     try {
       const response = await axios.get(url, {
