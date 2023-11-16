@@ -61,6 +61,7 @@ const EditModal: React.FC<EditModalProps> = ({
           valor,
           descricao,
           quantidade,
+          categoriaId
         },
       });
       onEditSuccess();
