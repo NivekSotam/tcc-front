@@ -1,84 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { editFornecedor } from "./helpers/api";
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  Input,
-  Flex,
+  Box,
   Button,
   FormControl,
-  InputLeftElement,
+  Input,
   InputGroup,
-  Box,
+  InputLeftElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from "@chakra-ui/react";
-import { FaEnvelope, FaIdCard, FaPhone, FaUser } from "react-icons/fa";
-import { createCliente} from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
+import { FaEnvelope, FaIdCard, FaPhone, FaUser } from "react-icons/fa";
 import { formatCpfCnpj } from "../../helpers/format-helpers";
 
-interface NewClienteModal {
+interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  fornecedorId: number | null;
+  onEditSuccess: () => void;
 }
 
-const NewClienteModal: React.FC<NewClienteModal> = ({
+const EditModal: React.FC<EditModalProps> = ({
   isOpen,
   onClose,
-  onSuccess,
+  fornecedorId,
+  onEditSuccess,
 }) => {
     const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [telefone, setTelefone] = useState("");
     const [cadastro, setCadastro] = useState("");
-    const [registro, setRegistro] = useState<string>();
-    const [isCliente, setIsCliente] = useState<boolean>(true);
+    const [registro, setRegistro] = useState("");
+    const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
-  const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
-  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setNome("");
-    }
-  }, [isOpen]);
-
-  const handleCreatePerson = async () => {
-    try {
-      console.log(nome);
-      const userToken = localStorage.getItem("USER_TOKEN");
-      await createCliente({
-        data: {
-          nome,
-          email,
-          telefone,
-          cadastro,
-          registro,
-          isCliente
-        },
-        userToken
+  const handleEditFornecedor = async () => {
+      try {
+        const userToken = localStorage.getItem("USER_TOKEN");
+        await editFornecedor({
+          fornecedorId,
+          userToken,
+          data: {
+            nome,
+            email,
+            telefone,
+            cadastro,
+            registro
+          }
         });
-      onSuccess();
-      setIsSuccessAlertOpen(true);
-      onClose();
-    } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
-      setIsErrorAlertOpen(true);
-    }
+        onEditSuccess();
+        onClose();
+      } catch (error) {
+        console.error("Erro ao editar fornecedor:", error);
+        setIsErrorAlertOpen(true);
+      }
   };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-    <ModalOverlay />
-    <ModalContent>
-      <ModalHeader>Criar Novo Cliente</ModalHeader>
-      <ModalCloseButton />
-      <ModalBody>
-        <Flex direction="column">
-          <FormControl mb={3}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Editar Fornecedor</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+        <FormControl mb={3}>
             <Box mb={2}>Nome</Box>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
@@ -159,20 +149,24 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
               />
             </InputGroup>
           </FormControl>
-          <Button colorScheme="blue" onClick={handleCreatePerson}>
-            Criar Cliente
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="blue" mr={3} onClick={handleEditFornecedor}>
+            Confirmar
           </Button>
-        </Flex>
-      </ModalBody>
-    </ModalContent>
-    <ErrorAlert
-      isOpen={isErrorAlertOpen}
-      onClose={() => setIsErrorAlertOpen(false)}
-      alertTitle="Não foi possível fazer o cadastro."
-      alertDescription="Reveja as permissões necessárias ou verifique os dados."
-    />
-  </Modal>
+          <Button variant="ghost" onClick={onClose}>
+            Cancelar
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+      <ErrorAlert
+        isOpen={isErrorAlertOpen}
+        onClose={() => setIsErrorAlertOpen(false)}
+        alertTitle="Não foi possível completar a operação."
+        alertDescription="Reveja as permissões necessárias ou verifique os dados."
+      />
+    </Modal>
   );
 };
 
-export default NewClienteModal;
+export default EditModal;

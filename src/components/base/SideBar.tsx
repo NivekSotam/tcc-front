@@ -89,6 +89,10 @@ const SidebarContent = () => {
         Clientes
       </NavItem>
 
+      <NavItem icon={FiFileText} to="/fornecedores">
+        Fornecedores
+      </NavItem>
+
       <Button
         onClick={() => setShowPessoas(!showPessoas)}
         bg={"#fff"}

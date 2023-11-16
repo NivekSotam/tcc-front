@@ -15,17 +15,17 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { FaEnvelope, FaIdCard, FaPhone, FaUser } from "react-icons/fa";
-import { createCliente} from "./helpers/api";
+import { createFornecedor } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
 import { formatCpfCnpj } from "../../helpers/format-helpers";
 
-interface NewClienteModal {
+interface NewFornecedorModal {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-const NewClienteModal: React.FC<NewClienteModal> = ({
+const NewFornecedorModal: React.FC<NewFornecedorModal> = ({
   isOpen,
   onClose,
   onSuccess,
@@ -35,7 +35,7 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
     const [telefone, setTelefone] = useState("");
     const [cadastro, setCadastro] = useState("");
     const [registro, setRegistro] = useState<string>();
-    const [isCliente, setIsCliente] = useState<boolean>(true);
+    const [isCliente, setIsCliente] = useState<boolean>(false);
 
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
@@ -46,11 +46,11 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
     }
   }, [isOpen]);
 
-  const handleCreatePerson = async () => {
+  const handleCreateFornecedor = async () => {
     try {
       console.log(nome);
       const userToken = localStorage.getItem("USER_TOKEN");
-      await createCliente({
+      await createFornecedor({
         data: {
           nome,
           email,
@@ -74,7 +74,7 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
     <ModalOverlay />
     <ModalContent>
-      <ModalHeader>Criar Novo Cliente</ModalHeader>
+      <ModalHeader>Criar Novo Fornecedor</ModalHeader>
       <ModalCloseButton />
       <ModalBody>
         <Flex direction="column">
@@ -159,8 +159,8 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
               />
             </InputGroup>
           </FormControl>
-          <Button colorScheme="blue" onClick={handleCreatePerson}>
-            Criar Cliente
+          <Button colorScheme="blue" onClick={handleCreateFornecedor}>
+            Criar Fornecedor
           </Button>
         </Flex>
       </ModalBody>
@@ -175,4 +175,4 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
   );
 };
 
-export default NewClienteModal;
+export default NewFornecedorModal;
