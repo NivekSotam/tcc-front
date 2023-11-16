@@ -48,3 +48,28 @@ export const createCliente = async ({
       throw error;
     }
   };
+
+type UpdateCliente = {
+    data: any;
+    clienteId: number | null;
+    userToken: any
+}
+
+export const editCliente = async ({
+    data,
+    clienteId,
+    userToken
+}: UpdateCliente) => {
+    const url = `/clientefornecedor/${clienteId}`;
+    try {
+      const response = await axios.put(url, data, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao criar cliente:", error);
+      throw error;
+    }
+  };

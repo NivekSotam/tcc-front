@@ -27,6 +27,7 @@ import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
 import NewClienteModal from "./Create.Cliente";
 import SuccessAlert from "../error/SuccessAlert";
+import EditModal from "./Edit.Cliente";
 
 const ListagemCliente = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -45,7 +46,7 @@ const ListagemCliente = () => {
   const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
     useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
-  const [categoriaToEdit, setCategoriaToEdit] = useState<number | null>(null);
+  const [clienteToEdit, setClienteToEdit] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
@@ -90,8 +91,8 @@ const ListagemCliente = () => {
     setIsModalOpen(false);
   };
 
-//   const handleDeleteButtonClick = (categoriaId: number) => {
-//     setCategoriaToDelete(categoriaId);
+//   const handleDeleteButtonClick = (clienteId: number) => {
+//     setCategoriaToDelete(clienteId);
 //     setIsDeleteModalOpen(true);
 //   };
 
@@ -106,21 +107,21 @@ const ListagemCliente = () => {
 //     setIsDeleteModalOpen(false);
 //   };
 
-//   const handleEditButtonClick = (categoriaId: number) => {
-//     setCategoriaToEdit(categoriaId);
-//     setIsEditModalOpen(true);
-//   };
+  const handleEditButtonClick = (clienteId: number) => {
+    setClienteToEdit(clienteId);
+    setIsEditModalOpen(true);
+  };
 
-//   const handleEditModalClose = () => {
-//     setCategoriaToEdit(null);
-//     setIsEditModalOpen(false);
-//   };
+  const handleEditModalClose = () => {
+    setClienteToEdit(null);
+    setIsEditModalOpen(false);
+  };
 
-//   const handleEditSuccess = () => {
-//     setIsEditSuccessAlertOpen(true);
-//     fetchDataFromApi();
-//     setIsEditModalOpen(false);
-//   };
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsEditModalOpen(false);
+  };
 
   const renderItems = () => {
     return currentItems.map((item) => (
@@ -132,7 +133,7 @@ const ListagemCliente = () => {
           <Button
             colorScheme="blue"
             mr={2}
-            //onClick={() => handleEditButtonClick(Number(item.id))}
+            onClick={() => handleEditButtonClick(Number(item.id))}
           >
             <FaEdit />
           </Button>
@@ -188,10 +189,10 @@ const ListagemCliente = () => {
           alertTitle="Categoria criada com sucesso"
           alertDescription="A nova categoria foi adicionada com sucesso."
         />
-        {/*<EditModal
+        <EditModal
           isOpen={isEditModalOpen}
           onClose={handleEditModalClose}
-          categoriaId={categoriaToEdit}
+          clienteId={clienteToEdit}
           onEditSuccess={handleEditSuccess}
         />
         <SuccessAlert
@@ -200,10 +201,10 @@ const ListagemCliente = () => {
           alertTitle="Categoria editada com sucesso"
           alertDescription="Os detalhes da categoria foram atualizados com sucesso."
         />
-        <DeleteModal
+        {/*<DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
-          categoriaId={categoriaToDelete}
+          clienteId={categoriaToDelete}
           onDeleteSuccess={handleDeleteSuccess}
         />
         <SuccessAlert
