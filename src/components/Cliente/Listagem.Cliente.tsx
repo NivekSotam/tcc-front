@@ -25,6 +25,8 @@ import {
 import { fetchCliforData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
+import NewClienteModal from "./Create.Cliente";
+import SuccessAlert from "../error/SuccessAlert";
 
 const ListagemCliente = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -82,11 +84,11 @@ const ListagemCliente = () => {
     data
   );
 
-//   const handleCreateModalSuccess = () => {
-//     setIsCreateSuccessAlertOpen(true);
-//     fetchDataFromApi();
-//     setIsModalOpen(false);
-//   };
+  const handleCreateModalSuccess = () => {
+    setIsCreateSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsModalOpen(false);
+  };
 
 //   const handleDeleteButtonClick = (categoriaId: number) => {
 //     setCategoriaToDelete(categoriaId);
@@ -175,7 +177,7 @@ const ListagemCliente = () => {
         >
           Criar
         </Button>
-        {/* <NewCategoriaModal
+        <NewClienteModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleCreateModalSuccess}
@@ -186,7 +188,7 @@ const ListagemCliente = () => {
           alertTitle="Categoria criada com sucesso"
           alertDescription="A nova categoria foi adicionada com sucesso."
         />
-        <EditModal
+        {/*<EditModal
           isOpen={isEditModalOpen}
           onClose={handleEditModalClose}
           categoriaId={categoriaToEdit}
