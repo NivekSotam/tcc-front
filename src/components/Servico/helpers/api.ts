@@ -47,3 +47,49 @@ export const createServico = async ({
     throw error;
   }
 };
+
+type UpdateServico = {
+  data: any;
+  servicoId: number | null;
+  userToken: any;
+}
+
+export const editServico = async ({
+  data,
+  servicoId,
+  userToken
+}: UpdateServico) => {
+  const url = `/servico/${servicoId}`;
+  try {
+    const response = await axios.put(url, data, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      }
+    })
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+type DeleteServico = {
+  servicoId: number | null;
+  userToken: any;
+}
+
+export const deleteServico = async ({
+  servicoId,
+  userToken
+}: DeleteServico) => {
+  const url = `/servico/${servicoId}`;
+  try {
+    const response = await axios.delete(url, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      }
+    })
+    return response.data;
+  } catch(error) {
+    throw error;
+  }
+}

@@ -27,6 +27,8 @@ import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
 import NewServicoModal from "./Create.Servico";
 import SuccessAlert from "../error/SuccessAlert";
+import EditModal from "./Edit.Servico";
+import DeleteModal from "./Delete.Servico";
 
 const ListagemServico = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -40,13 +42,13 @@ const ListagemServico = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
-    useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
-    useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [servicoToEdit, setServicoToEdit] = useState<number | null>(null);
+  const [servicoToDelete, setServicoToDelete] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const handleMenuItemClick = (type: string) => {
     setSearchType(type);
     setSearchTerm("");
@@ -90,37 +92,37 @@ const ListagemServico = () => {
     setIsModalOpen(false);
   };
 
-  // const handleDeleteButtonClick = (categoriaId: number) => {
-  //   setCategoriaToDelete(categoriaId);
-  //   setIsDeleteModalOpen(true);
-  // };
+  const handleDeleteButtonClick = (servicoId: number) => {
+    setServicoToDelete(servicoId);
+    setIsDeleteModalOpen(true);
+  };
 
-  // const handleDeleteModalClose = () => {
-  //   setCategoriaToDelete(null);
-  //   setIsDeleteModalOpen(false);
-  // };
+  const handleDeleteModalClose = () => {
+    setServicoToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
 
-  // const handleDeleteSuccess = () => {
-  //   setIsDeleteSuccessAlertOpen(true);
-  //   fetchDataFromApi();
-  //   setIsDeleteModalOpen(false);
-  // };
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsDeleteModalOpen(false);
+  };
 
-  // const handleEditButtonClick = (categoriaId: number) => {
-  //   setCategoriaToEdit(categoriaId);
-  //   setIsEditModalOpen(true);
-  // };
+  const handleEditButtonClick = (servicoId: number) => {
+    setServicoToEdit(servicoId);
+    setIsEditModalOpen(true);
+  };
 
-  // const handleEditModalClose = () => {
-  //   setCategoriaToEdit(null);
-  //   setIsEditModalOpen(false);
-  // };
+  const handleEditModalClose = () => {
+    setServicoToEdit(null);
+    setIsEditModalOpen(false);
+  };
 
-  // const handleEditSuccess = () => {
-  //   setIsEditSuccessAlertOpen(true);
-  //   fetchDataFromApi();
-  //   setIsEditModalOpen(false);
-  // };
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsEditModalOpen(false);
+  };
 
   const renderItems = () => {
     return currentItems.map((item) => (
@@ -131,13 +133,13 @@ const ListagemServico = () => {
           <Button
             colorScheme="blue"
             mr={2}
-            //onClick={() => handleEditButtonClick(Number(item.id))}
+            onClick={() => handleEditButtonClick(Number(item.id))}
           >
             <FaEdit />
           </Button>
           <Button
             colorScheme="red"
-            //onClick={() => handleDeleteButtonClick(Number(item.id))}
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
@@ -187,10 +189,10 @@ const ListagemServico = () => {
           alertTitle="Serviço criado com sucesso"
           alertDescription="O novo serviço foi adicionado com sucesso."
         />
-        {/* <EditModal
+        <EditModal
           isOpen={isEditModalOpen}
           onClose={handleEditModalClose}
-          categoriaId={categoriaToEdit}
+          servicoId={servicoToEdit}
           onEditSuccess={handleEditSuccess}
         />
         <SuccessAlert
@@ -202,7 +204,7 @@ const ListagemServico = () => {
         <DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
-          categoriaId={categoriaToDelete}
+          servicoId={servicoToDelete}
           onDeleteSuccess={handleDeleteSuccess}
         />
         <SuccessAlert
@@ -210,7 +212,7 @@ const ListagemServico = () => {
           onClose={() => setIsDeleteSuccessAlertOpen(false)}
           alertTitle="Categoria excluído com sucesso"
           alertDescription="A categoria foi excluída com sucesso."
-        /> */}
+        />
       </Flex>
 
       {currentItems.length > 0 ? (
