@@ -15,6 +15,7 @@ import {
   FiUsers,
   FiChevronDown,
   FiChevronUp,
+  FiBox,
 } from "react-icons/fi";
 import NavItem from "./NavItem";
 
@@ -51,14 +52,6 @@ const SidebarContent = () => {
         Compras
       </NavItem>
 
-      <NavItem icon={FiFileText} to="/clientes">
-        Clientes
-      </NavItem>
-
-      <NavItem icon={FiFileText} to="/fornecedores">
-        Fornecedores
-      </NavItem>
-
       <Button
         onClick={() => setShowItens(!showItens)}
         bg={"#fff"}
@@ -74,7 +67,7 @@ const SidebarContent = () => {
         }}
       >
         <Flex align="center">
-          <Icon as={FiFileText} />
+          <Icon as={FiBox} />
           Gestão de Estoque
           <Icon
             ml="4"
@@ -117,9 +110,12 @@ const SidebarContent = () => {
         </Flex>
       </Button>
       <Collapse in={showPessoas}>
-        <NavItem icon={FiUsers} to="/pessoas">
-          Pessoas
-        </NavItem>
+      <NavItem icon={FiFileText} to="/clientes">
+        Clientes
+      </NavItem>
+      <NavItem icon={FiFileText} to="/fornecedores">
+        Fornecedores
+      </NavItem>
       </Collapse>
       <Button
         onClick={() => setShowServicos(!showServicos)}

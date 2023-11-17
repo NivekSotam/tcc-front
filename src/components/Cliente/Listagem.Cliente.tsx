@@ -14,6 +14,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Link,
 } from "@chakra-ui/react";
 import {
   FaEdit,
@@ -21,6 +22,7 @@ import {
   FaAngleDown,
   FaPlus,
   FaSort,
+  FaEye,
 } from "react-icons/fa";
 import { fetchCliforData } from "./helpers/api";
 import ListPagination from "../ListPagination";
@@ -140,10 +142,21 @@ const ListagemCliente = () => {
           </Button>
           <Button
             colorScheme="red"
+            mr={2}
            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
+          <Link
+            href={`/clientes/${item.id}`}
+          >
+            <Button
+              colorScheme="blue"
+              mr={2}
+            >
+              <FaEye />
+            </Button>
+          </Link>
         </Th>
       </Tr>
     ));
