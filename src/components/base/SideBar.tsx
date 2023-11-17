@@ -43,40 +43,6 @@ const SidebarContent = () => {
         Calendário
       </NavItem>
 
-
-      <Button
-        onClick={() => setShowItens(!showItens)}
-        bg={"#fff"}
-        mt="1rem"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
-        _hover={{
-          bg: "#2C3E50",
-          color: "white",
-        }}
-      >
-        <Flex align="center">
-          <Icon as={FiFileText} />
-          Itens
-          <Icon
-            ml="4"
-            fontSize="16"
-            as={showItens ? FiChevronUp : FiChevronDown}
-          />
-        </Flex>
-      </Button>
-      <Collapse in={showItens}>
-        <NavItem icon={FiFileText} to="/itens">
-          Todos os Itens
-        </NavItem>
-        <NavItem icon={FiFileText} to="/categorias">
-          Categorias
-        </NavItem>
-      </Collapse>
-
       <NavItem icon={FiFileText} to="/vendas">
         Vendas
       </NavItem>
@@ -94,6 +60,39 @@ const SidebarContent = () => {
       </NavItem>
 
       <Button
+        onClick={() => setShowItens(!showItens)}
+        bg={"#fff"}
+        mt="1rem"
+        p="4"
+        mx="4"
+        borderRadius="lg"
+        role="group"
+        cursor="pointer"
+        _hover={{
+          bg: "#2C3E50",
+          color: "white",
+        }}
+      >
+        <Flex align="center">
+          <Icon as={FiFileText} />
+          Gestão de Estoque
+          <Icon
+            ml="4"
+            fontSize="16"
+            as={showItens ? FiChevronUp : FiChevronDown}
+          />
+        </Flex>
+      </Button>
+      <Collapse in={showItens}>
+        <NavItem icon={FiFileText} to="/itens">
+          Itens
+        </NavItem>
+        <NavItem icon={FiFileText} to="/categorias">
+          Categorias
+        </NavItem>
+      </Collapse>
+
+      <Button
         onClick={() => setShowPessoas(!showPessoas)}
         bg={"#fff"}
         mt="1rem"
@@ -109,7 +108,7 @@ const SidebarContent = () => {
       >
         <Flex align="center">
           <Icon as={FiUsers} />
-          Adm.Pessoas
+            Gestão Pessoal
           <Icon
             ml="4"
             fontSize="16"
@@ -138,7 +137,7 @@ const SidebarContent = () => {
       >
         <Flex align="center">
           <Icon as={FiFileText} />
-          Adm.Serviços
+          Gestão de Serviços
           <Icon
             ml="4"
             fontSize="16"
