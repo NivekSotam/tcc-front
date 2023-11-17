@@ -65,7 +65,7 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
+      console.error("Erro ao criar cliente:", error);
       setIsErrorAlertOpen(true);
     }
   };

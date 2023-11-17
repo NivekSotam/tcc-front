@@ -52,7 +52,7 @@ const NewCategoriaModal: React.FC<NewCategoriaModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
+      console.error("Erro ao criar categoria:", error);
       setIsErrorAlertOpen(true);
     }
   };

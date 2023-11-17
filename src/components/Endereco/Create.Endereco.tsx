@@ -76,7 +76,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
+      console.error("Erro ao criar endereco:", error);
       setIsErrorAlertOpen(true);
     }
   };

@@ -65,7 +65,7 @@ const NewFornecedorModal: React.FC<NewFornecedorModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
+      console.error("Erro ao criar fornecedor:", error);
       setIsErrorAlertOpen(true);
     }
   };

@@ -93,7 +93,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
+      console.error("Erro ao criar item:", error);
       setIsErrorAlertOpen(true);
     }
   };

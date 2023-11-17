@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -9,34 +9,51 @@ import {
   Input,
   Flex,
   Button,
+  FormControl,
+  InputLeftElement,
+  InputGroup,
 } from "@chakra-ui/react";
+import { FaUser, FaEnvelope, FaPhone, FaIdCard } from "react-icons/fa";
 import { createServico } from "./helpers/api";
+import ErrorAlert from "../error/ErrorAlert";
 
-interface NewPersonModalProps {
+interface NewServicoModal {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
 
-const NewPersonModal: React.FC<NewPersonModalProps> = ({
+const NewServicoModal: React.FC<NewServicoModal> = ({
   isOpen,
   onClose,
   onSuccess,
 }) => {
-  const [newPersonData, setNewPersonData] = useState({
-    nome: "",
-  });
+  const [nome, setNome] = useState("");
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
+  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setNome("");
+    }
+  }, [isOpen]);
 
   const handleCreatePerson = async () => {
     try {
+
       const userToken = localStorage.getItem("USER_TOKEN");
-      await createServico(newPersonData, userToken);
+      await createServico ({
+        data: {
+          nome
+        },
+        userToken
+        });
       onSuccess();
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar pessoa:", error);
+      console.error("Erro ao criar servico:", error);
+      setIsErrorAlertOpen(true);
     }
   };
 
@@ -44,28 +61,39 @@ const NewPersonModal: React.FC<NewPersonModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Criar Nova Pessoa</ModalHeader>
+        <ModalHeader>Criar Novo Servico</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex direction="column">
-            <Input
-              placeholder="Nome"
-              name="nome"
-              value={newPersonData.nome}
-              onChange={(e) =>
-                setNewPersonData({ ...newPersonData, nome: e.target.value })
-              }
-              mb={3}
-            />
-
+            <FormControl mb={3}>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <FaUser color="gray.300" />
+                </InputLeftElement>
+                <Input
+                  placeholder="Nome"
+                  name="nome"
+                  value={nome}
+                  onChange={(e) =>
+                    setNome(e.target.value)
+                  }
+                />
+              </InputGroup>
+            </FormControl>
             <Button colorScheme="blue" onClick={handleCreatePerson}>
-              Criar Pessoa
+              Criar Servico
             </Button>
           </Flex>
         </ModalBody>
       </ModalContent>
+      <ErrorAlert
+        isOpen={isErrorAlertOpen}
+        onClose={() => setIsErrorAlertOpen(false)}
+        alertTitle="Não foi possível fazer o cadastro."
+        alertDescription="Reveja as permissões necessárias ou verifique os dados."
+      />
     </Modal>
   );
 };
 
-export default NewPersonModal;
+export default NewServicoModal;
