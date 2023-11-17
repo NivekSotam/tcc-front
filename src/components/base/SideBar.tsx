@@ -149,6 +149,9 @@ const SidebarContent = () => {
         <NavItem icon={FiFileText} to="/servico">
           Serviços
         </NavItem>
+        <NavItem icon={FiFileText} to="/prestacoes">
+          Prestações
+        </NavItem>
       </Collapse>
     </Box>
   );
