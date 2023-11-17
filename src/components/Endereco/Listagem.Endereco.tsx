@@ -110,6 +110,9 @@ const ListagemEndereco = () => {
       <Tr key={item.id}>
         <Th>{item.id}</Th>
         <Th>{item.rua}</Th>
+        <Th>{item.numero}</Th>
+        <Th>{item.cep}</Th>
+        <Th>{item.tipo}</Th>
         <Th>
           <Button
             colorScheme="blue"
@@ -185,8 +188,10 @@ const ListagemEndereco = () => {
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Nome</Th>
-              <Th>Cadastro</Th>
+              <Th>Rua</Th>
+              <Th>Número</Th>
+              <Th>Cep</Th>
+              <Th>Tipo</Th>
               <Th>Ações</Th>
             </Tr>
           </Thead>

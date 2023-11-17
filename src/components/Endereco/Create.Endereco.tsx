@@ -12,8 +12,11 @@ import {
   FormControl,
   InputLeftElement,
   InputGroup,
+  Menu,
+  MenuButton,
+  MenuList,
 } from "@chakra-ui/react";
-import { FaUser, FaEnvelope, FaPhone, FaIdCard } from "react-icons/fa";
+import { FaUser, FaEnvelope, FaPhone, FaIdCard, FaChevronDown } from "react-icons/fa";
 import { createEndereco} from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
 
@@ -34,7 +37,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
   const [numero, setNumero] = useState("");
   const [bairro, setBairro] = useState("");
   const [cep, setCep] = useState("");
-  const [tipo, setTipo] = useState("");
+  const [tipo, setTipo] = useState("R");
   const [complemento, setComplemento] = useState("");
   const [cidade, setCidade] = useState("");
 
@@ -47,7 +50,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
       setNumero("");
       setBairro("");
       setCep("");
-      setTipo("");
+      setTipo("R");
       setComplemento("");
       setCidade("");
     }
@@ -147,19 +150,22 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
-                </InputLeftElement>
-                <Input
-                  placeholder="Tipo"
-                  name="Tipo"
-                  value={tipo}
-                  onChange={(e) =>
-                    setTipo(e.target.value)
-                  }
-                />
-              </InputGroup>
+              <Menu>
+                <MenuButton
+                    as={Button}
+                    rightIcon={<FaChevronDown />}
+                >{tipo === "R" ? "Rural" : "Urbano"}</MenuButton>
+                <MenuList
+                    onClick={() => {
+                        setTipo("R")
+                    }}
+                >Rural</MenuList>
+                <MenuList
+                    onClick={() => {
+                        setTipo("U")
+                    }}
+                >Urbano</MenuList>
+              </Menu>
             </FormControl>
             <FormControl mb={3}>
               <InputGroup>
