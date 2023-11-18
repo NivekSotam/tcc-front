@@ -14,13 +14,9 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Td,
 } from "@chakra-ui/react";
-import {
-  FaEdit,
-  FaTrashAlt,
-  FaAngleDown,
-  FaPlus,
-} from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus } from "react-icons/fa";
 import { fetchEnderecoData, fetchPessoaData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
@@ -29,38 +25,21 @@ import NewEnderecoModal from "./Create.Endereco";
 import SuccessAlert from "../error/SuccessAlert";
 
 const ListagemEndereco = () => {
-    const params = useParams();
-    const pessoaId = Number(params.id);
-
-  const [searchType, setSearchType] = useState("nome");
-  const [searchTerm, setSearchTerm] = useState("");
-
+  const params = useParams();
+  const pessoaId = Number(params.id);
   const [pessoaData, setPessoaData] = useState<any>();
-  
   // const [fornecedorToDelete, setFornecedorToDelete] = useState<number | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
-  const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
   // const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
   // const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   // const [fornecedorToEdit, setFornecedorToEdit] = useState<number | null>(null);
   // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const handleMenuItemClick = (type: string) => {
-    setSearchType(type);
-    setSearchTerm("");
-    setCurrentPage(1);
-    setButtonText(type === "nome" ? "Nome" : "Nome");
-  };
-
-  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //setNome(e.target.value);
-    setCurrentPage(1);
-  };
 
   const fetchPessoaDataFromApi = useCallback(async () => {
     try {
@@ -82,11 +61,12 @@ const ListagemEndereco = () => {
         pessoaId,
         userToken,
       });
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaa", fetchedData)
+      console.log("aaaaaaaaaaaaaaaaaaaaaaaa", fetchedData);
       setData(fetchedData);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-  }}, [])
+    }
+  }, []);
 
   useEffect(() => {
     fetchPessoaDataFromApi();
@@ -134,36 +114,32 @@ const ListagemEndereco = () => {
 
   return (
     <Box p={5}>
+      <Box boxShadow="base" p="6" rounded="md" bg="white">
+        <Table variant="simple">
+          <Thead bg="rgb(49,130,206)">
+            <Tr>
+              <Th color="white">Nome</Th>
+              <Th color="white">Email</Th>
+              <Th color="white">Telefone</Th>
+              <Th color="white">Cadastro</Th>
+              <Th color="white">Registro</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            <Tr>
+              <Td>{pessoaData?.nome}</Td>
+              <Td>{pessoaData?.email}</Td>
+              <Td>{pessoaData?.telefone}</Td>
+              <Td>{pessoaData?.cadastro}</Td>
+              <Td>{pessoaData?.registro}</Td>
+            </Tr>
+          </Tbody>
+        </Table>
+      </Box>
       <Flex mb={5}>
-        <Text>{pessoaData?.nome}</Text>
-        <Text> {pessoaData?.email} </Text>
-        <Text> {pessoaData?.telefone} </Text>
-        <Text> {pessoaData?.cadastro} </Text>
-        <Text> {pessoaData?.registro} </Text>
-        <Text> {pessoaData?.isCliente} </Text>
-      </Flex>
-      <Flex mb={5}>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<FaAngleDown />}>
-            <Flex alignItems="center">
-              <Box mr={4}>{buttonText}</Box>
-            </Flex>
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => handleMenuItemClick("nome")}>
-              Nome
-            </MenuItem>
-          </MenuList>
-        </Menu>
-
-        <Input
-          placeholder={`Pesquisar por ${searchType}`}
-          value={searchTerm}
-          onChange={handleSearchTermChange}
-        />
-
         <Button
-          ml={5}
+          marginY={2}
+          width={"100%"}
           colorScheme="blue"
           rightIcon={<FaPlus />}
           onClick={() => setIsModalOpen(true)}

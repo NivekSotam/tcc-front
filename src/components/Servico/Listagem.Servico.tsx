@@ -25,10 +25,10 @@ import {
 import { fetchServicoData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
-import NewServicoModal from "./Create.Servico";
 import SuccessAlert from "../error/SuccessAlert";
 import EditModal from "./Edit.Servico";
 import DeleteModal from "./Delete.Servico";
+import NewServicoModal from "./create.Servico";
 
 const ListagemServico = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -42,8 +42,10 @@ const ListagemServico = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [servicoToEdit, setServicoToEdit] = useState<number | null>(null);
   const [servicoToDelete, setServicoToDelete] = useState<number | null>(null);
