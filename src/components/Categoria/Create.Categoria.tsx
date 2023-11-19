@@ -14,7 +14,7 @@ import {
   InputGroup,
 } from "@chakra-ui/react";
 import { FaUser, FaEnvelope, FaPhone, FaIdCard } from "react-icons/fa";
-import { createCategoria} from "./helpers/api";
+import { createCategoria } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
 
 interface NewCategoriaModal {
@@ -44,10 +44,10 @@ const NewCategoriaModal: React.FC<NewCategoriaModal> = ({
       const userToken = localStorage.getItem("USER_TOKEN");
       await createCategoria({
         data: {
-          nome
+          nome,
         },
-        userToken
-        });
+        userToken,
+      });
       onSuccess();
       setIsSuccessAlertOpen(true);
       onClose();
@@ -74,9 +74,7 @@ const NewCategoriaModal: React.FC<NewCategoriaModal> = ({
                   placeholder="Nome"
                   name="nome"
                   value={nome}
-                  onChange={(e) =>
-                    setNome(e.target.value)
-                  }
+                  onChange={(e) => setNome(e.target.value)}
                 />
               </InputGroup>
             </FormControl>

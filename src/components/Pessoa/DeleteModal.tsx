@@ -1,4 +1,3 @@
-// DeleteModal.tsx
 import React, { useState } from "react";
 import {
   Modal,
@@ -32,7 +31,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
     if (personId) {
       try {
         const userToken = localStorage.getItem("USER_TOKEN");
-        await deletePerson({personId, userToken});
+        await deletePerson({ personId, userToken });
         onDeleteSuccess();
         onClose();
       } catch (error) {

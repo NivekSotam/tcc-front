@@ -16,13 +16,7 @@ import {
   MenuItem,
   Link,
 } from "@chakra-ui/react";
-import {
-  FaEdit,
-  FaTrashAlt,
-  FaAngleDown,
-  FaPlus,
-  FaEye,
-} from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus, FaEye } from "react-icons/fa";
 import { fetchCliforData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
@@ -30,21 +24,26 @@ import NewFornecedorModal from "./Create.Fornecedor";
 import SuccessAlert from "../error/SuccessAlert";
 import EditModal from "./Edit.Fornecedor";
 import DeleteModal from "./Delete.Fornecedor";
+import { formatCpfCnpj } from "../../helpers/format-helpers";
 
 const ListagemFornecedor = () => {
   const [searchType, setSearchType] = useState("nome");
   const [searchTerm, setSearchTerm] = useState("");
 
   const [nome, setNome] = useState("");
-  const [fornecedorToDelete, setFornecedorToDelete] = useState<number | null>(null);
+  const [fornecedorToDelete, setFornecedorToDelete] = useState<number | null>(
+    null
+  );
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [fornecedorToEdit, setFornecedorToEdit] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -53,7 +52,9 @@ const ListagemFornecedor = () => {
     setSearchType(type);
     setSearchTerm("");
     setCurrentPage(1);
-    setButtonText(type === "nome" ? "Nome" : "Nome");
+    setButtonText(
+      type === "nome" ? "Nome" : type === "cadastro" ? "Cadastro" : ""
+    );
   };
 
   const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,7 +130,7 @@ const ListagemFornecedor = () => {
       <Tr key={item.id}>
         <Th>{item.id}</Th>
         <Th>{item.nome}</Th>
-        <Th>{item.cadastro}</Th>
+        <Th>{formatCpfCnpj(item.cadastro)}</Th>
         <Th>
           <Button
             colorScheme="blue"
@@ -141,17 +142,12 @@ const ListagemFornecedor = () => {
           <Button
             colorScheme="red"
             mr={2}
-           onClick={() => handleDeleteButtonClick(Number(item.id))}
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
-          <Link
-            href={`/fornecedores/${item.id}`}
-          >
-            <Button
-              colorScheme="blue"
-              mr={2}
-            >
+          <Link href={`/fornecedores/${item.id}`}>
+            <Button colorScheme="blue" mr={2}>
               <FaEye />
             </Button>
           </Link>
@@ -173,6 +169,9 @@ const ListagemFornecedor = () => {
             <MenuItem onClick={() => handleMenuItemClick("nome")}>
               Nome
             </MenuItem>
+            {/* <MenuItem onClick={() => handleMenuItemClick("cadastro")}>
+              Cadastro
+            </MenuItem> */}
           </MenuList>
         </Menu>
 
@@ -228,17 +227,19 @@ const ListagemFornecedor = () => {
       </Flex>
 
       {currentItems.length > 0 ? (
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Nome</Th>
-              <Th>Cadastro</Th>
-              <Th>Ações</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{renderItems()}</Tbody>
-        </Table>
+        <Box boxShadow="base" p="6" rounded="md" bg="white">
+          <Table variant="simple">
+            <Thead>
+              <Tr bg={"#2C3E50"}>
+                <Th color="white">ID</Th>
+                <Th color="white">Nome</Th>
+                <Th color="white">Cadastro</Th>
+                <Th color="white">Ações</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderItems()}</Tbody>
+          </Table>
+        </Box>
       ) : (
         <Text>Nenhum dado encontrado.</Text>
       )}

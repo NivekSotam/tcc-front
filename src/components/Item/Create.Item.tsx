@@ -14,10 +14,7 @@ import {
   InputGroup,
   Text,
   Textarea,
-  Menu,
-  MenuItem,
-  MenuButton,
-  MenuList,
+  Select,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -47,7 +44,6 @@ const NewItemModal: React.FC<NewItemModal> = ({
   const [categoriaId, setCategoriaId] = useState<any>();
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
-
   const [data, setData] = useState<any[]>([]);
   const [categoria, setCategoria] = useState<string>("Escolha uma categoria");
 
@@ -57,12 +53,10 @@ const NewItemModal: React.FC<NewItemModal> = ({
       const response = await fetchCategoriaData({
         nome: "%",
         userToken,
-        itemsPerPage: 50,
+        itemsPerPage: 1000,
         currentPage: 1,
       });
       setData(response);
-      console.log(response);
-      console.log("bbbb", data);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
     }
@@ -72,25 +66,25 @@ const NewItemModal: React.FC<NewItemModal> = ({
     fetchCategoriaDataFromApi();
     if (!isOpen) {
       setNome("");
-      setValor("");
+      setValor(0);
       setDescricao("");
       setQuantidade(0);
       setCategoria("Escolha uma categoria");
       setCategoriaId(null);
     }
-  }, []);
+  }, [isOpen, fetchCategoriaDataFromApi]);
 
   const handleCreatePerson = async () => {
     try {
-      console.log(nome);
       const userToken = localStorage.getItem("USER_TOKEN");
+      const selectedCategoria = data.find((cat) => cat.nome === categoria);
       await createItem({
         data: {
           nome,
           descricao,
           valorUnitario: valor,
           quantidade,
-          categoriaId,
+          categoriaId: selectedCategoria?.id,
         },
         userToken,
       });
@@ -101,23 +95,6 @@ const NewItemModal: React.FC<NewItemModal> = ({
       console.error("Erro ao criar item:", error);
       setIsErrorAlertOpen(true);
     }
-  };
-
-  const renderMenuCategoria = () => {
-    return (
-      <MenuList>
-        {data?.map((categoria) => (
-          <MenuItem
-            onClick={() => {
-              setCategoriaId(categoria?.id);
-              setCategoria(categoria?.nome);
-            }}
-          >
-            {categoria?.nome}
-          </MenuItem>
-        ))}
-      </MenuList>
-    );
   };
 
   return (
@@ -160,13 +137,11 @@ const NewItemModal: React.FC<NewItemModal> = ({
                   pointerEvents="none"
                   color="#2C3E50"
                   fontSize="1.2em"
-                  // children="R$"
                 />
-
                 <NumberInput
                   min={0}
                   step={100.2}
-                  name=" valor"
+                  name="valor"
                   value={valor}
                   onChange={(value) => setValor(Number(value))}
                 >
@@ -178,6 +153,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
                 </NumberInput>
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
               <Text>Quantidade:</Text>
               <InputGroup>
@@ -202,12 +178,17 @@ const NewItemModal: React.FC<NewItemModal> = ({
 
             <FormControl mb={3}>
               <Text>Categoria:</Text>
-              <Menu>
-                <MenuButton as={Button} rightIcon={<FaChevronDown />}>
-                  {categoria}
-                </MenuButton>
-                {renderMenuCategoria()}
-              </Menu>
+              <Select
+                placeholder="Escolha uma categoria"
+                value={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+              >
+                {data?.map((categoria) => (
+                  <option key={categoria.id} value={categoria.nome}>
+                    {categoria.nome}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
             <Button colorScheme="blue" onClick={handleCreatePerson}>
               Criar Item

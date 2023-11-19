@@ -147,7 +147,9 @@ const NewClienteModal: React.FC<NewClienteModal> = ({
                   placeholder="RG/Insc. Municipal"
                   name="registro"
                   value={registro}
-                  onChange={(e) => setRegistro(e.target.value)}
+                  onChange={(e) =>
+                    setRegistro(getCleanedCpfCnpj(e.target.value))
+                  }
                 />
               </InputGroup>
             </FormControl>

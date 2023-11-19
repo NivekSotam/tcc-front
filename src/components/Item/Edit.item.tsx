@@ -19,6 +19,12 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Select,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -40,28 +46,42 @@ const EditModal: React.FC<EditModalProps> = ({
   onEditSuccess,
 }) => {
   const [nome, setNome] = useState<string>("");
-  const [valor, setValor] = useState<number>();
+  const [valor, setValor] = useState<any>();
   const [descricao, setDescricao] = useState("");
   const [quantidade, setQuantidade] = useState<number>();
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
-
-  const [categoriaId, setCategoriaId] = useState<any>();
   const [data, setData] = useState<any[]>([]);
+  const [categoriaId, setCategoriaId] = useState<any>();
   const [categoria, setCategoria] = useState<string>("Escolha uma categoria");
 
+  const fetchCategoriaDataFromApi = useCallback(async () => {
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      const response = await fetchCategoriaData({
+        nome: "%",
+        userToken,
+        itemsPerPage: 1000,
+        currentPage: 1,
+      });
+      setData(response);
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+    }
+  }, []);
 
   const handleEditItem = async () => {
     try {
       const userToken = localStorage.getItem("USER_TOKEN");
+      const selectedCategoria = data.find((cat) => cat.nome === categoria);
       await editItem({
         itemId,
         userToken,
         data: {
           nome,
-          valor,
           descricao,
+          valorUnitario: valor,
           quantidade,
-          categoriaId
+          categoriaId: selectedCategoria?.id,
         },
       });
       onEditSuccess();
@@ -72,45 +92,17 @@ const EditModal: React.FC<EditModalProps> = ({
     }
   };
 
-  const fetchCategoriaDataFromApi = useCallback(async () => {
-    try {
-      const userToken = localStorage.getItem("USER_TOKEN");
-      const response = await fetchCategoriaData({
-        nome: "%",
-        userToken,
-        itemsPerPage: 50,
-        currentPage: 1,
-      });
-      setData(response);
-      console.log(response)
-      console.log("bbbb", data)
-    } catch (error) {
-      console.error("Erro ao buscar dados:", error);
-    }
-  }, []);
-
   useEffect(() => {
     fetchCategoriaDataFromApi();
     if (!isOpen) {
+      setNome("");
+      setValor(0);
+      setDescricao("");
+      setQuantidade(0);
       setCategoria("Escolha uma categoria");
       setCategoriaId(null);
     }
   }, []);
-
-  const renderMenuCategoria = () => {
-    return (
-      <MenuList>
-        {
-          data?.map((categoria) => (
-            <MenuItem onClick={() => {
-              setCategoriaId(categoria?.id)
-              setCategoria(categoria?.nome)
-            }}>{categoria?.nome}</MenuItem>
-          ))
-        }
-      </MenuList>
-    )
-  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -146,6 +138,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 />
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
               <Text>Valor:</Text>
               <InputGroup>
@@ -153,39 +146,58 @@ const EditModal: React.FC<EditModalProps> = ({
                   pointerEvents="none"
                   color="#2C3E50"
                   fontSize="1.2em"
-                  children="$"
                 />
-                <Input
-                  placeholder="Valor"
+                <NumberInput
+                  min={0}
+                  step={100.2}
                   name="valor"
                   value={valor}
-                  onChange={(e) => setValor(Number(e.target.value))}
-                />
+                  onChange={(value) => setValor(Number(value))}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
               <Text>Quantidade:</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaTools color="gray.300" />
+                  {/* <FaTools color="gray.300" /> */}
                 </InputLeftElement>
-                <Input
-                  placeholder="Quantidade"
+                <NumberInput
+                  min={0}
+                  step={100}
                   name="quantidade"
                   value={quantidade}
-                  onChange={(e) => setQuantidade(Number(e.target.value))}
-                />
+                  onChange={(value) => setQuantidade(Number(value))}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
               <Text>Categoria:</Text>
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<FaChevronDown />}
-                >{categoria}</MenuButton>
-                {renderMenuCategoria()}
-              </Menu>
+              <Select
+                placeholder="Escolha uma categoria"
+                value={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+              >
+                {data?.map((categoria) => (
+                  <option key={categoria.id} value={categoria.nome}>
+                    {categoria.nome}
+                  </option>
+                ))}
+              </Select>
             </FormControl>
             <Button colorScheme="blue" onClick={handleEditItem}>
               Confirmar

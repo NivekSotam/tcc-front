@@ -30,8 +30,8 @@ import { paginateData } from "../../helpers/paginate-help";
 import NewClienteModal from "./Create.Cliente";
 import SuccessAlert from "../error/SuccessAlert";
 import EditModal from "./Edit.Cliente";
-import DeleteModal from "./Delete.Cliente";
 import { formatCpfCnpj } from "../../helpers/format-helpers";
+import DeleteModal from "./Delete.Cliente";
 
 const ListagemCliente = () => {
   const [searchType, setSearchType] = useState("nome");
