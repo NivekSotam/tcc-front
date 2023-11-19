@@ -1,5 +1,7 @@
 export const formatCpfCnpj = (value: string) => {
-  const cleanedValue = value.replace(/\D/g, ""); // Remove caracteres não numéricos
+  // Remove caracteres não numéricos
+  const cleanedValue = value.replace(/\D/g, "");
+
   if (cleanedValue.length <= 11) {
     // Se o valor tem até 11 dígitos, é um CPF
     return cleanedValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -10,6 +12,12 @@ export const formatCpfCnpj = (value: string) => {
       "$1.$2.$3/$4-$5"
     );
   }
+};
+
+// Função para obter o valor sem caracteres especiais
+export const getCleanedCpfCnpj = (value: string) => {
+  // Remove caracteres não numéricos
+  return value.replace(/\D/g, "");
 };
 
 export const removeSpecialChars = (value: any) => {

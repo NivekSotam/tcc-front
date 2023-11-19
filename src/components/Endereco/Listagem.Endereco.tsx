@@ -23,23 +23,27 @@ import { paginateData } from "../../helpers/paginate-help";
 import { useParams } from "react-router-dom";
 import NewEnderecoModal from "./Create.Endereco";
 import SuccessAlert from "../error/SuccessAlert";
+import EditModal from "./Editar.Endereco";
+import DeleteModal from "./Delete.Endereco";
 
 const ListagemEndereco = () => {
   const params = useParams();
   const pessoaId = Number(params.id);
   const [pessoaData, setPessoaData] = useState<any>();
-  // const [fornecedorToDelete, setFornecedorToDelete] = useState<number | null>(null);
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
     useState(false);
-  // const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
-  // const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
-  // const [fornecedorToEdit, setFornecedorToEdit] = useState<number | null>(null);
-  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
+  const [endecoToEdit, setEnderecoToEdit] = useState<number | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const [enderecoToDelete, setEnderecoToDelete] = useState<number | null>(null);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const fetchPessoaDataFromApi = useCallback(async () => {
     try {
@@ -85,6 +89,38 @@ const ListagemEndereco = () => {
     setIsModalOpen(false);
   };
 
+  const handleEditButtonClick = (enderecoId: number) => {
+    setEnderecoToEdit(enderecoId);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setEnderecoToEdit(null);
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchEnderecoDataFromApi();
+    setIsEditModalOpen(false);
+  };
+
+  const handleDeleteButtonClick = (enderecoId: number) => {
+    setEnderecoToDelete(enderecoId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleDeleteModalClose = () => {
+    setEnderecoToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccessAlertOpen(true);
+    fetchEnderecoDataFromApi();
+    setIsDeleteModalOpen(false);
+  };
+
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
@@ -92,18 +128,18 @@ const ListagemEndereco = () => {
         <Th>{item.rua}</Th>
         <Th>{item.numero}</Th>
         <Th>{item.cep}</Th>
-        <Th>{item.tipo}</Th>
+        <Th>{item.tipo === "R" ? "Rural" : "Urbano"}</Th>
         <Th>
           <Button
             colorScheme="blue"
             mr={2}
-            //onClick={() => handleEditButtonClick(Number(item.id))}
+            onClick={() => handleEditButtonClick(Number(item.id))}
           >
             <FaEdit />
           </Button>
           <Button
             colorScheme="red"
-            //onClick={() => handleDeleteButtonClick(Number(item.id))}
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
@@ -158,21 +194,42 @@ const ListagemEndereco = () => {
           alertTitle="Endereço criado com sucesso"
           alertDescription="O novo endereço foi criado com sucesso."
         />
+        <EditModal
+          isOpen={isEditModalOpen}
+          onClose={handleEditModalClose}
+          enderecoId={endecoToEdit}
+          onEditSuccess={handleEditSuccess}
+        />
+        <SuccessAlert
+          isOpen={isEditSuccessAlertOpen}
+          onClose={() => setIsEditSuccessAlertOpen(false)}
+          alertTitle="Endereco editada com sucesso"
+          alertDescription="Os detalhes da categoria foram atualizados com sucesso."
+        />
+
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={handleDeleteModalClose}
+          enderecoId={enderecoToDelete}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
       </Flex>
       {currentItems.length > 0 ? (
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Rua</Th>
-              <Th>Número</Th>
-              <Th>Cep</Th>
-              <Th>Tipo</Th>
-              <Th>Ações</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{renderItems()}</Tbody>
-        </Table>
+        <Box boxShadow="base" p="6" rounded="md" bg="white">
+          <Table variant="simple">
+            <Thead>
+              <Tr bg={"#2C3E50"}>
+                <Th color="white">ID</Th>
+                <Th color="white">Rua</Th>
+                <Th color="white">Número</Th>
+                <Th color="white">Cep</Th>
+                <Th color="white">Tipo</Th>
+                <Th color="white">Ações</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderItems()}</Tbody>
+          </Table>
+        </Box>
       ) : (
         <Text>Nenhum endereço encontrado.</Text>
       )}

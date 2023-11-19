@@ -16,8 +16,14 @@ import {
   MenuButton,
   MenuList,
 } from "@chakra-ui/react";
-import { FaUser, FaEnvelope, FaPhone, FaIdCard, FaChevronDown } from "react-icons/fa";
-import { createEndereco} from "./helpers/api";
+import {
+  FaUser,
+  FaEnvelope,
+  FaPhone,
+  FaIdCard,
+  FaChevronDown,
+} from "react-icons/fa";
+import { createEndereco } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
 
 interface NewEnderecoModal {
@@ -67,11 +73,11 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
           cep,
           tipo,
           complemento,
-          cidade
+          cidade,
         },
         pessoaId,
-        userToken
-        });
+        userToken,
+      });
       onSuccess();
       setIsSuccessAlertOpen(true);
       onClose();
@@ -98,9 +104,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   placeholder="Rua"
                   name="Rua"
                   value={rua}
-                  onChange={(e) =>
-                    setRua(e.target.value)
-                  }
+                  onChange={(e) => setRua(e.target.value)}
                 />
               </InputGroup>
             </FormControl>
@@ -113,9 +117,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   placeholder="Numero"
                   name="Numero"
                   value={numero}
-                  onChange={(e) =>
-                    setNumero(e.target.value)
-                  }
+                  onChange={(e) => setNumero(e.target.value)}
                 />
               </InputGroup>
             </FormControl>
@@ -128,9 +130,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   placeholder="Bairro"
                   name="Bairro"
                   value={bairro}
-                  onChange={(e) =>
-                    setBairro(e.target.value)
-                  }
+                  onChange={(e) => setBairro(e.target.value)}
                 />
               </InputGroup>
             </FormControl>
@@ -143,31 +143,32 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   placeholder="Cep"
                   name="Cep"
                   value={cep}
-                  onChange={(e) =>
-                    setCep(e.target.value)
-                  }
+                  onChange={(e) => setCep(e.target.value)}
                 />
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
               <Menu>
-                <MenuButton
-                    as={Button}
-                    rightIcon={<FaChevronDown />}
-                >{tipo === "R" ? "Rural" : "Urbano"}</MenuButton>
+                <MenuButton as={Button} rightIcon={<FaChevronDown />}>
+                  {tipo === "R" ? "Rural" : "Urbano"}
+                </MenuButton>
                 <MenuList
-                    onClick={() => {
-                        setTipo("R")
-                    }}
-                >Rural</MenuList>
+                  onClick={() => {
+                    setTipo("R");
+                  }}
+                >
+                  Rural
+                </MenuList>
                 <MenuList
-                    onClick={() => {
-                        setTipo("U")
-                    }}
-                >Urbano</MenuList>
+                  onClick={() => {
+                    setTipo("U");
+                  }}
+                >
+                  Urbano
+                </MenuList>
               </Menu>
             </FormControl>
-            <FormControl mb={3}>
+            {/* <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaUser color="gray.300" />
@@ -181,7 +182,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   }
                 />
               </InputGroup>
-            </FormControl>
+            </FormControl> */}
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
@@ -191,9 +192,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   placeholder="Cidade"
                   name="Cidade"
                   value={cidade}
-                  onChange={(e) =>
-                    setCidade(e.target.value)
-                  }
+                  onChange={(e) => setCidade(e.target.value)}
                 />
               </InputGroup>
             </FormControl>

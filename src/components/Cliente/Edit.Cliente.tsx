@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
 import { FaEnvelope, FaIdCard, FaPhone, FaUser } from "react-icons/fa";
-import { formatCpfCnpj } from "../../helpers/format-helpers";
+import { formatCpfCnpj, getCleanedCpfCnpj } from "../../helpers/format-helpers";
 
 interface EditModalProps {
   isOpen: boolean;
@@ -32,33 +32,33 @@ const EditModal: React.FC<EditModalProps> = ({
   clienteId,
   onEditSuccess,
 }) => {
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [telefone, setTelefone] = useState("");
-    const [cadastro, setCadastro] = useState("");
-    const [registro, setRegistro] = useState("");
-    const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
+  const [nome, setNome] = useState("");
+  const [email, setEmail] = useState("");
+  const [telefone, setTelefone] = useState("");
+  const [cadastro, setCadastro] = useState("");
+  const [registro, setRegistro] = useState("");
+  const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
   const handleEditCliente = async () => {
-      try {
-        const userToken = localStorage.getItem("USER_TOKEN");
-        await editCliente({
-          clienteId,
-          userToken,
-          data: {
-            nome,
-            email,
-            telefone,
-            cadastro,
-            registro
-          }
-        });
-        onEditSuccess();
-        onClose();
-      } catch (error) {
-        console.error("Erro ao editar cliente:", error);
-        setIsErrorAlertOpen(true);
-      }
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      await editCliente({
+        clienteId,
+        userToken,
+        data: {
+          nome,
+          email,
+          telefone,
+          cadastro,
+          registro,
+        },
+      });
+      onEditSuccess();
+      onClose();
+    } catch (error) {
+      console.error("Erro ao editar cliente:", error);
+      setIsErrorAlertOpen(true);
+    }
   };
 
   return (
@@ -68,7 +68,7 @@ const EditModal: React.FC<EditModalProps> = ({
         <ModalHeader>Editar Cliente</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-        <FormControl mb={3}>
+          <FormControl mb={3}>
             <Box mb={2}>Nome</Box>
             <InputGroup>
               <InputLeftElement pointerEvents="none">
@@ -78,9 +78,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 placeholder="Nome"
                 name="nome"
                 value={nome}
-                onChange={(e) =>
-                  setNome(e.target.value)
-                }
+                onChange={(e) => setNome(e.target.value)}
               />
             </InputGroup>
           </FormControl>
@@ -95,9 +93,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 name="email"
                 type="email"
                 value={email}
-                onChange={(e) =>
-                  setEmail(e.target.value)
-                }
+                onChange={(e) => setEmail(e.target.value)}
               />
             </InputGroup>
           </FormControl>
@@ -111,9 +107,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 placeholder="Telefone"
                 name="telefone"
                 value={telefone}
-                onChange={(e) =>
-                  setTelefone(e.target.value)
-                }
+                onChange={(e) => setTelefone(e.target.value)}
               />
             </InputGroup>
           </FormControl>
@@ -127,9 +121,9 @@ const EditModal: React.FC<EditModalProps> = ({
                 placeholder="CPF/CNPJ"
                 name="cadastro"
                 value={formatCpfCnpj(cadastro)}
-                onChange={(e) =>
-                  setCadastro(e.target.value)
-                }
+                onChange={(e) => {
+                  setCadastro(getCleanedCpfCnpj(e.target.value));
+                }}
               />
             </InputGroup>
           </FormControl>
@@ -143,9 +137,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 placeholder="RG/Insc. Municipal"
                 name="registro"
                 value={registro}
-                onChange={(e) =>
-                  setRegistro(e.target.value)
-                }
+                onChange={(e) => setRegistro(e.target.value)}
               />
             </InputGroup>
           </FormControl>

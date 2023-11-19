@@ -18,11 +18,16 @@ import {
   MenuItem,
   MenuButton,
   MenuList,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
 import { FaUser, FaTools, FaChevronDown } from "react-icons/fa";
 import { createItem } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
-import { fetchCategoriaData } from "../Categoria/helpers/api"
+import { fetchCategoriaData } from "../Categoria/helpers/api";
 
 interface NewItemModal {
   isOpen: boolean;
@@ -56,8 +61,8 @@ const NewItemModal: React.FC<NewItemModal> = ({
         currentPage: 1,
       });
       setData(response);
-      console.log(response)
-      console.log("bbbb", data)
+      console.log(response);
+      console.log("bbbb", data);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
     }
@@ -85,7 +90,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
           descricao,
           valorUnitario: valor,
           quantidade,
-          categoriaId
+          categoriaId,
         },
         userToken,
       });
@@ -101,17 +106,19 @@ const NewItemModal: React.FC<NewItemModal> = ({
   const renderMenuCategoria = () => {
     return (
       <MenuList>
-        {
-          data?.map((categoria) => (
-            <MenuItem onClick={() => {
-              setCategoriaId(categoria?.id)
-              setCategoria(categoria?.nome)
-            }}>{categoria?.nome}</MenuItem>
-          ))
-        }
+        {data?.map((categoria) => (
+          <MenuItem
+            onClick={() => {
+              setCategoriaId(categoria?.id);
+              setCategoria(categoria?.nome);
+            }}
+          >
+            {categoria?.nome}
+          </MenuItem>
+        ))}
       </MenuList>
-    )
-  }
+    );
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -145,6 +152,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
                 h="120px"
               />
             </FormControl>
+
             <FormControl mb={3}>
               <Text>Valor:</Text>
               <InputGroup>
@@ -152,37 +160,52 @@ const NewItemModal: React.FC<NewItemModal> = ({
                   pointerEvents="none"
                   color="#2C3E50"
                   fontSize="1.2em"
-                  children="$"
+                  // children="R$"
                 />
-                <Input
-                  placeholder="Valor"
-                  name="valor"
+
+                <NumberInput
+                  min={0}
+                  step={100.2}
+                  name=" valor"
                   value={valor}
-                  onChange={(e) => setValor(Number(e.target.value))}
-                />
+                  onChange={(value) => setValor(Number(value))}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
               <Text>Quantidade:</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaTools color="gray.300" />
+                  {/* <FaTools color="gray.300" /> */}
                 </InputLeftElement>
-                <Input
-                  placeholder="Quantidade"
+                <NumberInput
+                  min={0}
+                  step={100}
                   name="quantidade"
                   value={quantidade}
-                  onChange={(e) => setQuantidade(Number(e.target.value))}
-                />
+                  onChange={(value) => setQuantidade(Number(value))}
+                >
+                  <NumberInputField />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
               <Text>Categoria:</Text>
               <Menu>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<FaChevronDown />}
-                >{categoria}</MenuButton>
+                <MenuButton as={Button} rightIcon={<FaChevronDown />}>
+                  {categoria}
+                </MenuButton>
                 {renderMenuCategoria()}
               </Menu>
             </FormControl>

@@ -39,8 +39,10 @@ const ListagemItem = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -213,18 +215,20 @@ const ListagemItem = () => {
       </Flex>
 
       {currentItems.length > 0 ? (
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Item</Th>
-              <Th>Quantidade</Th>
-              <Th>Valor</Th>
-              <Th>Ações</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{renderItems()}</Tbody>
-        </Table>
+        <Box boxShadow="base" p="6" rounded="md" bg="white">
+          <Table variant="simple">
+            <Thead>
+              <Tr bg={"#2C3E50"}>
+                <Th color="white">ID</Th>
+                <Th color="white">Item</Th>
+                <Th color="white">Quantidade</Th>
+                <Th color="white">Valor</Th>
+                <Th color="white">Ações</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderItems()}</Tbody>
+          </Table>
+        </Box>
       ) : (
         <Text>Nenhum dado encontrado.</Text>
       )}
