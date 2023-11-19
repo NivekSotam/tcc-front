@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import SidebarContent from "../components/base/SideBar";
 import MobileNav from "../components/base/navbar";
+import ListagemPrestacao from "../components/Prestacao/Listagem.Prestacao";
 
 const Prestacao = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,7 +29,7 @@ const Prestacao = () => {
 
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        
+        <ListagemPrestacao />
       </Box>
     </Box>
   );

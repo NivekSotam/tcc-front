@@ -1,20 +1,18 @@
 import axios from "axios";
 
 type ListPrestacao = {
-    nome?: string;
     userToken: any;
     itemsPerPage: number;
     currentPage: number;
   }
   
-  export const fetchServicoData = async ({
-    nome,
+  export const fetchPrestacaoData = async ({
     userToken,
     itemsPerPage,
     currentPage
   }: ListPrestacao) => {
     try {
-      const response = await axios.get(`/prestacao/?nome=${nome}&page=${currentPage}&limit=${itemsPerPage}`, {
+      const response = await axios.get(`/prestacao/?page=${currentPage}&limit=${itemsPerPage}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
