@@ -28,7 +28,7 @@ import { paginateData } from "../../helpers/paginate-help";
 import SuccessAlert from "../error/SuccessAlert";
 import EditModal from "./Edit.Servico";
 import DeleteModal from "./Delete.Servico";
-import NewServicoModal from "./create.Servico";
+import NewServicoModal from "./Create.Servico";
 
 const ListagemServico = () => {
   const [searchType, setSearchType] = useState("nome");
