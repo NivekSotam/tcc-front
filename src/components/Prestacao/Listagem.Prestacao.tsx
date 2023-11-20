@@ -26,6 +26,9 @@ import { fetchPrestacaoData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
 import SuccessAlert from "../error/SuccessAlert";
+import NewPrestacaoModal from "./Create.Prestacao";
+import EditModal from "./Edit.Prestacao";
+import DeleteModal from "./Delete.Prestacao";
 
 const ListagemPrestacao = () => {
   const [searchType, setSearchType] = useState("nome");
@@ -82,60 +85,62 @@ const ListagemPrestacao = () => {
     data
   );
 
-//   const handleCreateModalSuccess = () => {
-//     setIsCreateSuccessAlertOpen(true);
-//     fetchDataFromApi();
-//     setIsModalOpen(false);
-//   };
+  const handleCreateModalSuccess = () => {
+    setIsCreateSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsModalOpen(false);
+  };
 
-//   const handleDeleteButtonClick = (prestacaoId: number) => {
-//     setPrestacaoToDelete(prestacaoId);
-//     setIsDeleteModalOpen(true);
-//   };
+  const handleDeleteButtonClick = (prestacaoId: number) => {
+    setPrestacaoToDelete(prestacaoId);
+    setIsDeleteModalOpen(true);
+  };
 
-//   const handleDeleteModalClose = () => {
-//     setPrestacaoToDelete(null);
-//     setIsDeleteModalOpen(false);
-//   };
+  const handleDeleteModalClose = () => {
+    setPrestacaoToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
 
-//   const handleDeleteSuccess = () => {
-//     setIsDeleteSuccessAlertOpen(true);
-//     fetchDataFromApi();
-//     setIsDeleteModalOpen(false);
-//   };
+  const handleDeleteSuccess = () => {
+    setIsDeleteSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsDeleteModalOpen(false);
+  };
 
-//   const handleEditButtonClick = (prestacaoId: number) => {
-//     setPrestacaoToEdit(prestacaoId);
-//     setIsEditModalOpen(true);
-//   };
+  const handleEditButtonClick = (prestacaoId: number) => {
+    setPrestacaoToEdit(prestacaoId);
+    setIsEditModalOpen(true);
+  };
 
-//   const handleEditModalClose = () => {
-//     setPrestacaoToEdit(null);
-//     setIsEditModalOpen(false);
-//   };
+  const handleEditModalClose = () => {
+    setPrestacaoToEdit(null);
+    setIsEditModalOpen(false);
+  };
 
-//   const handleEditSuccess = () => {
-//     setIsEditSuccessAlertOpen(true);
-//     fetchDataFromApi();
-//     setIsEditModalOpen(false);
-//   };
+  const handleEditSuccess = () => {
+    setIsEditSuccessAlertOpen(true);
+    fetchDataFromApi();
+    setIsEditModalOpen(false);
+  };
 
   const renderItems = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
         <Th>{item.id}</Th>
-        <Th>{item.nome}</Th>
+        <Th>{item.funcionario}</Th>
+        <Th>{item.cliente}</Th>
+
         <Th>
           <Button
             colorScheme="blue"
             mr={2}
-            //onClick={() => handleEditButtonClick(Number(item.id))}
+            onClick={() => handleEditButtonClick(Number(item.id))}
           >
             <FaEdit />
           </Button>
           <Button
             colorScheme="red"
-            //onClick={() => handleDeleteButtonClick(Number(item.id))}
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
@@ -174,7 +179,7 @@ const ListagemPrestacao = () => {
         >
           Criar
         </Button>
-        {/* <NewprestacaoModal
+        <NewPrestacaoModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleCreateModalSuccess}
@@ -208,7 +213,7 @@ const ListagemPrestacao = () => {
           onClose={() => setIsDeleteSuccessAlertOpen(false)}
           alertTitle="Categoria excluído com sucesso"
           alertDescription="A categoria foi excluída com sucesso."
-        /> */}
+        />
       </Flex>
 
       {currentItems.length > 0 ? (
@@ -216,6 +221,9 @@ const ListagemPrestacao = () => {
           <Thead>
             <Tr>
               <Th>ID</Th>
+              <Th>Funcionario</Th>
+              <Th>Cliente</Th>
+              <Th>Ações</Th>
             </Tr>
           </Thead>
           <Tbody>{renderItems()}</Tbody>

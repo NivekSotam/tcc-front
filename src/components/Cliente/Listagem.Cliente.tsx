@@ -197,8 +197,8 @@ const ListagemCliente = () => {
         <SuccessAlert
           isOpen={isCreateSuccessAlertOpen}
           onClose={() => setIsCreateSuccessAlertOpen(false)}
-          alertTitle="Categoria criada com sucesso"
-          alertDescription="A nova categoria foi adicionada com sucesso."
+          alertTitle="Cliente criado com sucesso"
+          alertDescription="A novo cliente foi adicionada com sucesso."
         />
         <EditModal
           isOpen={isEditModalOpen}
@@ -209,8 +209,8 @@ const ListagemCliente = () => {
         <SuccessAlert
           isOpen={isEditSuccessAlertOpen}
           onClose={() => setIsEditSuccessAlertOpen(false)}
-          alertTitle="Categoria editada com sucesso"
-          alertDescription="Os detalhes da categoria foram atualizados com sucesso."
+          alertTitle="Cliente editado com sucesso"
+          alertDescription="Os detalhes do cliente foram atualizados com sucesso."
         />
         <DeleteModal
           isOpen={isDeleteModalOpen}
@@ -221,8 +221,8 @@ const ListagemCliente = () => {
         <SuccessAlert
           isOpen={isDeleteSuccessAlertOpen}
           onClose={() => setIsDeleteSuccessAlertOpen(false)}
-          alertTitle="Categoria excluído com sucesso"
-          alertDescription="A categoria foi excluída com sucesso."
+          alertTitle="Cliente excluído com sucesso"
+          alertDescription="O cliente foi excluído com sucesso."
         />
       </Flex>
 
