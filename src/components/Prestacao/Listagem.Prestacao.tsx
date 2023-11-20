@@ -42,11 +42,15 @@ const ListagemPrestacao = () => {
   const [buttonText, setButtonText] = useState("Buscar");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
-  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
+  const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [prestacaoToEdit, setPrestacaoToEdit] = useState<number | null>(null);
-  const [prestacaoToDelete, setPrestacaoToDelete] = useState<number | null>(null);
+  const [prestacaoToDelete, setPrestacaoToDelete] = useState<number | null>(
+    null
+  );
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const handleMenuItemClick = (type: string) => {
@@ -217,17 +221,19 @@ const ListagemPrestacao = () => {
       </Flex>
 
       {currentItems.length > 0 ? (
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Funcionario</Th>
-              <Th>Cliente</Th>
-              <Th>Ações</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{renderItems()}</Tbody>
-        </Table>
+        <Box boxShadow="base" p="6" rounded="md" bg="white">
+          <Table variant="simple">
+            <Thead>
+              <Tr bg={"#2C3E50"}>
+                <Th color="white">ID</Th>
+                <Th color="white">Funcionario</Th>
+                <Th color="white">Cliente</Th>
+                <Th color="white">Ações</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderItems()}</Tbody>
+          </Table>
+        </Box>
       ) : (
         <Text>Nenhum dado encontrado.</Text>
       )}

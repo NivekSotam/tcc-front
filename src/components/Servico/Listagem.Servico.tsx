@@ -218,16 +218,18 @@ const ListagemServico = () => {
       </Flex>
 
       {currentItems.length > 0 ? (
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th>ID</Th>
-              <Th>Categoria</Th>
-              <Th>Ações</Th>
-            </Tr>
-          </Thead>
-          <Tbody>{renderItems()}</Tbody>
-        </Table>
+        <Box boxShadow="base" p="6" rounded="md" bg="white">
+          <Table variant="simple">
+            <Thead>
+              <Tr bg={"#2C3E50"}>
+                <Th color="white">ID</Th>
+                <Th color="white">Categoria</Th>
+                <Th color="white">Ações</Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderItems()}</Tbody>
+          </Table>
+        </Box>
       ) : (
         <Text>Nenhum dado encontrado.</Text>
       )}
