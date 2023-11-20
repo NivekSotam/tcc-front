@@ -77,7 +77,7 @@ const SidebarContent = () => {
           Itens
         </NavItem>
         <NavItem icon={FiFileText} to="/itensCategoria">
-          Iten-Categoria
+          Itens por Categoria
         </NavItem>
         <NavItem icon={FiFileText} to="/categorias">
           Categorias

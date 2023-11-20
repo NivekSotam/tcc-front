@@ -15,6 +15,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  Text
 } from "@chakra-ui/react";
 import {
   FaUser,
@@ -22,6 +23,9 @@ import {
   FaPhone,
   FaIdCard,
   FaChevronDown,
+  FaDollarSign,
+  FaFolder,
+  FaCalendar,
 } from "react-icons/fa";
 import { createServicoPrestacao } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
@@ -89,14 +93,15 @@ const NewModal: React.FC<NewModal> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Criar Novo Endereço</ModalHeader>
+        <ModalHeader>Criar Novo Serviço</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
+              <Text>Valor Cobrado</Text>
               <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+              <InputLeftElement pointerEvents="none">
+                  <FaDollarSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="ValorCobrado"
@@ -107,9 +112,10 @@ const NewModal: React.FC<NewModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Serviço</Text>
               <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+              <InputLeftElement pointerEvents="none">
+                  <FaFolder color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="ServicoId"
@@ -120,10 +126,11 @@ const NewModal: React.FC<NewModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Data Início</Text>
               <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
-                </InputLeftElement>
+              <InputLeftElement pointerEvents="none">
+                  <FaCalendar color="gray.300" />
+              </InputLeftElement>
                 <Input
                   placeholder="DataInicio"
                   name="DataInicio"
@@ -133,10 +140,11 @@ const NewModal: React.FC<NewModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Data previsão fim</Text>
               <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
-                </InputLeftElement>
+              <InputLeftElement pointerEvents="none">
+                  <FaCalendar color="gray.300" />
+              </InputLeftElement>
                 <Input
                   placeholder="DataFim"
                   name="DataFim"
@@ -147,10 +155,11 @@ const NewModal: React.FC<NewModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Pago?</Text>
               <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
-                </InputLeftElement>
+              <InputLeftElement pointerEvents="none">
+                  <FaDollarSign color="gray.300" />
+              </InputLeftElement>
                 <Input
                   placeholder="IsPago"
                   name="IsPago"

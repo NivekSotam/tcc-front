@@ -109,8 +109,8 @@ const ListagemServicoPrestacao = () => {
         <Th>{item.id}</Th>
         <Th>R${item.valorCobrado}</Th>
         <Th>{item.servico}</Th>
-        <Th>{item.status === false ? <FaThumbsDown /> : <FaThumbsUp />}</Th>
-        <Th>{item.isPago === false ? <FaThumbsDown /> : <FaThumbsUp />}</Th>
+        <Th>{item.status === false ? <FaThumbsDown color="red" /> : <FaThumbsUp color="green" />}</Th>
+        <Th>{item.isPago === false ? <FaThumbsDown color="red" /> : <FaThumbsUp color="green" />}</Th>
         <Th>
           <Button
             colorScheme="blue"
@@ -151,8 +151,8 @@ const ListagemServicoPrestacao = () => {
         <SuccessAlert
           isOpen={isCreateSuccessAlertOpen}
           onClose={() => setIsCreateSuccessAlertOpen(false)}
-          alertTitle="Endereço criado com sucesso"
-          alertDescription="O novo endereço foi criado com sucesso."
+          alertTitle="Serviço criado com sucesso"
+          alertDescription="O novo serviço foi criado com sucesso."
         />
         <EditModal
           isOpen={isEditModalOpen}
@@ -163,15 +163,15 @@ const ListagemServicoPrestacao = () => {
         <SuccessAlert
           isOpen={isEditSuccessAlertOpen}
           onClose={() => setIsEditSuccessAlertOpen(false)}
-          alertTitle="Endereco editada com sucesso"
-          alertDescription="Os detalhes da categoria foram atualizados com sucesso."
+          alertTitle="Serviço editado com sucesso"
+          alertDescription="Os detalhes do serviço foram atualizados com sucesso."
         />
 
         {/* <DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
           enderecoId={enderecoToDelete}
-          onDeleteSuccess={handleDeleteSuccess}
+          onDeleteSuccess={handleDeleteSuccess}W
         /> */}
       </Flex>
       {currentItems.length > 0 ? (
