@@ -40,10 +40,6 @@ const SidebarContent = () => {
         <CloseButton display={{ base: "flex", md: "none" }} />
       </Flex>
 
-      <NavItem icon={FiCalendar} to="/">
-        Calendário
-      </NavItem>
-
       <NavItem icon={FiFileText} to="/vendas">
         Vendas
       </NavItem>
