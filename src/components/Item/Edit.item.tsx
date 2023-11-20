@@ -78,7 +78,6 @@ const EditModal: React.FC<EditModalProps> = ({
         userToken,
         data: {
           nome,
-          descricao,
           valorUnitario: valor,
           quantidade,
           categoriaId: selectedCategoria?.id,
@@ -126,7 +125,7 @@ const EditModal: React.FC<EditModalProps> = ({
                 />
               </InputGroup>
             </FormControl>
-            <FormControl mb={3}>
+            {/* <FormControl mb={3}>
               <Text>Descrição:</Text>
               <InputGroup>
                 <Textarea
@@ -137,7 +136,7 @@ const EditModal: React.FC<EditModalProps> = ({
                   h="120px"
                 />
               </InputGroup>
-            </FormControl>
+            </FormControl> */}
 
             <FormControl mb={3}>
               <Text>Valor:</Text>

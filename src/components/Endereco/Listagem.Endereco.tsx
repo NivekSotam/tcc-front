@@ -125,6 +125,7 @@ const ListagemEndereco = () => {
     return currentItems.map((item) => (
       <Tr key={item.id}>
         <Th>{item.id}</Th>
+        <Th>{item.cidade}</Th>
         <Th>{item.rua}</Th>
         <Th>{item.numero}</Th>
         <Th>{item.cep}</Th>
@@ -206,6 +207,12 @@ const ListagemEndereco = () => {
           alertTitle="Endereco editada com sucesso"
           alertDescription="Os detalhes da categoria foram atualizados com sucesso."
         />
+        <SuccessAlert
+          isOpen={isDeleteSuccessAlertOpen}
+          onClose={() => setIsDeleteSuccessAlertOpen(false)}
+          alertTitle="Endereço excluído com sucesso"
+          alertDescription="O Endereço foi excluído com sucesso."
+        />
 
         <DeleteModal
           isOpen={isDeleteModalOpen}
@@ -220,6 +227,7 @@ const ListagemEndereco = () => {
             <Thead>
               <Tr bg={"#2C3E50"}>
                 <Th color="white">ID</Th>
+                <Th color="white">Cidade</Th>
                 <Th color="white">Rua</Th>
                 <Th color="white">Número</Th>
                 <Th color="white">Cep</Th>

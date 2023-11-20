@@ -81,7 +81,6 @@ const NewItemModal: React.FC<NewItemModal> = ({
       await createItem({
         data: {
           nome,
-          descricao,
           valorUnitario: valor,
           quantidade,
           categoriaId: selectedCategoria?.id,
@@ -119,7 +118,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
                 />
               </InputGroup>
             </FormControl>
-            <FormControl mb={3}>
+            {/* <FormControl mb={3}>
               <Text>Descrição:</Text>
               <Textarea
                 placeholder="Descrição"
@@ -128,7 +127,7 @@ const NewItemModal: React.FC<NewItemModal> = ({
                 onChange={(e) => setDescricao(e.target.value)}
                 h="120px"
               />
-            </FormControl>
+            </FormControl> */}
 
             <FormControl mb={3}>
               <Text>Valor:</Text>

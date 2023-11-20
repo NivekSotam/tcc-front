@@ -40,13 +40,13 @@ const SidebarContent = () => {
         <CloseButton display={{ base: "flex", md: "none" }} />
       </Flex>
 
-      <NavItem icon={FiFileText} to="/vendas">
+      {/* <NavItem icon={FiFileText} to="/vendas">
         Vendas
       </NavItem>
 
       <NavItem icon={FiFileText} to="/compras">
         Compras
-      </NavItem>
+      </NavItem> */}
 
       <Button
         onClick={() => setShowItens(!showItens)}
@@ -76,6 +76,9 @@ const SidebarContent = () => {
         <NavItem icon={FiFileText} to="/itens">
           Itens
         </NavItem>
+        <NavItem icon={FiFileText} to="/itensCategoria">
+          Iten-Categoria
+        </NavItem>
         <NavItem icon={FiFileText} to="/categorias">
           Categorias
         </NavItem>
@@ -97,7 +100,7 @@ const SidebarContent = () => {
       >
         <Flex align="center">
           <Icon as={FiUsers} />
-            Gestão Pessoal
+          Gestão Pessoal
           <Icon
             ml="4"
             fontSize="16"
@@ -106,12 +109,12 @@ const SidebarContent = () => {
         </Flex>
       </Button>
       <Collapse in={showPessoas}>
-      <NavItem icon={FiFileText} to="/clientes">
-        Clientes
-      </NavItem>
-      <NavItem icon={FiFileText} to="/fornecedores">
-        Fornecedores
-      </NavItem>
+        <NavItem icon={FiFileText} to="/clientes">
+          Clientes
+        </NavItem>
+        <NavItem icon={FiFileText} to="/fornecedores">
+          Fornecedores
+        </NavItem>
       </Collapse>
       <Button
         onClick={() => setShowServicos(!showServicos)}

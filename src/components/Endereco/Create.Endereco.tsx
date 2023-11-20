@@ -15,6 +15,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import {
   FaUser,
@@ -134,6 +135,7 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                 />
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
@@ -148,42 +150,6 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
-              <Menu>
-                <MenuButton as={Button} rightIcon={<FaChevronDown />}>
-                  {tipo === "R" ? "Rural" : "Urbano"}
-                </MenuButton>
-                <MenuList
-                  onClick={() => {
-                    setTipo("R");
-                  }}
-                >
-                  Rural
-                </MenuList>
-                <MenuList
-                  onClick={() => {
-                    setTipo("U");
-                  }}
-                >
-                  Urbano
-                </MenuList>
-              </Menu>
-            </FormControl>
-            {/* <FormControl mb={3}>
-              <InputGroup>
-                <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
-                </InputLeftElement>
-                <Input
-                  placeholder="Complemento"
-                  name="Complemento"
-                  value={complemento}
-                  onChange={(e) =>
-                    setComplemento(e.target.value)
-                  }
-                />
-              </InputGroup>
-            </FormControl> */}
-            <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaUser color="gray.300" />
@@ -195,6 +161,17 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
                   onChange={(e) => setCidade(e.target.value)}
                 />
               </InputGroup>
+            </FormControl>
+            <FormControl mb={3}>
+              <Menu>
+                <MenuButton as={Button} rightIcon={<FaChevronDown />}>
+                  {tipo === "R" ? "Rural" : "Urbano"}
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => setTipo("R")}>Rural</MenuItem>
+                  <MenuItem onClick={() => setTipo("U")}>Urbano</MenuItem>
+                </MenuList>
+              </Menu>
             </FormControl>
             <Button colorScheme="blue" onClick={handleCreateEndereco}>
               Criar Endereço
