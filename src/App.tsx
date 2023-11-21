@@ -16,6 +16,7 @@ import Endereco from "./pages/Endereco";
 import Prestacao from "./pages/Prestacao";
 import ServicoPrestacao from "./pages/ServicoPrestacao";
 import ItensCategoria from "./pages/itensCategoria";
+import ItemServico from "./pages/ItemServico";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -130,6 +131,14 @@ export const App = () => (
           element={
             <PrivateRoute>
               <ServicoPrestacao />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/prestacoes/:id/:servicoId"
+          element={
+            <PrivateRoute>
+              <ItemServico />
             </PrivateRoute>
           }
         />

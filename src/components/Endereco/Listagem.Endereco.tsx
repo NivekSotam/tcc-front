@@ -153,7 +153,7 @@ const ListagemEndereco = () => {
     <Box p={5}>
       <Box boxShadow="base" p="6" rounded="md" bg="white">
         <Table variant="simple">
-          <Thead bg="rgb(49,130,206)">
+          <Thead bg={"#2C3E50"}>
             <Tr>
               <Th color="white">Nome</Th>
               <Th color="white">Email</Th>

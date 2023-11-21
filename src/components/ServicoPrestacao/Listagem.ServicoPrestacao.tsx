@@ -15,8 +15,9 @@ import {
   MenuList,
   MenuItem,
   Td,
+  Link,
 } from "@chakra-ui/react";
-import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus, FaThumbsDown, FaThumbsUp, FaCheck } from "react-icons/fa";
+import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus, FaThumbsDown, FaThumbsUp, FaCheck, FaBox } from "react-icons/fa";
 import { fetchPrestacaoData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
@@ -24,6 +25,7 @@ import { useParams } from "react-router-dom";
 import NewModal from "./Create.ServicoPrestacao";
 import SuccessAlert from "../error/SuccessAlert";
 import EditModal from "./Edit.ServicoPrestacao";
+import DeleteModal from "./Delete.ServicoPrestacao";
 
 const ListagemServicoPrestacao = () => {
   const params = useParams();
@@ -121,10 +123,16 @@ const ListagemServicoPrestacao = () => {
           </Button>
           <Button
             colorScheme="red"
-            //onClick={() => handleDeleteButtonClick(Number(item.id))}
+            mr={2}
+            onClick={() => handleDeleteButtonClick(Number(item.id))}
           >
             <FaTrashAlt />
           </Button>
+          <Link href={`/prestacoes/${prestacaoId}/${item.id}`}>
+            <Button colorScheme="blue" mr={2}>
+              <FaBox />
+            </Button>
+          </Link>
         </Th>
       </Tr>
     ));
@@ -167,12 +175,18 @@ const ListagemServicoPrestacao = () => {
           alertDescription="Os detalhes do serviço foram atualizados com sucesso."
         />
 
-        {/* <DeleteModal
+        <DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
-          enderecoId={enderecoToDelete}
-          onDeleteSuccess={handleDeleteSuccess}W
-        /> */}
+          prestacaoId={prestacaoToDelete}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
+        <SuccessAlert
+          isOpen={isDeleteSuccessAlertOpen}
+          onClose={() => setIsDeleteSuccessAlertOpen(false)}
+          alertTitle="Serviço deletado com sucesso"
+          alertDescription="O serviço foi deletado com sucesso."
+        />
       </Flex>
       {currentItems.length > 0 ? (
         <Box boxShadow="base" p="6" rounded="md" bg="white">

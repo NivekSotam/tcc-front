@@ -73,3 +73,26 @@ export const editServicoPrestacao = async ({
         throw error;
     }
 };
+
+type DeleteServicoPrestacao = {
+    prestacaoId: number | null;
+    userToken: any;
+}
+
+export const deleteServicoPretacao = async ({
+    prestacaoId,
+    userToken
+}: DeleteServicoPrestacao) => {
+    try {
+        const response = await axios.delete(`/prestacao/servicos/${prestacaoId}/`, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        });
+        console.log(response)
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao buscar dados:", error);
+        throw error;
+    }
+}
