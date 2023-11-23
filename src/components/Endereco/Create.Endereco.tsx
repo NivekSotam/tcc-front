@@ -16,6 +16,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Text,
 } from "@chakra-ui/react";
 import {
   FaUser,
@@ -23,6 +24,7 @@ import {
   FaPhone,
   FaIdCard,
   FaChevronDown,
+  FaSign,
 } from "react-icons/fa";
 import { createEndereco } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
@@ -97,9 +99,10 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
+              <Text>Rua</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Rua"
@@ -110,9 +113,10 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Numero</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Numero"
@@ -123,9 +127,10 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Bairro</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Bairro"
@@ -137,9 +142,10 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
             </FormControl>
 
             <FormControl mb={3}>
+              <Text>CEP</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Cep"
@@ -150,9 +156,10 @@ const NewEnderecoModal: React.FC<NewEnderecoModal> = ({
               </InputGroup>
             </FormControl>
             <FormControl mb={3}>
+              <Text>Cidade</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Cidade"
