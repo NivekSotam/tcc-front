@@ -64,7 +64,7 @@ const SidebarContent = () => {
       >
         <Flex align="center">
           <Icon as={FiBox} />
-          Gestão de Estoque
+          <Text ml="2">Gestão de Estoque</Text>
           <Icon
             ml="4"
             fontSize="16"
@@ -100,7 +100,7 @@ const SidebarContent = () => {
       >
         <Flex align="center">
           <Icon as={FiUsers} />
-          Gestão Pessoal
+          <Text ml="2">Gestão Pessoal</Text>
           <Icon
             ml="4"
             fontSize="16"
@@ -132,7 +132,7 @@ const SidebarContent = () => {
       >
         <Flex align="center">
           <Icon as={FiFileText} />
-          Gestão de Serviços
+          <Text ml="2">Gestão de Serviços</Text>
           <Icon
             ml="4"
             fontSize="16"
