@@ -28,7 +28,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
 }) => {
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
-  const handleDeleteCategoria = async () => {
+  const handleDeleteEndereco = async () => {
     if (enderecoId) {
       try {
         const userToken = localStorage.getItem("USER_TOKEN");
@@ -36,7 +36,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         onDeleteSuccess();
         onClose();
       } catch (error) {
-        console.error("Erro ao excluir categoria:", error);
+        console.error("Erro ao excluir endereco:", error);
         setIsErrorAlertOpen(true);
       }
     }
@@ -50,7 +50,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         <ModalCloseButton />
         <ModalBody>Tem certeza que deseja excluir este endereço?</ModalBody>
         <ModalFooter>
-          <Button colorScheme="red" mr={3} onClick={handleDeleteCategoria}>
+          <Button colorScheme="red" mr={3} onClick={handleDeleteEndereco}>
             Confirmar
           </Button>
           <Button variant="ghost" onClick={onClose}>

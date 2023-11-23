@@ -36,7 +36,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
         onDeleteSuccess();
         onClose();
       } catch (error) {
-        console.error("Erro ao excluir categoria:", error);
+        console.error("Erro ao excluir serviço:", error);
         setIsErrorAlertOpen(true);
       }
     }

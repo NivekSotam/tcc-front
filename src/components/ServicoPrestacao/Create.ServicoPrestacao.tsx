@@ -84,7 +84,7 @@ const NewModal: React.FC<NewModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar endereco:", error);
+      console.error("Erro ao incluir serviço:", error);
       setIsErrorAlertOpen(true);
     }
   };

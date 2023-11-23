@@ -65,7 +65,6 @@ const ListagemEndereco = () => {
         pessoaId,
         userToken,
       });
-      console.log("aaaaaaaaaaaaaaaaaaaaaaaa", fetchedData);
       setData(fetchedData);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);

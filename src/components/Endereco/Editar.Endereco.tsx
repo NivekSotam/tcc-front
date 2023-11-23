@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -15,17 +14,13 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
 import {
   FaChevronDown,
-  FaEnvelope,
-  FaIdCard,
-  FaPhone,
-  FaUser,
+  FaSign,
 } from "react-icons/fa";
 import { editEndereco } from "./helpers/api";
 
@@ -87,7 +82,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Rua"
@@ -100,7 +95,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Numero"
@@ -113,7 +108,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Bairro"
@@ -127,7 +122,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Cep"
@@ -140,7 +135,7 @@ const EditModal: React.FC<EditModalProps> = ({
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
-                  <FaUser color="gray.300" />
+                  <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
                   placeholder="Cidade"

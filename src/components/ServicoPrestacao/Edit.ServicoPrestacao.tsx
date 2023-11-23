@@ -20,16 +20,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
-import {
-    FaCheck,
-  FaChevronDown,
-  FaEnvelope,
-  FaIdCard,
-  FaPhone,
-  FaUser,
-} from "react-icons/fa";
 import { editServicoPrestacao } from "./helpers/api";
-import { formatCurrency } from "../../helpers/format-helpers";
 
 interface EditModalProps {
   isOpen: boolean;
