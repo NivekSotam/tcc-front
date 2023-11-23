@@ -11,9 +11,9 @@ export const fetchPrestacaoData = async ({
     servicoId,
     userToken
 }: ListItemPrestacao) => {
-    const url = `/prestacao/${prestacaoId}/servicos/${servicoId}/`
+    const url = `/prestacao/${prestacaoId}/servicos/${servicoId}/itens`
     try {
-        const response = await axios.get(`/prestacao/${prestacaoId}/servicos/`, {
+        const response = await axios.get(url, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },

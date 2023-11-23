@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import SidebarContent from "../components/base/SideBar";
 import MobileNav from "../components/base/navbar";
+import ListagemItemServico from "../components/ItemServico/Listagem.ItemServico";
 
 const ItemServico
  = () => {
@@ -30,7 +31,7 @@ const ItemServico
 
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        
+        <ListagemItemServico />
       </Box>
     </Box>
   );
