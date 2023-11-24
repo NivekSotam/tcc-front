@@ -21,6 +21,8 @@ import { fetchPrestacaoData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
 import { useParams } from "react-router-dom";
+import NewItemPrestacaoModal from "./Create.ItemServico";
+import SuccessAlert from "../error/SuccessAlert";
 
 const ListagemItemServico = () => {
   const params = useParams();
@@ -146,9 +148,10 @@ const ListagemItemServico = () => {
         >
           Criar
         </Button>
-        {/* <NewEnderecoModal
+        <NewItemPrestacaoModal
           isOpen={isModalOpen}
-          pessoaId={pessoaId}
+          servicoId={servicoId}
+          prestacaoId={prestacaoId}
           onClose={() => setIsModalOpen(false)}
           onSuccess={handleCreateModalSuccess}
         />
@@ -158,7 +161,7 @@ const ListagemItemServico = () => {
           alertTitle="Endereço criado com sucesso"
           alertDescription="O novo endereço foi criado com sucesso."
         />
-        <EditModal
+        {/* <EditModal
           isOpen={isEditModalOpen}
           onClose={handleEditModalClose}
           enderecoId={endecoToEdit}
