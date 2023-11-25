@@ -8,6 +8,8 @@ import {
   Icon,
   Button,
   Collapse,
+  Img,
+  Image,
 } from "@chakra-ui/react";
 import {
   FiCalendar,
@@ -18,6 +20,7 @@ import {
   FiBox,
 } from "react-icons/fi";
 import NavItem from "./NavItem";
+import logoFinal from "../../images/logoFinal.png";
 
 const SidebarContent = () => {
   const [showPessoas, setShowPessoas] = useState(false);
@@ -34,9 +37,9 @@ const SidebarContent = () => {
       h="full"
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+        {/* Adicionando a imagem usando o componente Image do Chakra UI */}
+        <Image src={logoFinal} />
+
         <CloseButton display={{ base: "flex", md: "none" }} />
       </Flex>
 
