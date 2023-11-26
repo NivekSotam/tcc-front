@@ -18,7 +18,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  Checkbox, // Importando o Checkbox
+  Checkbox,
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
 import { editServicoPrestacao } from "./helpers/api";

@@ -12,7 +12,7 @@ import {
   FormControl,
   InputLeftElement,
   InputGroup,
-  Checkbox, // Importando o Checkbox
+  Checkbox,
   Text,
 } from "@chakra-ui/react";
 import { FaDollarSign, FaFolder, FaCalendar } from "react-icons/fa";
