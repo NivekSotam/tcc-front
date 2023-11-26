@@ -23,6 +23,8 @@ import { paginateData } from "../../helpers/paginate-help";
 import { useParams } from "react-router-dom";
 import NewItemPrestacaoModal from "./Create.ItemServico";
 import SuccessAlert from "../error/SuccessAlert";
+import EditItemPrestacaoModal from "./Update.ItemServico";
+import DeleteModal from "./Delete.ItemServico";
 
 const ListagemItemServico = () => {
   const params = useParams();
@@ -39,10 +41,10 @@ const ListagemItemServico = () => {
   const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
     useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
-  const [endecoToEdit, setEnderecoToEdit] = useState<number | null>(null);
+  const [servicoToEdit, setServicoToEdit] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const [enderecoToDelete, setEnderecoToDelete] = useState<number | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
     useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -78,13 +80,13 @@ const ListagemItemServico = () => {
     setIsModalOpen(false);
   };
 
-  const handleEditButtonClick = (enderecoId: number) => {
-    setEnderecoToEdit(enderecoId);
+  const handleEditButtonClick = (itemServicoId: number) => {
+    setServicoToEdit(itemServicoId);
     setIsEditModalOpen(true);
   };
 
   const handleEditModalClose = () => {
-    setEnderecoToEdit(null);
+    setServicoToEdit(null);
     setIsEditModalOpen(false);
   };
 
@@ -94,13 +96,13 @@ const ListagemItemServico = () => {
     setIsEditModalOpen(false);
   };
 
-  const handleDeleteButtonClick = (enderecoId: number) => {
-    setEnderecoToDelete(enderecoId);
+  const handleDeleteButtonClick = (itemServicoId: number) => {
+    setItemToDelete(itemServicoId);
     setIsDeleteModalOpen(true);
   };
 
   const handleDeleteModalClose = () => {
-    setEnderecoToDelete(null);
+    setItemToDelete(null);
     setIsDeleteModalOpen(false);
   };
 
@@ -120,6 +122,7 @@ const ListagemItemServico = () => {
         <Th>
           <Button
             colorScheme="blue"
+            isDisabled = {item.retornado}
             mr={2}
             onClick={() => handleEditButtonClick(Number(item.id))}
           >
@@ -158,14 +161,16 @@ const ListagemItemServico = () => {
         <SuccessAlert
           isOpen={isCreateSuccessAlertOpen}
           onClose={() => setIsCreateSuccessAlertOpen(false)}
-          alertTitle="Endereço criado com sucesso"
-          alertDescription="O novo endereço foi criado com sucesso."
+          alertTitle="Item adicionado com sucesso"
+          alertDescription="O item foi adicionado com sucesso."
         />
-        {/* <EditModal
+         <EditItemPrestacaoModal
           isOpen={isEditModalOpen}
           onClose={handleEditModalClose}
-          enderecoId={endecoToEdit}
-          onEditSuccess={handleEditSuccess}
+          itemServicoId={servicoToEdit}
+          servicoId={servicoId}
+          prestacaoId={prestacaoId}
+          onSuccess={handleEditSuccess}
         />
         <SuccessAlert
           isOpen={isEditSuccessAlertOpen}
@@ -183,9 +188,11 @@ const ListagemItemServico = () => {
         <DeleteModal
           isOpen={isDeleteModalOpen}
           onClose={handleDeleteModalClose}
-          enderecoId={enderecoToDelete}
+          itemServicoId={itemToDelete}
+          servicoId={servicoId}
+          prestacaoId={prestacaoId}
           onDeleteSuccess={handleDeleteSuccess}
-        /> */}
+        />
       </Flex>
       {currentItems.length > 0 ? (
         <Box boxShadow="base" p="6" rounded="md" bg="white">

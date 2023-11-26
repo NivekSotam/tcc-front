@@ -22,9 +22,9 @@ import { addItemToPrestacao, editItemServico } from "./helpers/api";
 
 interface EditItemPrestacaoModal {
   isOpen: boolean;
-  prestacaoId: number;
-  servicoId: number;
-  itemServicoId: number;
+  prestacaoId: number | null;
+  servicoId: number | null;
+  itemServicoId: number| null;
   onClose: () => void;
   onSuccess: () => void;
 }

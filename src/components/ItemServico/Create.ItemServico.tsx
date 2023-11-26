@@ -73,7 +73,7 @@ const NewItemPrestacaoModal: React.FC<NewItemPrestacaoModal> = ({
       setIsSuccessAlertOpen(true);
       onClose();
     } catch (error) {
-      console.error("Erro ao criar endereco:", error);
+      console.error("Erro ao adicionar item:", error);
       setIsErrorAlertOpen(true);
     }
   };
@@ -82,12 +82,12 @@ const NewItemPrestacaoModal: React.FC<NewItemPrestacaoModal> = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Criar Novo Endereço</ModalHeader>
+        <ModalHeader>Adicionar Novo Item</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
-              <Text>Rua</Text>
+              <Text>Item</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaSign color="gray.300" />
@@ -115,7 +115,7 @@ const NewItemPrestacaoModal: React.FC<NewItemPrestacaoModal> = ({
               </InputGroup>
             </FormControl>
             <Button colorScheme="blue" onClick={handleAddItemToPrestacao}>
-              Criar Endereço
+              Adicionar Item
             </Button>
           </Flex>
         </ModalBody>

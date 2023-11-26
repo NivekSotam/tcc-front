@@ -53,10 +53,10 @@ export const addItemToPrestacao = async ({
 }
 
 type UpdateItemServico = {
-    prestacaoId: number;
+    prestacaoId: number | null;
     data: any;
-    itemServicoId: number;
-    servicoId: number;
+    itemServicoId: number | null;
+    servicoId: number | null
     userToken: any
 }
 
@@ -70,6 +70,32 @@ export const editItemServico = async ({
     const url = `/prestacao/${prestacaoId}/servicos/${servicoId}/itens/${itemServicoId}`
     try {
         const response = await axios.put(url, data, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+            },
+        })
+        return response;
+    } catch(error){
+        throw error;
+    }
+}
+
+type DeleteItemServico = {
+    prestacaoId: number | null;
+    itemServicoId: number | null;
+    servicoId: number | null
+    userToken: any
+}
+
+export const deleteItemServico = async ({
+    prestacaoId,
+    servicoId,
+    itemServicoId,
+    userToken
+}: DeleteItemServico) => {
+    const url = `/prestacao/${prestacaoId}/servicos/${servicoId}/itens/${itemServicoId}`
+    try {
+        const response = await axios.delete(url, {
             headers: {
                 Authorization: `Bearer ${userToken}`,
             },
