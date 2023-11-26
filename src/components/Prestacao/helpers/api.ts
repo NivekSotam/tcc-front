@@ -6,12 +6,8 @@ type ListPrestacao = {
   currentPage: number;
 };
 
-export const fetchPrestacaoData = async ({
-  userToken,
-  itemsPerPage,
-  currentPage,
-}: ListPrestacao) => {
-  const url = `/prestacao/?page=${currentPage}&limit=${itemsPerPage}`;
+export const fetchPrestacaoData = async ({ userToken }: ListPrestacao) => {
+  const url = `/prestacao/?page=&limit=`;
   try {
     const response = await axios.get(url, {
       headers: {

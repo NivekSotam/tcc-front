@@ -100,8 +100,9 @@ const NewModal: React.FC<NewModal> = ({
                 />
               </InputGroup>
             </FormControl>
+
             <FormControl mb={3}>
-              <Text>Serviço</Text>
+              <Text>Serviço Id</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaFolder color="gray.300" />

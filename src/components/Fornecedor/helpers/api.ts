@@ -13,7 +13,7 @@ export const fetchCliforData = async ({
   itemsPerPage,
   currentPage,
 }: ListCliente) => {
-  const url = `/clientefornecedor/?nome=${nome}&isCliente=0&limit=${itemsPerPage}&page=${currentPage}`;
+  const url = `/clientefornecedor/?nome=${nome}&isCliente=0&limit=&page=`;
   try {
     const response = await axios.get(url, {
       headers: {

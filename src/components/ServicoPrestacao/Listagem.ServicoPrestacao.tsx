@@ -17,7 +17,16 @@ import {
   Td,
   Link,
 } from "@chakra-ui/react";
-import { FaEdit, FaTrashAlt, FaAngleDown, FaPlus, FaThumbsDown, FaThumbsUp, FaCheck, FaBox } from "react-icons/fa";
+import {
+  FaEdit,
+  FaTrashAlt,
+  FaAngleDown,
+  FaPlus,
+  FaThumbsDown,
+  FaThumbsUp,
+  FaCheck,
+  FaBox,
+} from "react-icons/fa";
 import { fetchPrestacaoData } from "./helpers/api";
 import ListPagination from "../ListPagination";
 import { paginateData } from "../../helpers/paginate-help";
@@ -34,12 +43,15 @@ const ListagemServicoPrestacao = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(15);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] = useState(false);
+  const [isCreateSuccessAlertOpen, setIsCreateSuccessAlertOpen] =
+    useState(false);
   const [isEditSuccessAlertOpen, setIsEditSuccessAlertOpen] = useState(false);
   const [prestacaoToEdit, setPrestacaoToEdit] = useState<number | null>(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const [prestacaoToDelete, setPrestacaoToDelete] = useState<number | null>(null);
+  const [prestacaoToDelete, setPrestacaoToDelete] = useState<number | null>(
+    null
+  );
   const [isDeleteSuccessAlertOpen, setIsDeleteSuccessAlertOpen] =
     useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -111,8 +123,20 @@ const ListagemServicoPrestacao = () => {
         <Th>{item.id}</Th>
         <Th>R${item.valorCobrado}</Th>
         <Th>{item.servico}</Th>
-        <Th>{item.status === false ? <FaThumbsDown color="red" /> : <FaThumbsUp color="green" />}</Th>
-        <Th>{item.isPago === false ? <FaThumbsDown color="red" /> : <FaThumbsUp color="green" />}</Th>
+        <Th>
+          {item.status === false ? (
+            <FaThumbsDown color="red" />
+          ) : (
+            <FaThumbsUp color="green" />
+          )}
+        </Th>
+        <Th>
+          {item.isPago === false ? (
+            <FaThumbsDown color="red" />
+          ) : (
+            <FaThumbsUp color="green" />
+          )}
+        </Th>
         <Th>
           <Button
             colorScheme="blue"

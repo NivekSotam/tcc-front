@@ -13,7 +13,7 @@ export const fetchItemData = async ({
   itemsPerPage,
   currentPage,
 }: ListItem) => {
-  const url = `/item/?nome=${nome}&categoria=&limit=${itemsPerPage}&page=${currentPage}`;
+  const url = `/item/?nome=${nome}&categoria=&limit=&page=`;
   try {
     const response = await axios.get(url, {
       headers: {
@@ -33,7 +33,7 @@ export const fetchItemCategoriaData = async ({
   itemsPerPage,
   currentPage,
 }: ListItem) => {
-  const url = `/item/categoria/list/?nome=${nome}&limit=${itemsPerPage}&page=${currentPage}`;
+  const url = `/item/categoria/list/?nome=${nome}&limit=&page=`;
   try {
     const response = await axios.get(url, {
       headers: {
