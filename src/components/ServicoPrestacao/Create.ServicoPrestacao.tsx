@@ -12,21 +12,10 @@ import {
   FormControl,
   InputLeftElement,
   InputGroup,
-  Menu,
-  MenuButton,
-  MenuList,
-  Text
+  Checkbox, // Importando o Checkbox
+  Text,
 } from "@chakra-ui/react";
-import {
-  FaUser,
-  FaEnvelope,
-  FaPhone,
-  FaIdCard,
-  FaChevronDown,
-  FaDollarSign,
-  FaFolder,
-  FaCalendar,
-} from "react-icons/fa";
+import { FaDollarSign, FaFolder, FaCalendar } from "react-icons/fa";
 import { createServicoPrestacao } from "./helpers/api";
 import ErrorAlert from "../error/ErrorAlert";
 import { formatCurrency } from "../../helpers/format-helpers";
@@ -49,7 +38,7 @@ const NewModal: React.FC<NewModal> = ({
   const [servico, setServico] = useState<string>("");
   const [dataInicio, setDataInicio] = useState<any>();
   const [dataFim, setDataFim] = useState<any>();
-  const [isPago, setIsPago] = useState<any>(false);
+  const [isPago, setIsPago] = useState(false); // Inicializando como false
   const [status, setStatus] = useState<any>(false);
 
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
@@ -75,7 +64,7 @@ const NewModal: React.FC<NewModal> = ({
           dataInicio: new Date(dataInicio),
           dataFim: new Date(dataFim),
           isPago,
-          status
+          status,
         },
         prestacaoId,
         userToken,
@@ -100,7 +89,7 @@ const NewModal: React.FC<NewModal> = ({
             <FormControl mb={3}>
               <Text>Valor Cobrado</Text>
               <InputGroup>
-              <InputLeftElement pointerEvents="none">
+                <InputLeftElement pointerEvents="none">
                   <FaDollarSign color="gray.300" />
                 </InputLeftElement>
                 <Input
@@ -114,7 +103,7 @@ const NewModal: React.FC<NewModal> = ({
             <FormControl mb={3}>
               <Text>Serviço</Text>
               <InputGroup>
-              <InputLeftElement pointerEvents="none">
+                <InputLeftElement pointerEvents="none">
                   <FaFolder color="gray.300" />
                 </InputLeftElement>
                 <Input
@@ -128,9 +117,9 @@ const NewModal: React.FC<NewModal> = ({
             <FormControl mb={3}>
               <Text>Data Início</Text>
               <InputGroup>
-              <InputLeftElement pointerEvents="none">
+                <InputLeftElement pointerEvents="none">
                   <FaCalendar color="gray.300" />
-              </InputLeftElement>
+                </InputLeftElement>
                 <Input
                   placeholder="DataInicio"
                   name="DataInicio"
@@ -142,9 +131,9 @@ const NewModal: React.FC<NewModal> = ({
             <FormControl mb={3}>
               <Text>Data previsão fim</Text>
               <InputGroup>
-              <InputLeftElement pointerEvents="none">
+                <InputLeftElement pointerEvents="none">
                   <FaCalendar color="gray.300" />
-              </InputLeftElement>
+                </InputLeftElement>
                 <Input
                   placeholder="DataFim"
                   name="DataFim"
@@ -156,17 +145,9 @@ const NewModal: React.FC<NewModal> = ({
             </FormControl>
             <FormControl mb={3}>
               <Text>Pago?</Text>
-              <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                  <FaDollarSign color="gray.300" />
-              </InputLeftElement>
-                <Input
-                  placeholder="IsPago"
-                  name="IsPago"
-                  value={isPago}
-                  onChange={(e) => setIsPago(e.target.value)}
-                />
-              </InputGroup>
+              <Checkbox isChecked={isPago} onChange={() => setIsPago(!isPago)}>
+                Marcar como Pago
+              </Checkbox>
             </FormControl>
             <Button colorScheme="blue" onClick={handleCreateServicoPrestacao}>
               Criar Serviço

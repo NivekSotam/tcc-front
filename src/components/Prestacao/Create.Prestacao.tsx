@@ -44,16 +44,15 @@ const NewPrestacaoModal: React.FC<NewPrestacaoModal> = ({
 
   const handleCreatePrestacao = async () => {
     try {
-
       const userToken = localStorage.getItem("USER_TOKEN");
-      await createPrestacao ({
+      await createPrestacao({
         data: {
           descricao,
           colaborador,
-          clienteFornecedor
+          clienteFornecedor,
         },
-        userToken
-        });
+        userToken,
+      });
       onSuccess();
       setIsSuccessAlertOpen(true);
       onClose();
@@ -71,7 +70,7 @@ const NewPrestacaoModal: React.FC<NewPrestacaoModal> = ({
         <ModalCloseButton />
         <ModalBody>
           <Flex direction="column">
-            <FormControl mb={3}>
+            {/* <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaUser color="gray.300" />
@@ -85,7 +84,7 @@ const NewPrestacaoModal: React.FC<NewPrestacaoModal> = ({
                   }
                 />
               </InputGroup>
-            </FormControl>
+            </FormControl> */}
             <FormControl mb={3}>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
@@ -95,9 +94,7 @@ const NewPrestacaoModal: React.FC<NewPrestacaoModal> = ({
                   placeholder="Colaborador"
                   name="colaborador"
                   value={colaborador}
-                  onChange={(e) =>
-                    setColaborador(e.target.value)
-                  }
+                  onChange={(e) => setColaborador(e.target.value)}
                 />
               </InputGroup>
             </FormControl>
@@ -110,9 +107,7 @@ const NewPrestacaoModal: React.FC<NewPrestacaoModal> = ({
                   placeholder="ClienteFornecedor"
                   name="clienteFornecedor"
                   value={clienteFornecedor}
-                  onChange={(e) =>
-                    setClienteFornecedor(e.target.value)
-                  }
+                  onChange={(e) => setClienteFornecedor(e.target.value)}
                 />
               </InputGroup>
             </FormControl>

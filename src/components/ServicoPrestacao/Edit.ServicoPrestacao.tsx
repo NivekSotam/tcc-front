@@ -18,6 +18,7 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  Checkbox, // Importando o Checkbox
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
 import { editServicoPrestacao } from "./helpers/api";
@@ -35,12 +36,12 @@ const EditModal: React.FC<EditModalProps> = ({
   prestacaoId,
   onEditSuccess,
 }) => {
-    const [isPago, setIsPago] = useState<any>(false);
-    const [status, setStatus] = useState<any>(false);
+  const [isPago, setIsPago] = useState<any>(false);
+  const [status, setStatus] = useState<any>(false);
 
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
-  const handleCreateServicoPrestacao = async () => {
+  const handleEditServicoPrestacao = async () => {
     try {
       const userToken = localStorage.getItem("USER_TOKEN");
       await editServicoPrestacao({
@@ -48,13 +49,13 @@ const EditModal: React.FC<EditModalProps> = ({
         userToken,
         data: {
           isPago: JSON.parse(isPago),
-          status: JSON.parse(status)
+          status: JSON.parse(status),
         },
       });
       onEditSuccess();
       onClose();
     } catch (error) {
-      console.error("Erro ao editar endereco:", error);
+      console.error("Erro ao editar serviço:", error);
       setIsErrorAlertOpen(true);
     }
   };
@@ -68,28 +69,18 @@ const EditModal: React.FC<EditModalProps> = ({
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
-                <Text>Serviço pago?</Text>
-              <InputGroup>
-                <Input
-                  placeholder="IsPago"
-                  name="IsPago"
-                  value={isPago}
-                  onChange={(e) => setIsPago(e.target.value)}
-                />
-              </InputGroup>
+              <Text>Serviço pago?</Text>
+              <Checkbox isChecked={isPago} onChange={() => setIsPago(!isPago)}>
+                Marcar como Pago
+              </Checkbox>
             </FormControl>
             <FormControl mb={3}>
-                <Text>Serviço Pronto?</Text>
-              <InputGroup>
-                <Input
-                  placeholder="status"
-                  name="status"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                />
-              </InputGroup>
+              <Text>Serviço Pronto?</Text>
+              <Checkbox isChecked={status} onChange={() => setStatus(!status)}>
+                Marcado como Feito
+              </Checkbox>
             </FormControl>
-            <Button colorScheme="blue" onClick={handleCreateServicoPrestacao}>
+            <Button colorScheme="blue" onClick={handleEditServicoPrestacao}>
               Editar Serviço
             </Button>
           </Flex>

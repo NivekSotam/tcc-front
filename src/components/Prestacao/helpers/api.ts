@@ -4,12 +4,12 @@ type ListPrestacao = {
   userToken: any;
   itemsPerPage: number;
   currentPage: number;
-}
+};
 
 export const fetchPrestacaoData = async ({
   userToken,
   itemsPerPage,
-  currentPage
+  currentPage,
 }: ListPrestacao) => {
   const url = `/prestacao/?page=${currentPage}&limit=${itemsPerPage}`;
   try {
@@ -28,13 +28,10 @@ export const fetchPrestacaoData = async ({
 type CreatePrestacao = {
   data: any;
   userToken: any;
-}
+};
 
-export const createPrestacao = async ({
-  data,
-  userToken,
-}: CreatePrestacao) => {
-  const url = `/prestacao/`
+export const createPrestacao = async ({ data, userToken }: CreatePrestacao) => {
+  const url = `/prestacao/`;
   try {
     const response = await axios.post(url, data, {
       headers: {
@@ -52,7 +49,7 @@ type UpdatePrestacao = {
   prestacaoId: number | null;
   data: any;
   userToken: any;
-}
+};
 
 export const editPrestacao = async ({
   prestacaoId,
@@ -76,7 +73,7 @@ export const editPrestacao = async ({
 export type DeletePrestacao = {
   prestacaoId: number | null;
   userToken: any;
-}
+};
 
 export const deletePrestacao = async ({
   prestacaoId,
@@ -90,6 +87,25 @@ export const deletePrestacao = async ({
       },
     });
     return response.data;
+  } catch (error) {
+    console.error("Erro ao buscar dados:", error);
+    throw error;
+  }
+};
+
+type ListColaborador = {
+  userToken: any;
+};
+
+export const fetchColaboradorData = async ({ userToken }: ListColaborador) => {
+  const url = `/colaborador/?usuario=&limit=&page=`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return response.data.result;
   } catch (error) {
     console.error("Erro ao buscar dados:", error);
     throw error;

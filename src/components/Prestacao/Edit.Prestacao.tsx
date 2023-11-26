@@ -5,6 +5,8 @@ import {
   Button,
   FormControl,
   Input,
+  InputGroup,
+  InputLeftElement,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,6 +16,7 @@ import {
   ModalOverlay,
 } from "@chakra-ui/react";
 import ErrorAlert from "../error/ErrorAlert";
+import { FaUser } from "react-icons/fa";
 
 interface EditModalProps {
   isOpen: boolean;
@@ -35,23 +38,22 @@ const EditModal: React.FC<EditModalProps> = ({
   const [clienteFornecedor, setClienteFornecedor] = useState("");
 
   const handleEditPerson = async () => {
-      try {
-        const userToken = localStorage.getItem("USER_TOKEN");
-        await editPrestacao({
-          prestacaoId,
-          userToken,
-          data: {
-            descricao,
-            colaborador,
-            clienteFornecedor
-          }
-        });
-        onEditSuccess();
-        onClose();
-      } catch (error) {
-        console.error("Erro ao editar servico:", error);
-        setIsErrorAlertOpen(true);
-      }
+    try {
+      const userToken = localStorage.getItem("USER_TOKEN");
+      await editPrestacao({
+        prestacaoId,
+        userToken,
+        data: {
+          colaborador,
+          clienteFornecedor,
+        },
+      });
+      onEditSuccess();
+      onClose();
+    } catch (error) {
+      console.error("Erro ao editar servico:", error);
+      setIsErrorAlertOpen(true);
+    }
   };
 
   return (
@@ -61,36 +63,47 @@ const EditModal: React.FC<EditModalProps> = ({
         <ModalHeader>Editar Servico</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl mb={4}>
-            <Box mb={2}>Novo Descriçõ</Box>
+          {/* <FormControl mb={4}>
+            <Box mb={2}>Novo Descrição</Box>
             <Input
               placeholder="Nova descrição"
               name="descriçõ"
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
             />
-          </FormControl>
+          </FormControl> */}
         </ModalBody>
         <ModalBody>
           <FormControl mb={4}>
             <Box mb={2}>Novo Cliente</Box>
-            <Input
-              placeholder="Novo Cliente"
-              name="cliente"
-              value={clienteFornecedor}
-              onChange={(e) => setClienteFornecedor(e.target.value)}
-            />
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <FaUser color="gray.300" />
+              </InputLeftElement>
+              <Input
+                placeholder="Novo Cliente"
+                name="cliente"
+                value={clienteFornecedor}
+                onChange={(e) => setClienteFornecedor(e.target.value)}
+              />
+            </InputGroup>
           </FormControl>
         </ModalBody>
         <ModalBody>
           <FormControl mb={4}>
             <Box mb={2}>Novo Colaborador</Box>
-            <Input
-              placeholder="Novo Colaborador"
-              name="Colaborador"
-              value={colaborador}
-              onChange={(e) => setColaborador(e.target.value)}
-            />
+
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <FaUser color="gray.300" />
+              </InputLeftElement>
+              <Input
+                placeholder="Novo Colaborador"
+                name="Colaborador"
+                value={colaborador}
+                onChange={(e) => setColaborador(e.target.value)}
+              />
+            </InputGroup>
           </FormControl>
         </ModalBody>
         <ModalFooter>
