@@ -70,15 +70,11 @@ const EditModal: React.FC<EditModalProps> = ({
           <Flex direction="column">
             <FormControl mb={3}>
               <Text>Serviço pago?</Text>
-              <Checkbox isChecked={isPago} onChange={() => setIsPago(!isPago)}>
-                Marcar como Pago
-              </Checkbox>
+              <Checkbox isChecked={isPago} onChange={() => setIsPago(!isPago)} />
             </FormControl>
             <FormControl mb={3}>
               <Text>Serviço Pronto?</Text>
-              <Checkbox isChecked={status} onChange={() => setStatus(!status)}>
-                Marcado como Feito
-              </Checkbox>
+              <Checkbox isChecked={status} onChange={() => setStatus(!status)} />
             </FormControl>
             <Button colorScheme="blue" onClick={handleEditServicoPrestacao}>
               Editar Serviço
