@@ -15,9 +15,7 @@ import {
   Text,
   Checkbox,
 } from "@chakra-ui/react";
-import {
-  FaSign,
-} from "react-icons/fa";
+import { FaSign } from "react-icons/fa";
 import ErrorAlert from "../error/ErrorAlert";
 import { addItemToPrestacao, editItemServico } from "./helpers/api";
 
@@ -25,7 +23,7 @@ interface EditItemPrestacaoModal {
   isOpen: boolean;
   prestacaoId: number | null;
   servicoId: number | null;
-  itemServicoId: number| null;
+  itemServicoId: number | null;
   onClose: () => void;
   onSuccess: () => void;
 }
@@ -40,14 +38,13 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
 }) => {
   const [quantidade, setQuantidade] = useState("");
   const [itemId, setItemId] = useState("");
-  const [retornado, setRetornado] = useState<any>(true);
+  const [retornado, setRetornado] = useState<any>(false);
 
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
 
   useEffect(() => {
     if (!isOpen) {
-
     }
   }, [isOpen]);
 
@@ -56,9 +53,9 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
       const userToken = localStorage.getItem("USER_TOKEN");
       await editItemServico({
         data: {
-            itemId,
-            quantidade,
-            retornado
+          itemId,
+          quantidade,
+          retornado,
         },
         prestacaoId,
         servicoId,
@@ -124,8 +121,11 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
                 /> */}
                 <Checkbox
                   onChange={() => {
-                    setRetornado(!retornado)
-                    console.log(retornado)
+                    if (retornado === true) {
+                      setRetornado(false);
+                    } else {
+                      setRetornado(true);
+                    }
                   }}
                 />
               </InputGroup>
