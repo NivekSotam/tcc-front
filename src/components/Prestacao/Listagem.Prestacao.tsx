@@ -164,27 +164,9 @@ const ListagemPrestacao = () => {
   return (
     <Box p={5}>
       <Flex mb={5}>
-        <Menu>
-          <MenuButton as={Button} rightIcon={<FaAngleDown />}>
-            <Flex alignItems="center">
-              <Box mr={4}>{buttonText}</Box>
-            </Flex>
-          </MenuButton>
-          <MenuList>
-            <MenuItem onClick={() => handleMenuItemClick("nome")}>
-              Nome
-            </MenuItem>
-          </MenuList>
-        </Menu>
-
-        <Input
-          placeholder={`Pesquisar por ${searchType}`}
-          value={nome}
-          onChange={handleSearchTermChange}
-        />
-
         <Button
           ml={5}
+          width={"100%"}
           colorScheme="blue"
           rightIcon={<FaPlus />}
           onClick={() => setIsModalOpen(true)}

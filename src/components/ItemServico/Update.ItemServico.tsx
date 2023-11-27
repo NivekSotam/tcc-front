@@ -13,6 +13,7 @@ import {
   InputLeftElement,
   InputGroup,
   Text,
+  Checkbox,
 } from "@chakra-ui/react";
 import {
   FaSign,
@@ -39,7 +40,7 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
 }) => {
   const [quantidade, setQuantidade] = useState("");
   const [itemId, setItemId] = useState("");
-  const [retornado, setRetornado] = useState<any>(false);
+  const [retornado, setRetornado] = useState<any>(true);
 
   const [isSuccessAlertOpen, setIsSuccessAlertOpen] = useState(false);
   const [isErrorAlertOpen, setIsErrorAlertOpen] = useState(false);
@@ -82,7 +83,7 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
         <ModalBody>
           <Flex direction="column">
             <FormControl mb={3}>
-              <Text>Rua</Text>
+              <Text>Item</Text>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <FaSign color="gray.300" />
@@ -112,7 +113,7 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
             <FormControl mb={3}>
               <Text>Retornado</Text>
               <InputGroup>
-                <InputLeftElement pointerEvents="none">
+                {/*<InputLeftElement pointerEvents="none">
                   <FaSign color="gray.300" />
                 </InputLeftElement>
                 <Input
@@ -120,11 +121,17 @@ const EditItemPrestacaoModal: React.FC<EditItemPrestacaoModal> = ({
                   name="Retornado"
                   value={retornado}
                   onChange={(e) => setRetornado(Boolean(e.target.value))}
+                /> */}
+                <Checkbox
+                  onChange={() => {
+                    setRetornado(!retornado)
+                    console.log(retornado)
+                  }}
                 />
               </InputGroup>
             </FormControl>
             <Button colorScheme="blue" onClick={handleAddItemToPrestacao}>
-              Criar Endereço
+              Aplicar Mudanças
             </Button>
           </Flex>
         </ModalBody>
